@@ -31,14 +31,12 @@ const Tooltip = BaseTooltip.extend('tooltip', {
             }
         }
 
-        if (options.instance.$primevue && options.instance.$primevue.config) {
-            let _config = options.instance.$primevue && options.instance.$primevue.config;
-
-            target.$_ptooltipZIndex = _config.zIndex.tooltip;
-            target.$_ptooltipUnstyled = _config.unstyled || false;
-        }
+        target.$_ptooltipZIndex = options.instance.$primevue?.config?.zIndex?.tooltip;
+        target.unstyled = options.instance.$primevue?.config?.unstyled || options.value?.unstyled || false;
 
         this.bindEvents(target, options);
+
+        el.setAttribute('data-pd-tooltip', true);
     },
     updated(el, options) {
         let target = this.getTarget(el);
@@ -78,6 +76,8 @@ const Tooltip = BaseTooltip.extend('tooltip', {
                 this.bindEvents(target, options);
             }
         }
+
+        target.unstyled = options.instance.$primevue?.config?.unstyled || options.value?.unstyled || false;
     },
     unmounted(el, options) {
         let target = this.getTarget(el);
@@ -186,7 +186,7 @@ const Tooltip = BaseTooltip.extend('tooltip', {
             let tooltipElement = this.create(el, options);
 
             this.align(el);
-            !el.$_ptooltipUnstyled && DomHandler.fadeIn(tooltipElement, 250);
+            !el.unstyled && DomHandler.fadeIn(tooltipElement, 250);
 
             const $this = this;
 
@@ -226,12 +226,12 @@ const Tooltip = BaseTooltip.extend('tooltip', {
         },
         create(el, options) {
             const tooltipArrow = DomHandler.createElement('div', {
-                class: this.cx('arrow'),
+                class: !el.unstyled && this.cx('arrow'),
                 'p-bind': this.ptm('arrow')
             });
 
             const tooltipText = DomHandler.createElement('div', {
-                class: this.cx('text'),
+                class: !el.unstyled && this.cx('text'),
                 'p-bind': this.ptm('text')
             });
 
@@ -251,7 +251,7 @@ const Tooltip = BaseTooltip.extend('tooltip', {
                         display: 'inline-block',
                         width: el.$_ptooltipFitContent ? 'fit-content' : undefined
                     },
-                    class: [this.cx('root'), el.$_ptooltipClass],
+                    class: [!el.unstyled && this.cx('root'), el.$_ptooltipClass],
                     'p-bind': this.ptm('root')
                 },
                 tooltipArrow,

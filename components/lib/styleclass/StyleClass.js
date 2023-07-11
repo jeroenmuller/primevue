@@ -3,6 +3,8 @@ import BaseStyleClass from './BaseStyleClass';
 
 const StyleClass = BaseStyleClass.extend('styleclass', {
     mounted(el, binding) {
+        el.setAttribute('data-pd-styleclass', true);
+
         this.bind(el, binding);
     },
     unmounted(el) {
@@ -145,7 +147,7 @@ const StyleClass = BaseStyleClass.extend('styleclass', {
                 target.$p_styleclass_documentlistener = (event) => {
                     if (!this.isVisible(target) || getComputedStyle(target).getPropertyValue('position') === 'static') {
                         this.unbindDocumentListener(target);
-                    } else if (isOutsideClick(event, target, el)) {
+                    } else if (this.isOutsideClick(event, target, el)) {
                         this.leave(target, binding);
                     }
                 };

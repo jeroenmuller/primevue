@@ -17,6 +17,10 @@ gulp.task('build-css', function () {
         .pipe(gulp.dest('dist/resources'));
 });
 
+gulp.task('build-primevuecss', function () {
+    return gulp.src(['./assets/styles/primevue.css']).pipe(concat('primevue.css')).pipe(gulp.dest('dist/resources')).pipe(rename('primevue.min.css')).pipe(gulp.dest('dist/resources'));
+});
+
 gulp.task('build-themes', function () {
     return gulp.src(['public/themes/**/*']).pipe(gulp.dest('dist/resources/themes'));
 });
@@ -27,4 +31,4 @@ gulp.task('images', function () {
 });
 
 //Building project with run sequence
-gulp.task('build-styles', gulp.series('build-themes'));
+gulp.task('build-styles', gulp.series('build-themes', 'build-primevuecss'));

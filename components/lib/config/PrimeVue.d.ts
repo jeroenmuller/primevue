@@ -81,14 +81,14 @@ import { TieredMenuPassThroughOptions } from '../tieredmenu';
 import { TimelinePassThroughOptions } from '../timeline';
 import { ToastPassThroughOptions } from '../toast';
 import { ToolbarPassThroughOptions } from '../toolbar';
-import { TooltipPassThroughOptions } from '../tooltip';
+import { TooltipDirectivePassThroughOptions } from '../tooltip';
 import { TreePassThroughOptions } from '../tree';
 import { TreeSelectPassThroughOptions } from '../treeselect';
 import { TreeTablePassThroughOptions } from '../treetable';
 import { DefaultPTOptions } from '../ts-helpers';
 import { VirtualScrollerPassThroughOptions } from '../virtualscroller';
 
-interface PrimeVueConfiguration {
+export interface PrimeVueConfiguration {
     ripple?: boolean;
     inputStyle?: string;
     locale?: PrimeVueLocaleOptions;
@@ -98,20 +98,19 @@ interface PrimeVueConfiguration {
     unstyled?: boolean;
 }
 
-interface PrimeVueZIndexOptions {
+export interface PrimeVueZIndexOptions {
     modal?: number;
     overlay?: number;
     menu?: number;
     tooltip?: number;
 }
 
-interface PrimeVuePTOptions {
+export interface PrimeVuePTOptions {
     accordion?: DefaultPTOptions<AccordionPassThroughOptions>;
     accordiontab?: DefaultPTOptions<AccordionTabPassThroughOptions>;
     autocomplete?: DefaultPTOptions<AutoCompletePassThroughOptions>;
     avatar?: DefaultPTOptions<AvatarPassThroughOptions>;
     badge?: DefaultPTOptions<BadgePassThroughOptions>;
-    badgedirective?: DefaultPTOptions<BadgeDirectivePassThroughOptions>;
     blockui?: DefaultPTOptions<BlockUIPassThroughOptions>;
     breadcrumb?: DefaultPTOptions<BreadcrumbPassThroughOptions>;
     button?: DefaultPTOptions<ButtonPassThroughOptions>;
@@ -140,7 +139,6 @@ interface PrimeVuePTOptions {
     editor?: DefaultPTOptions<EditorPassThroughOptions>;
     fieldset?: DefaultPTOptions<FieldsetPassThroughOptions>;
     fileupload?: DefaultPTOptions<FileUploadPassThroughOptions>;
-    focustrap?: DefaultPTOptions<FocusTrapDirectivePassThroughOptions>;
     galleria?: DefaultPTOptions<GalleriaPassThroughOptions>;
     image?: DefaultPTOptions<ImagePassThroughOptions>;
     inlinemessage?: DefaultPTOptions<InlineMessagePassThroughOptions>;
@@ -167,7 +165,6 @@ interface PrimeVuePTOptions {
     progressbar?: DefaultPTOptions<ProgressBarPassThroughOptions>;
     progressspinner?: DefaultPTOptions<ProgressSpinnerPassThroughOptions>;
     radiobutton?: DefaultPTOptions<RadioButtonPassThroughOptions>;
-    ripple?: DefaultPTOptions<RippleDirectivePassThroughOptions>;
     row?: DefaultPTOptions<RowPassThroughOptions>;
     scrollpanel?: DefaultPTOptions<ScrollPanelPassThroughOptions>;
     scrolltop?: DefaultPTOptions<ScrollTopPassThroughOptions>;
@@ -178,7 +175,6 @@ interface PrimeVuePTOptions {
     splitbutton?: DefaultPTOptions<SplitButtonPassThroughOptions>;
     splitter?: DefaultPTOptions<SplitterPassThroughOptions>;
     steps?: DefaultPTOptions<StepsPassThroughOptions>;
-    styleclass?: DefaultPTOptions<StyleClassDirectivePassThroughOptions>;
     tabmenu?: DefaultPTOptions<TabMenuPassThroughOptions>;
     tabpanel?: DefaultPTOptions<TabPanelPassThroughOptions>;
     tabview?: DefaultPTOptions<TabViewPassThroughOptions>;
@@ -189,14 +185,20 @@ interface PrimeVuePTOptions {
     timeline?: DefaultPTOptions<TimelinePassThroughOptions>;
     toast?: DefaultPTOptions<ToastPassThroughOptions>;
     toolbar?: DefaultPTOptions<ToolbarPassThroughOptions>;
-    tooltip?: DefaultPTOptions<TooltipPassThroughOptions>;
     tree?: DefaultPTOptions<TreePassThroughOptions>;
     treeselect?: DefaultPTOptions<TreeSelectPassThroughOptions>;
     treetable?: DefaultPTOptions<TreeTablePassThroughOptions>;
     virtualscroller?: DefaultPTOptions<VirtualScrollerPassThroughOptions>;
+    directives?: {
+        badge?: BadgeDirectivePassThroughOptions;
+        tooltip?: TooltipDirectivePassThroughOptions;
+        styleclass?: StyleClassDirectivePassThroughOptions;
+        focustrap?: FocusTrapDirectivePassThroughOptions;
+        ripple?: RippleDirectivePassThroughOptions;
+    };
 }
 
-interface PrimeVueLocaleAriaOptions {
+export interface PrimeVueLocaleAriaOptions {
     trueLabel?: string;
     falseLabel?: string;
     nullLabel?: string;
@@ -247,7 +249,7 @@ interface PrimeVueLocaleAriaOptions {
     rotateLeft?: string;
 }
 
-interface PrimeVueLocaleOptions {
+export interface PrimeVueLocaleOptions {
     startsWith?: string;
     contains?: string;
     notContains?: string;
@@ -315,7 +317,12 @@ interface PrimeVueLocaleOptions {
     aria?: PrimeVueLocaleAriaOptions;
 }
 
-export declare function usePrimeVue(): { config: PrimeVueConfiguration };
+export type PrimeVueChangeTheme = (currentTheme: string, newTheme: string, linkElementId: string, callback?: Function) => void;
+
+export declare function usePrimeVue(): {
+    config: PrimeVueConfiguration;
+    changeTheme: PrimeVueChangeTheme;
+};
 
 declare const plugin: Plugin;
 export default plugin;
@@ -324,6 +331,7 @@ declare module 'vue/types/vue' {
     interface Vue {
         $primevue: {
             config: PrimeVueConfiguration;
+            changeTheme: PrimeVueChangeTheme;
         };
     }
 }
@@ -332,6 +340,7 @@ declare module '@vue/runtime-core' {
     interface ComponentCustomProperties {
         $primevue: {
             config: PrimeVueConfiguration;
+            changeTheme: PrimeVueChangeTheme;
         };
     }
 }

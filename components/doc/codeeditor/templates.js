@@ -2,7 +2,7 @@ import pkg from '../../../package.json';
 import { services } from './services';
 
 const PrimeVue = {
-    version: '^3.29.2',
+    version: '^3.30.0',
     description:
         'PrimeVue is an open source UI library for Vue featuring a rich set of 80+ components, a theme designer, various theme alternatives such as Material, Bootstrap, Tailwind, premium templates and professional support. In addition, it integrates with PrimeBlock, which has 400+ ready to use UI blocks to build spectacular applications in no time.'
 };
@@ -104,7 +104,7 @@ export default defineConfig({
         [`${path}main.js`]: {
             content: `import "primeflex/primeflex.css";
 import "primevue/resources/themes/lara-light-blue/theme.css";
-import "primevue/resources/primevue.min.css";
+import "primevue/resources/primevue.min.css"; /* Deprecated */
 import "primeicons/primeicons.css";
 import "./index.css";
 import "./flags.css";

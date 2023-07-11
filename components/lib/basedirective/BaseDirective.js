@@ -5,12 +5,12 @@ import { mergeProps } from 'vue';
 const BaseDirective = {
     _getMeta: (...args) => [ObjectUtils.isObject(args[0]) ? undefined : args[0], ObjectUtils.getItemValue(ObjectUtils.isObject(args[0]) ? args[0] : args[1])],
     _getOptionValue: (options, key = '', params = {}) => {
-        const fKeys = ObjectUtils.convertToFlatCase(key).split('.');
+        const fKeys = ObjectUtils.toFlatCase(key).split('.');
         const fKey = fKeys.shift();
 
         return fKey
             ? ObjectUtils.isObject(options)
-                ? BaseDirective._getOptionValue(ObjectUtils.getItemValue(options[Object.keys(options).find((k) => ObjectUtils.convertToFlatCase(k) === fKey) || ''], params), fKeys.join('.'), params)
+                ? BaseDirective._getOptionValue(ObjectUtils.getItemValue(options[Object.keys(options).find((k) => ObjectUtils.toFlatCase(k) === fKey) || ''], params), fKeys.join('.'), params)
                 : undefined
             : ObjectUtils.getItemValue(options, params);
     },
@@ -19,49 +19,51 @@ const BaseDirective = {
         const self = BaseDirective._getOptionValue(obj, key, params);
         const globalPT = searchInDefaultPT ? BaseDirective._getOptionValue(instance.defaultPT, key, params) : undefined;
         const merged = mergeProps(self, globalPT, {
-            ...(key === 'root' && { [`${datasetPrefix}name`]: ObjectUtils.convertToFlatCase(instance.$name) }),
-            [`${datasetPrefix}section`]: ObjectUtils.convertToFlatCase(key)
+            ...(key === 'root' && { [`${datasetPrefix}name`]: ObjectUtils.toFlatCase(instance.$name) }),
+            [`${datasetPrefix}section`]: ObjectUtils.toFlatCase(key)
         });
 
         return merged;
     },
     _hook: (directiveName, hookName, el, binding, vnode, prevVnode) => {
+        const name = `on${ObjectUtils.toCapitalCase(hookName)}`;
         const config = binding?.instance?.$primevue?.config;
-        const selfHook = binding?.value?.pt?.hooks?.[hookName];
-        const globalHook = config?.pt?.directives?.[directiveName]?.hooks?.[hookName];
+        const selfHook = binding?.value?.pt?.hooks?.[name];
+        const globalHook = config?.pt?.directives?.[directiveName]?.hooks?.[name];
+        const options = { el, binding, vnode, prevVnode };
 
-        selfHook?.(el, binding, vnode, prevVnode);
-        globalHook?.(el, binding, vnode, prevVnode);
+        selfHook?.(el?.$instance, options);
+        globalHook?.(el?.$instance, options);
     },
     _extend: (name, options = {}) => {
         const handleHook = (hook, el, binding, vnode, prevVnode) => {
             el._$instances = el._$instances || {};
 
             const config = binding?.instance?.$primevue?.config;
-            const $instance = el._$instances[name] || {};
-            const $options = ObjectUtils.isEmpty($instance) ? { ...options, ...options?.methods } : {};
+            const $prevInstance = el._$instances[name] || {};
+            const $options = ObjectUtils.isEmpty($prevInstance) ? { ...options, ...options?.methods } : {};
 
-            el.$instance = $instance;
             el._$instances[name] = {
-                ...$instance,
+                ...$prevInstance,
                 /* new instance variables to pass in directive methods */
                 $name: name,
                 $host: el,
                 $binding: binding,
-                $el: $instance['$el'] || undefined,
+                $el: $prevInstance['$el'] || undefined,
                 $css: { classes: undefined, inlineStyles: undefined, loadStyle: () => {}, ...options?.css },
                 /* computed instance variables */
                 defaultPT: config?.pt?.directives?.[name],
-                isUnstyled: config?.unstyled,
+                isUnstyled: el.unstyled !== undefined ? el.unstyled : config?.unstyled,
                 /* instance's methods */
-                ptm: (key = '', params = {}) => BaseDirective._getPTValue(el._$instances[name], el._$instances?.[name]?.$binding?.value?.pt, key, { ...params }),
-                ptmo: (obj = {}, key = '', params = {}) => BaseDirective._getPTValue(el._$instances?.[name], obj, key, params, false),
-                cx: (key = '', params = {}) => (!el._$instances?.[name]?.isUnstyled ? BaseDirective._getOptionValue(el._$instances?.[name]?.$css?.classes, key, { ...params }) : undefined),
-                sx: (key = '', when = true, params = {}) => (when ? BaseDirective._getOptionValue(el._$instances?.[name]?.$css?.inlineStyles, key, { ...params }) : undefined),
+                ptm: (key = '', params = {}) => BaseDirective._getPTValue(el.$instance, el.$instance?.$binding?.value?.pt, key, { ...params }),
+                ptmo: (obj = {}, key = '', params = {}) => BaseDirective._getPTValue(el.$instance, obj, key, params, false),
+                cx: (key = '', params = {}) => (!el.$instance?.isUnstyled ? BaseDirective._getOptionValue(el.$instance?.$css?.classes, key, { ...params }) : undefined),
+                sx: (key = '', when = true, params = {}) => (when ? BaseDirective._getOptionValue(el.$instance?.$css?.inlineStyles, key, { ...params }) : undefined),
                 ...$options
             };
 
-            $instance[hook]?.(el, binding, vnode, prevVnode); // handle hook in directive implementation
+            el.$instance = el._$instances[name]; // pass instance data to hooks
+            el.$instance[hook]?.(el, binding, vnode, prevVnode); // handle hook in directive implementation
             BaseDirective._hook(name, hook, el, binding, vnode, prevVnode); // handle hooks during directive uses (global and self-definition)
         };
 
