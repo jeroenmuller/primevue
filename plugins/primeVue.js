@@ -671,6 +671,78 @@ const tailwindLight = {
                 }
             ]
         })
+    },
+    dataview: {
+        content: {
+            class: 'bg-white blue-gray-700 border-0 p-0'
+        },
+        grid: {
+            class: 'flex flex-wrap ml-0 mr-0 mt-0'
+        },
+        header: {
+            class: 'bg-gray-100 text-blue-gray-800 border-gray-200 border-t border-b p-4 font-bold'
+        }
+    },
+    dataviewlayoutoptions: {
+        listbutton: ({ props }) => ({
+            class: [
+                'items-center cursor-pointer inline-flex overflow-hidden relative select-none text-center align-bottom justify-center border',
+                'transition duration-200',
+                'w-12 pt-3 pb-3 rounded-lg rounded-r-none',
+                props.modelValue === 'list' ? 'bg-blue-500 border-blue-500 text-white' : 'bg-white border-gray-300 text-blue-gray-700'
+            ]
+        }),
+        gridbutton: ({ props }) => ({
+            class: [
+                'items-center cursor-pointer inline-flex overflow-hidden relative select-none text-center align-bottom justify-center border',
+                'transition duration-200',
+                'w-12 pt-3 pb-3 rounded-lg rounded-l-none',
+                props.modelValue === 'grid' ? 'bg-blue-500 border-blue-500 text-white' : 'bg-white border-gray-300 text-blue-gray-700'
+            ]
+        })
+    },
+    organizationchart: {
+        table: {
+            class: 'mx-auto my-0',
+            style: { 'border-spacing': 0, 'border-collapse': 'separate' }
+        },
+        cell: {
+            class: 'text-center align-top py-0 px-3'
+        },
+        node: {
+            class: 'relative inline-block bg-white border border-gray-300 text-gray-600 p-5'
+        },
+        linecell: {
+            class: 'text-center align-top py-0 px-3'
+        },
+        linedown: {
+            class: 'mx-auto my-0 w-px h-[20px] bg-gray-300'
+        },
+        lineleft: ({ context }) => ({
+            class: [
+                'text-center align-top py-0 px-3 rounded-none border-r border-gray-300',
+                {
+                    'border-t': context.lineTop
+                }
+            ]
+        }),
+        lineright: ({ context }) => ({
+            class: [
+                'text-center align-top py-0 px-3 rounded-none',
+                {
+                    'border-t border-gray-300': context.lineTop
+                }
+            ]
+        }),
+        nodecell: {
+            class: 'text-center align-top py-0 px-3'
+        },
+        nodetoggler: {
+            class: 'absolute bottom-[-0.75rem] left-2/4 -ml-3 w-6 h-6 bg-inherit text-inherit rounded z-2 cursor-pointer no-underline select-none'
+        },
+        nodetogglericon: {
+            class: 'relative inline-block top-1 w-4 h-4'
+        }
     }
 };
 
