@@ -12,7 +12,7 @@ import { ComponentHooks } from '../basecomponent';
 import { ButtonPassThroughOptionType } from '../button';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
 
-export declare type PickListPassThroughOptionType = PickListPassThroughAttributes | ((options: PickListPassThroughMethodOptions) => PickListPassThroughAttributes) | null | undefined;
+export declare type PickListPassThroughOptionType = PickListPassThroughAttributes | ((options: PickListPassThroughMethodOptions) => PickListPassThroughAttributes | string) | string | null | undefined;
 
 /**
  * Custom passthrough(pt) option method.
@@ -21,6 +21,7 @@ export interface PickListPassThroughMethodOptions {
     instance: any;
     props: PickListProps;
     state: PickListState;
+    context: PickListContext;
 }
 
 /**
@@ -139,6 +140,10 @@ export interface PickListPassThroughOptions {
      */
     sourceList?: PickListPassThroughOptionType;
     /**
+     * Uses to pass attributes to the source item's DOM element.
+     */
+    sourceItem?: PickListPassThroughOptionType;
+    /**
      * Uses to pass attributes to the buttons' DOM element.
      */
     buttons?: PickListPassThroughOptionType;
@@ -170,6 +175,10 @@ export interface PickListPassThroughOptions {
      * Uses to pass attributes to the target list's DOM element.
      */
     targetList?: PickListPassThroughOptionType;
+    /**
+     * Uses to pass attributes to the target item's DOM element.
+     */
+    targetItem?: PickListPassThroughOptionType;
     /**
      * Uses to pass attributes to the target controls' DOM element.
      */
@@ -244,6 +253,22 @@ export interface PickListState {
      * @defaultValue false
      */
     viewChanged: boolean;
+}
+
+/**
+ * Defines current options in PickList component.
+ */
+export interface PickListContext {
+    /**
+     * Current active state of the item as a boolean.
+     * @defaultValue false
+     */
+    active: boolean;
+    /**
+     * Current focus state of the item as a boolean.
+     * @defaultValue false
+     */
+    focused: boolean;
 }
 
 /**

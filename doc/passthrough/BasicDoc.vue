@@ -1,8 +1,9 @@
 <template>
     <DocSectionText v-bind="$attrs">
         <p>
-            Each component has a special <i>pt</i> property to define an object with keys corresponding to the available DOM elements. Each value can either be an object or a function that returns an object to define the arbitrary properties to apply
-            to the element such as styling, aria, data-* or custom attributes. Every component documentation has a dedicated section to document the available section names exposed via PT.
+            Each component has a special <i>pt</i> property to define an object with keys corresponding to the available DOM elements. Each value can either be a string, an object or a function that returns a string or an object to define the
+            arbitrary properties to apply to the element such as styling, aria, data-* or custom attributes. If the value is a string or a function that returns a string, it is considered as a class definition and added to the class attribute of the
+            element. Every component documentation has a dedicated section to document the available section names exposed via PT.
         </p>
         <p>Most common usage of <i>pt</i> is styling and customization, example below styles a Panel component with PrimeFlex CSS library.</p>
     </DocSectionText>
@@ -12,12 +13,22 @@
             header="Header"
             toggleable
             :pt="{
-                header: (opts) => {
-                    return { class: opts.state.d_collapsed ? 'bg-primary border-primary' : 'bg-primary-reverse border-primary' };
-                },
+                header: (options) => ({
+                    id: 'myPanelHeader',
+                    style: {
+                        'user-select': 'none'
+                    },
+                    class: [
+                        'border-primary',
+                        {
+                            'bg-primary': options.state.d_collapsed,
+                            'bg-primary-reverse': !options.state.d_collapsed
+                        }
+                    ]
+                }),
                 content: { class: 'border-primary text-lg text-primary-700' },
-                title: { class: 'text-xl' },
-                toggler: { class: 'bg-primary hover:bg-primary-reverse' }
+                title: 'text-xl',
+                toggler: () => 'bg-primary hover:bg-primary-reverse'
             }"
         >
             <p class="m-0">
@@ -37,12 +48,22 @@ export default {
                 basic: `
 <Panel header="Header" toggleable
     :pt="{
-        header: (opts: PanelPassThroughMethodOptions) => {
-            return { class: opts.state.d_collapsed ? 'bg-primary border-primary' : 'bg-primary-reverse border-primary' };
-        },
+        header: (options) => ({
+            id: 'myPanelHeader',
+            style: {
+                'user-select': 'none'
+            },
+            class: [
+                'border-primary',
+                {
+                    'bg-primary': options.state.d_collapsed,
+                    'bg-primary-reverse': !options.state.d_collapsed
+                }
+            ]
+        }),
         content: { class: 'border-primary text-lg text-primary-700' },
-        title: { class: 'text-xl' },
-        toggler: { class: 'bg-primary hover:bg-primary-reverse' }
+        title: 'text-xl',                                     // OR { class: 'text-xl' }
+        toggler: () => 'bg-primary hover:bg-primary-reverse'  // OR { class: 'bg-primary hover:bg-primary-reverse' }
     }">
     <p class="m-0">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -54,12 +75,22 @@ export default {
     <div class="card">
         <Panel header="Header" toggleable
             :pt="{
-                header: (opts: PanelPassThroughMethodOptions) => {
-                    return { class: opts.state.d_collapsed ? 'bg-primary border-primary' : 'bg-primary-reverse border-primary' };
-                },
+                header: (options) => ({
+                    id: 'myPanelHeader',
+                    style: {
+                        'user-select': 'none'
+                    },
+                    class: [
+                        'border-primary',
+                        {
+                            'bg-primary': options.state.d_collapsed,
+                            'bg-primary-reverse': !options.state.d_collapsed
+                        }
+                    ]
+                }),
                 content: { class: 'border-primary text-lg text-primary-700' },
-                title: { class: 'text-xl' },
-                toggler: { class: 'bg-primary hover:bg-primary-reverse' }
+                title: 'text-xl',                                     // OR { class: 'text-xl' }
+                toggler: () => 'bg-primary hover:bg-primary-reverse'  // OR { class: 'bg-primary hover:bg-primary-reverse' }
             }">
             <p class="m-0">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -76,12 +107,22 @@ export default {
     <div class="card">
         <Panel header="Header" toggleable
             :pt="{
-                header: (opts: PanelPassThroughMethodOptions) => {
-                    return { class: opts.state.d_collapsed ? 'bg-primary border-primary' : 'bg-primary-reverse border-primary' };
-                },
+                header: (options) => ({
+                    id: 'myPanelHeader',
+                    style: {
+                        'user-select': 'none'
+                    },
+                    class: [
+                        'border-primary',
+                        {
+                            'bg-primary': options.state.d_collapsed,
+                            'bg-primary-reverse': !options.state.d_collapsed
+                        }
+                    ]
+                }),
                 content: { class: 'border-primary text-lg text-primary-700' },
-                title: { class: 'text-xl' },
-                toggler: { class: 'bg-primary hover:bg-primary-reverse' }
+                title: 'text-xl',                                     // OR { class: 'text-xl' }
+                toggler: () => 'bg-primary hover:bg-primary-reverse'  // OR { class: 'bg-primary hover:bg-primary-reverse' }
             }">
             <p class="m-0">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.

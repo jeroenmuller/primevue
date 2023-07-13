@@ -12,7 +12,7 @@ import { ComponentHooks } from '../basecomponent';
 import { ButtonPassThroughOptionType } from '../button';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
 
-export declare type OrderListPassThroughOptionType = OrderListPassThroughAttributes | ((options: OrderListPassThroughMethodOptions) => OrderListPassThroughAttributes) | null | undefined;
+export declare type OrderListPassThroughOptionType = OrderListPassThroughAttributes | ((options: OrderListPassThroughMethodOptions) => OrderListPassThroughAttributes | string) | string | null | undefined;
 
 /**
  * Custom passthrough(pt) option method.
@@ -21,6 +21,7 @@ export interface OrderListPassThroughMethodOptions {
     instance: any;
     props: OrderListProps;
     state: OrderListState;
+    context: OrderListContext;
 }
 
 /**
@@ -138,6 +139,22 @@ export interface OrderListState {
      * @defaultvalue -1
      */
     focusedOptionIndex: number;
+}
+
+/**
+ * Defines current options in OrderList component.
+ */
+export interface OrderListContext {
+    /**
+     * Current active state of the item as a boolean.
+     * @defaultValue false
+     */
+    active: boolean;
+    /**
+     * Current focus state of the item as a boolean.
+     * @defaultValue false
+     */
+    focused: boolean;
 }
 
 /**
