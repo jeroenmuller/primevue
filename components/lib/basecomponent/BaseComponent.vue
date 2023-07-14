@@ -8,7 +8,6 @@ const inlineStyles = {};
 
 const buttonStyles = `
 .p-button {
-    margin: 0;
     display: inline-flex;
     cursor: pointer;
     user-select: none;
@@ -96,10 +95,6 @@ const checkboxStyles = `
 }
 `;
 const inputTextStyles = `
-.p-inputtext {
-    margin: 0;
-}
-
 .p-fluid .p-inputtext {
     width: 100%;
 }
@@ -285,14 +280,6 @@ const styles = `
     word-wrap: normal !important;
 }
 
-input[type="button"],
-input[type="submit"],
-input[type="reset"],
-input[type="file"]::-webkit-file-upload-button,
-button { /* @todo */
-    border-radius: 0;
-}
-
 .p-link {
 	text-align: left;
 	background-color: transparent;
@@ -455,7 +442,7 @@ export default {
 
             const datasetPrefix = 'data-pc-';
             const self = getValue(obj, key, params);
-            const globalPT = searchInDefaultPT ? getValue(this.defaultPT, key, params) || (/./g.test(key) && !!params[key.split('.')[0]] ? getValue(this.globalPT, key, params) : undefined) : undefined;
+            const globalPT = searchInDefaultPT ? (/./g.test(key) && !!params[key.split('.')[0]] ? getValue(this.globalPT, key, params) : getValue(this.defaultPT, key, params)) : undefined;
             const merged = mergeProps(self, globalPT, {
                 ...(key === 'root' && { [`${datasetPrefix}name`]: ObjectUtils.toFlatCase(this.$.type.name) }),
                 [`${datasetPrefix}section`]: ObjectUtils.toFlatCase(key)

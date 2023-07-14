@@ -134,6 +134,15 @@
                             "readonly": false,
                             "type": "AccordionTabPassThroughOptionType",
                             "default": "",
+                            "description": "Uses to pass attributes to AccordionTab helper components.",
+                            "deprecated": "since v3.30.1. Use 'accordiontab' property instead."
+                        },
+                        {
+                            "name": "accordiontab",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "AccordionTabPassThroughOptionType",
+                            "default": "",
                             "description": "Uses to pass attributes to AccordionTab helper components."
                         },
                         {
@@ -30857,30 +30866,12 @@
                             "description": "Uses to pass attributes to the first page icon's DOM element."
                         },
                         {
-                            "name": "prevPageButton",
-                            "optional": true,
-                            "readonly": false,
-                            "type": "PaginatorPassThroughOptionType",
-                            "default": "",
-                            "description": "Uses to pass attributes to the prev page button's DOM element.",
-                            "deprecated": "since v3.30.0. Use 'previousPageButton' property instead."
-                        },
-                        {
                             "name": "previousPageButton",
                             "optional": true,
                             "readonly": false,
                             "type": "PaginatorPassThroughOptionType",
                             "default": "",
                             "description": "Uses to pass attributes to the prev page button's DOM element."
-                        },
-                        {
-                            "name": "prevPageIcon",
-                            "optional": true,
-                            "readonly": false,
-                            "type": "PaginatorPassThroughOptionType",
-                            "default": "",
-                            "description": "Uses to pass attributes to the prev page icon's DOM element.",
-                            "deprecated": "since v3.30.0. Use 'previousPageIcon' property instead."
                         },
                         {
                             "name": "previousPageIcon",
@@ -30947,15 +30938,6 @@
                             "description": "Uses to pass attributes to the current's DOM element."
                         },
                         {
-                            "name": "RPPDropdown",
-                            "optional": true,
-                            "readonly": false,
-                            "type": "DropdownPassThroughOptionType",
-                            "default": "",
-                            "description": "Uses to pass attributes to the Dropdown component.",
-                            "deprecated": "since v3.30.0. Use 'rowPerPageDropdown' property instead."
-                        },
-                        {
                             "name": "rowPerPageDropdown",
                             "optional": true,
                             "readonly": false,
@@ -30964,30 +30946,12 @@
                             "description": "Uses to pass attributes to the Dropdown component."
                         },
                         {
-                            "name": "JTPDropdown",
-                            "optional": true,
-                            "readonly": false,
-                            "type": "DropdownPassThroughOptionType",
-                            "default": "",
-                            "description": "Uses to pass attributes to the Dropdown component.",
-                            "deprecated": "since v3.30.0. Use 'jumpToPageDropdown' property instead."
-                        },
-                        {
                             "name": "jumpToPageDropdown",
                             "optional": true,
                             "readonly": false,
                             "type": "DropdownPassThroughOptionType",
                             "default": "",
                             "description": "Uses to pass attributes to the Dropdown component."
-                        },
-                        {
-                            "name": "JTPInput",
-                            "optional": true,
-                            "readonly": false,
-                            "type": "InputNumberPassThroughOptionType",
-                            "default": "",
-                            "description": "Uses to pass attributes to the Dropdown component.",
-                            "deprecated": "since v3.30.0. Use 'jumpToPageInput' property instead."
                         },
                         {
                             "name": "jumpToPageInput",
@@ -31563,7 +31527,7 @@
                                 {
                                     "name": "scope",
                                     "optional": false,
-                                    "type": "{\n  \t <b>id</b>: boolean, // Current id state as a string\n  \t <b>class</b>: string, // Style class of the icon\n  }"
+                                    "type": "{\n  \t <b>id</b>: string, // Current id state as a string\n  \t <b>class</b>: string, // Style class of the icon\n  }"
                                 }
                             ],
                             "returnType": "VNode<RendererNode, RendererElement, Object>[]",
@@ -38925,6 +38889,15 @@
                         },
                         {
                             "name": "tab",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "TabPanelPassThroughOptionType",
+                            "default": "",
+                            "description": "Uses to pass attributes to TabPanel helper components.",
+                            "deprecated": "since v3.30.1. Use 'tabpanel' property instead."
+                        },
+                        {
+                            "name": "tabpanel",
                             "optional": true,
                             "readonly": false,
                             "type": "TabPanelPassThroughOptionType",
