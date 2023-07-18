@@ -108,6 +108,13 @@ import CodeHighlight from '@/components/layout/CodeHighlight';
 import DevelopmentSection from '@/components/layout/DevelopmentSection';
 
 const tailwindLight = {
+    directives: {
+        ripple: {
+            root: {
+                class: ['block absolute bg-white bg-opacity-50 rounded-full transform scale-0 pointer-events-none']
+            }
+        }
+    },
     //PANELS
     panel: {
         header: ({ props }) => ({
@@ -149,15 +156,15 @@ const tailwindLight = {
                     { 'select-none pointer-events-none cursor-default opacity-60': props?.disabled } // Condition
                 ]
             }),
-            headerAction: ({ context }) => ({
+            headerAction: ({ tab }) => ({
                 class: [
                     'flex items-center cursor-pointer relative no-underline select-none', // Alignments
                     'p-5 transition duration-200 ease-in-out rounded-t-md font-bold transition-shadow duration-200', // Padding and transition
                     'border border-gray-300 bg-gray-100 text-gray-600', // Borders and colors
                     'dark:bg-gray-900 dark:border-blue-900/40 dark:text-white/80 dark:hover:bg-gray-800/80 dark:focus:shadow-[inset_0_0_0_0.2rem_rgba(147,197,253,0.5)]', // Dark mode
                     'hover:border-gray-300 hover:bg-gray-200 hover:text-gray-800', // Hover
-                    'focus:outline-none focus:outline-offset-0 focus:shadow-[inset_0_0_0_0.2rem_rgba(191,219,254,1)]' // Focus
-                    // { 'rounded-br-md rounded-bl-md': !context.active, 'rounded-br-0 rounded-bl-0 text-gray-800': context.active } // Condition
+                    'focus:outline-none focus:outline-offset-0 focus:shadow-[inset_0_0_0_0.2rem_rgba(191,219,254,1)]', // Focus
+                    { 'rounded-br-md rounded-bl-md': !tab.context.active, 'rounded-br-0 rounded-bl-0 text-gray-800': tab.context.active } // Condition
                 ]
             }),
             headerIcon: {
@@ -277,7 +284,6 @@ const tailwindLight = {
         navContainer: ({ props, context, parent }) => ({
             class: [
                 'relative', // Relative positioning.
-                console.log(props.scrollable), // Console log (you may remove this if not needed).
                 { 'overflow-hidden': props.scrollable } // Overflow condition.
             ]
         }),
@@ -293,27 +299,30 @@ const tailwindLight = {
         nav: {
             class: ['flex flex-1 list-none m-0 p-0', 'bg-white border border-gray-300 border-0 border-b-2', 'dark:bg-gray-900 dark:border-blue-900/40 dark:text-white/80 '] // Flex, list, margin, padding, and border styles.
         },
-        header: ({ props }) => ({
-            class: ['mr-0', { 'cursor-default pointer-events-none select-none user-select-none opacity-60': props?.disabled }] // Margin and condition-based styles.
-        }),
-        headerAction: ({ props, context, parent }) => ({
-            class: [
-                'items-center cursor-pointer flex overflow-hidden relative select-none text-decoration-none user-select-none', // Flex and overflow styles.
-                'border-b-2 p-5 font-bold rounded-t-lg transition-shadow duration-200 m-0', // Border, padding, font, and transition styles.
-                'transition-colors duration-200', // Transition duration style.
-                'focus:outline-none focus:outline-offset-0 focus:shadow-[inset_0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[inset_0_0_0_0.2rem_rgba(147,197,253,0.5)]', // Focus styles.
-                {
-                    'border-gray-300 bg-white text-gray-700 hover:bg-white hover:border-gray-400 hover:text-gray-600 dark:bg-gray-900 dark:border-blue-900/40 dark:text-white/80 dark:hover:bg-gray-800/80': parent.state.d_activeIndex !== context.index, // Condition-based hover styles.
-                    'bg-white border-blue-500 text-blue-500 dark:bg-gray-900 dark:border-blue-300 dark:text-blue-300': parent.state.d_activeIndex === context.index // Condition-based active styles.
-                }
-            ],
-            style: 'margin-bottom:-2px' // Negative margin style.
-        }),
-        headerTitle: {
-            class: ['leading-none whitespace-nowrap'] // Leading and whitespace styles.
-        },
-        content: {
-            class: ['bg-white p-5 border-0 text-gray-700 rounded-bl-2xl rounded-br-2xl', 'dark:bg-gray-900 dark:border-blue-900/40 dark:text-white/80'] // Background, padding, border, and text styles.
+        tab: {
+            header: ({ tab }) => ({
+                class: ['mr-0', { 'cursor-default pointer-events-none select-none user-select-none opacity-60': tab.props?.disabled }] // Margin and condition-based styles.
+            }),
+            headerAction: ({ tab }) => ({
+                class: [
+                    'items-center cursor-pointer flex overflow-hidden relative select-none text-decoration-none user-select-none', // Flex and overflow styles.
+                    'border-b-2 p-5 font-bold rounded-t-lg transition-shadow duration-200 m-0', // Border, padding, font, and transition styles.
+                    'transition-colors duration-200', // Transition duration style.
+                    'focus:outline-none focus:outline-offset-0 focus:shadow-[inset_0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[inset_0_0_0_0.2rem_rgba(147,197,253,0.5)]', // Focus styles.
+                    {
+                        'border-gray-300 bg-white text-gray-700 hover:bg-white hover:border-gray-400 hover:text-gray-600 dark:bg-gray-900 dark:border-blue-900/40 dark:text-white/80 dark:hover:bg-gray-800/80':
+                            tab.parent.state.d_activeIndex !== tab.context.index, // Condition-based hover styles.
+                        'bg-white border-blue-500 text-blue-500 dark:bg-gray-900 dark:border-blue-300 dark:text-blue-300': tab.parent.state.d_activeIndex === tab.context.index // Condition-based active styles.
+                    }
+                ],
+                style: 'margin-bottom:-2px' // Negative margin style.
+            }),
+            headerTitle: {
+                class: ['leading-none whitespace-nowrap'] // Leading and whitespace styles.
+            },
+            content: {
+                class: ['bg-white p-5 border-0 text-gray-700 rounded-bl-2xl rounded-br-2xl', 'dark:bg-gray-900 dark:border-blue-900/40 dark:text-white/80'] // Background, padding, border, and text styles.
+            }
         }
     },
 
@@ -321,7 +330,7 @@ const tailwindLight = {
 
     dialog: {
         root: ({ props, state }) => ({
-            class: [console.log(state), 'rounded-lg shadow-lg border-0', 'flex flex-col max-h-90 transform scale-100', 'm-0  w-[50vw] z-40 relative', '', 'dark:border dark:border-blue-900/40']
+            class: ['rounded-lg shadow-lg border-0', 'flex flex-col max-h-90 transform scale-100', 'm-0  w-[50vw] z-40 relative', '', 'dark:border dark:border-blue-900/40']
         }),
         header: {
             class: ['flex items-center justify-between flex-shrink-0', 'bg-white text-gray-800 border-t-0  rounded-tl-lg rounded-tr-lg p-6', 'dark:bg-gray-900  dark:text-white/80']
@@ -400,7 +409,6 @@ const tailwindLight = {
     sidebar: {
         root: ({ props, state }) => ({
             class: [
-                console.log(props),
                 'flex flex-col pointer-events-auto relative transform translate-z-0 transition-transform duration-300',
                 'bg-white text-gray-700 border-0 shadow-lg',
                 { 'h-full w-80': props.position == 'left' || props.position == 'right', 'h-40 w-full': props.position == 'top' || props.position == 'bottom' },
@@ -472,7 +480,7 @@ const tailwindLight = {
     //BUTTONS
 
     button: {
-        root: ({ props }) => ({
+        root: ({ props, context }) => ({
             class: [
                 'items-center cursor-pointer inline-flex overflow-hidden relative select-none text-center align-bottom',
                 'transition duration-200 ease-in-out',
@@ -532,13 +540,677 @@ const tailwindLight = {
             class: [{ 'ml-2 w-4 h-4 leading-none': props.badge }]
         })
     },
+    speeddial: {
+        root: {
+            class: []
+        }
+    },
+    //FORMS
 
+    inputtext: {
+        root: ({ props, context }) => ({
+            class: [
+                'm-0',
+                'font-sans  text-gray-600 bg-white border border-gray-300 transition-colors duration-200 appearance-none rounded-lg',
+                { 'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]': !context.disabled, 'opacity-60 select-none pointer-events-none cursor-default': context.disabled },
+                { 'text-lg px-4 py-4': props.size == 'large', 'text-xs px-2 py-2': props.size == 'small', 'p-3 text-base': props.size == null }
+            ]
+        })
+    },
+    knob: {
+        root: ({ props }) => ({
+            class: ['focus:outline-none focus:outline-offset-0 focus:shadow-0', { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }]
+        }),
+        range: {
+            class: ['stroke-current transition duration-100 ease-in stroke-gray-200 fill-none']
+        },
+        value: {
+            class: ['animate-dash-frame  stroke-blue-500 fill-none']
+        },
+        label: {
+            class: ['text-center text-xl']
+        }
+    },
+    inputswitch: {
+        root: ({ props }) => ({
+            class: ['inline-block relative', 'w-12 h-7', { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }]
+        }),
+        slider: ({ props }) => ({
+            class: [
+                'absolute cursor-pointer top-0 left-0 right-0 bottom-0 border border-transparent',
+                'transition-colors duration-200 rounded-2xl',
+                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]',
+                "before:absolute before:content-'' before:top-1/2 before:bg-white before:w-5 before:h-5 before:left-1 before:-mt-2.5 before:rounded-full before:transition-duration-200",
+                { 'bg-gray-200 hover:bg-gray-300': !props.modelValue, 'bg-blue-500 before:transform before:translate-x-5': props.modelValue }
+            ]
+        })
+    },
+    rating: {
+        root: ({ props }) => ({
+            class: ['relative flex items-center', 'gap-2', { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }]
+        }),
+        cancelitem: {
+            class: ['inline-flex items-center cursor-pointer']
+        },
+        cancelicon: {
+            class: ['text-red-500', 'w-5 h-5', 'transition duration-200 ease-in']
+        },
+        item: ({ props }) => ({
+            class: ['inline-flex items-center', { 'cursor-pointer': !props.readonly, 'cursor-default': props.readonly }]
+        }),
+        officon: {
+            class: ['text-gray-700 hover:text-blue-400', 'w-5 h-5', 'transition duration-200 ease-in']
+        },
+        onicon: {
+            class: ['text-blue-500', 'w-5 h-5', 'transition duration-200 ease-in']
+        }
+    },
+    selectbutton: {
+        root: ({ props }) => ({
+            class: [{ 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }]
+        }),
+        button: ({ context, props }) => ({
+            class: [
+                'inline-flex cursor-pointer select-none items-center align-bottom text-center overflow-hidden relative',
+                'px-4 py-3',
+                'transition duration-200 border border-r-0',
+                'first:rounded-l-md first:rounded-tr-none first:rounded-br-none last:border-r last:rounded-tl-none last:rounded-bl-none last:rounded-r-md',
+                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]',
+                { 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50': !context.active, 'bg-blue-500 border-blue-500 text-white hover:bg-blue-600': context.active },
+                console.log(props.optionDisabled)
+            ]
+        }),
+        label: {
+            class: ['font-bold']
+        }
+    },
+    slider: {
+        root: ({ props }) => ({
+            class: [
+                console.log(props),
+                'relative',
+                'bg-gray-100 border-0 rounded-6',
+                { 'h-1 w-56': props.orientation == 'horizontal', 'w-1 h-56': props.orientation == 'vertical' },
+                { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }
+            ]
+        }),
+        range: ({ props }) => ({
+            class: ['bg-blue-500', 'block absolute', { 'top-0 left-0 h-full': props.orientation == 'horizontal', 'bottom-0 left-0 w-full': props.orientation == 'vertical' }]
+        }),
+        handle: ({ props }) => ({
+            class: [
+                'h-4 w-4 bg-white border-2 border-blue-500 rounded-full transition duration-200',
+                'cursor-grab touch-action-none block',
+                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]',
+                'hover:bg-blue-500 hover:border hover:border-blue-500',
+                { 'top-[50%] mt-[-0.5715rem] ml-[-0.5715rem]': props.orientation == 'horizontal', 'left-[50%] mb-[-0.5715rem] ml-[-0.4715rem]': props.orientation == 'vertical' }
+            ]
+        }),
+        starthandler: ({ props }) => ({
+            class: [
+                'h-4 w-4 bg-white border-2 border-blue-500 rounded-full transition duration-200',
+                'cursor-grab touch-action-none block',
+                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]',
+                'hover:bg-blue-500 hover:border hover:border-blue-500',
+                { 'top-[50%] mt-[-0.5715rem] ml-[-0.5715rem]': props.orientation == 'horizontal', 'left-[50%] mb-[-0.5715rem] ml-[-0.4715rem]': props.orientation == 'vertical' }
+            ]
+        }),
+        endhandler: ({ props }) => ({
+            class: [
+                'h-4 w-4 bg-white border-2 border-blue-500 rounded-full transition duration-200',
+                'cursor-grab touch-action-none block',
+                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]',
+                'hover:bg-blue-500 hover:border hover:border-blue-500',
+                { 'top-[50%] mt-[-0.5715rem] ml-[-0.5715rem]': props.orientation == 'horizontal', 'left-[50%] mb-[-0.5715rem] ml-[-0.4715rem]': props.orientation == 'vertical' }
+            ]
+        })
+    },
+    password: {
+        root: ({ props }) => ({
+            class: ['inline-flex relative', { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }]
+        }),
+        panel: {
+            class: ['p-5 bg-white text-gray-700 shadow-md rounded-md']
+        },
+        meter: {
+            class: ['mb-2 bg-gray-300 h-3']
+        },
+        meterlabel: ({ instance, props }) => ({
+            class: [
+                'transition-width duration-1000 ease-in-out h-full',
+                console.log(),
+                { 'bg-red-500': instance.meter.strength == 'weak', 'bg-orange-500': instance.meter.strength == 'medium', 'bg-green-500': instance.meter.strength == 'strong' },
+                { 'pr-[2.5rem] ': props.toggleMask }
+            ]
+        }),
+        showicon: {
+            class: ['absolute top-1/2 -mt-2', 'right-3 text-gray-600']
+        },
+        hideicon: {
+            class: ['absolute top-1/2 -mt-2', 'right-3 text-gray-600']
+        }
+    },
+
+    // <div id="pv_id_183_panel" class="p-password-panel p-component" data-pc-section="panel" style="z-index: 1001; position: absolute; top: 940.859px; left: 823px; min-width: 177px; transform-origin: center top;">
+    //     <div class="p-password-meter" data-pc-section="meter">
+    //         <div class="p-password-strength weak" data-pc-section="meterlabel" style="width: 33.33%;"></div>
+    //     </div>
+    //     <div class="p-password-info" data-pc-section="info">Weak</div>
+    // </div>
+
+    togglebutton: {
+        root: ({ props }) => ({
+            class: [
+                'inline-flex cursor-pointer select-none items-center align-bottom text-center overflow-hidden relative',
+                'px-4 py-3 rounded-md text-base w-36',
+                'border transition duration-200 ease-in-out',
+                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]',
+                { 'bg-white border-gray-300 text-gray-700 hover:bg-gray-100 hover:border-gray-300 hover:text-gray-700': !props.modelValue, 'bg-blue-500 border-blue-500 text-white hover:bg-blue-600 hover:border-blue-600': props.modelValue },
+                { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }
+            ]
+        }),
+        label: {
+            class: ['font-bold text-center w-full']
+        },
+        icon: ({ props }) => ({
+            class: [' mr-2', { 'text-gray-600': !props.modelValue, 'text-white': props.modelValue }]
+        })
+    },
+    tristatecheckbox: {
+        root: {
+            class: ['cursor-pointer inline-flex relative select-none align-bottom', 'w-6 h-6']
+        },
+        checkbox: ({ props }) => ({
+            class: [
+                'flex items-center justify-center',
+                'border-2 w-6 h-6 rounded-lg transition-colors duration-200',
+                { 'border-blue-500 bg-blue-500 text-white dark:border-blue-400 dark:bg-blue-400': props.modelValue || !props.modelValue, 'border-gray-300 text-gray-600 bg-white dark:border-blue-900/40 dark:bg-gray-900': props.modelValue == null },
+                {
+                    'hover:border-blue-500 dark:hover:border-blue-400 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[inset_0_0_0_0.2rem_rgba(147,197,253,0.5)]': !props.disabled,
+                    'cursor-default opacity-60': props.disabled
+                }
+            ]
+        })
+    },
+    checkbox: {
+        root: ({ props }) => ({
+            class: ['cursor-pointer inline-flex relative select-none align-bottom', 'w-6 h-6']
+        }),
+        input: ({ props, context }) => ({
+            class: [
+                'flex items-center justify-center',
+                'border-2 w-6 h-6 text-gray-600 rounded-lg transition-colors duration-200',
+                { 'border-gray-300 bg-white dark:border-blue-900/40 dark:bg-gray-900': !context.checked, 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400': context.checked },
+                {
+                    'hover:border-blue-500 dark:hover:border-blue-400 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[inset_0_0_0_0.2rem_rgba(147,197,253,0.5)]': !props.disabled,
+                    'cursor-default opacity-60': props.disabled
+                }
+            ]
+        }),
+        icon: {
+            class: ['w-4 h-4 transition-all duration-200 text-white text-base dark:text-gray-900']
+        }
+    },
+    radiobutton: {
+        root: ({ props }) => ({
+            class: ['relative inline-flex cursor-pointer select-none align-bottom', 'w-6 h-6']
+        }),
+        input: ({ props }) => ({
+            class: [
+                'flex justify-center items-center',
+                'border-2 w-6 h-6 text-gray-700 rounded-full transition duration-200 ease-in-out',
+                { 'border-gray-300 bg-white dark:border-blue-900/40 dark:bg-gray-900': props.value !== props.modelValue, 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400': props.value == props.modelValue },
+                {
+                    'hover:border-blue-500 dark:hover:border-blue-400 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[inset_0_0_0_0.2rem_rgba(147,197,253,0.5)]': !props.disabled,
+                    'cursor-default opacity-60': props.disabled
+                }
+            ]
+        }),
+        icon: ({ props }) => ({
+            class: [
+                'transform rounded-full',
+                'block w-3 h-3 transition duration-200 bg-white dark:bg-gray-900',
+                { 'backface-hidden scale-10 invisible': props.value !== props.modelValue, 'transform scale-100 visible': props.value == props.modelValue }
+            ]
+        })
+    },
+    dropdown: {
+        root: ({ props }) => ({
+            class: [
+                'cursor-pointer inline-flex relative select-none',
+                'bg-white border border-gray-400 transition-colors duration-200 ease-in-out rounded-md',
+                'dark:bg-gray-900 dark:border-blue-900/40 dark:hover:border-blue-300',
+                'w-full md:w-56',
+                'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
+                { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }
+            ]
+        }),
+        input: ({ props }) => ({
+            class: [
+                'cursor-pointer block flex flex-auto overflow-hidden overflow-ellipsis whitespace-nowrap relative',
+                'bg-transparent border-0 text-gray-800',
+                'dark:text-white/80',
+                'p-3 transition duration-200 bg-transparent rounded appearance-none font-sans text-base',
+                'focus:outline-none focus:shadow-none',
+                { 'pr-7': props.showClear }
+            ]
+        }),
+        trigger: {
+            class: ['flex items-center justify-center flex-shrink-0', 'bg-transparent text-gray-500 w-12 rounded-tr-lg rounded-br-lg']
+        },
+        wrapper: {
+            class: ['max-h-[200px] overflow-auto', 'bg-white text-gray-700 border-0 rounded-md shadow-lg', 'dark:bg-gray-900 dark:text-white/80']
+        },
+        list: {
+            class: ['py-3 list-none m-0']
+        },
+        item: ({ context }) => ({
+            class: [
+                'cursor-pointer font-normal overflow-hidden relative whitespace-nowrap',
+                'm-0 p-3 border-0  transition-shadow duration-200 rounded-none',
+                'dark:text-white/80 dark:hover:bg-gray-800',
+                'hover:text-gray-700 hover:bg-gray-200',
+                { 'text-gray-700 bg-transparent': !context.selected, 'text-blue-600 bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-700': context.selected }
+            ]
+        }),
+        itemgroup: {
+            class: ['m-0 p-3 text-gray-800 bg-white font-bold', 'dark:bg-gray-900 dark:text-white/80', 'cursor-auto']
+        },
+        header: {
+            class: ['p-3 border-b border-gray-300 text-gray-700 bg-gray-100 mt-0 rounded-tl-lg rounded-tr-lg', 'dark:bg-gray-800 dark:text-white/80 dark:border-blue-900/40']
+        },
+        filtercontainer: {
+            class: ['relative']
+        },
+        filterinput: {
+            class: [
+                'pr-7 -mr-7',
+                'w-full',
+                'font-sans text-base text-gray-700 bg-white py-3 px-3 border border-gray-300 transition duration-200 rounded-lg appearance-none',
+                'dark:bg-gray-900 dark:border-blue-900/40 dark:hover:border-blue-300 dark:text-white/80',
+                'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
+            ]
+        },
+        filtericon: {
+            class: ['-mt-2 absolute top-1/2']
+        },
+        clearicon: {
+            class: ['text-gray-500 right-12 -mt-2 absolute top-1/2']
+        }
+    },
+    calendar: {
+        root: {
+            class: ['inline-flex max-w-full relative']
+        },
+        input: {
+            class: ['font-sans text-base text-gray-600 bg-white p-3 border border-gray-300 transition-colors duration-200 appearance-none rounded-lg', 'hover:border-blue-500 ']
+        },
+        panel: {
+            class: ['bg-white border-0 shadow-md', 'absolute min-w-[350px]']
+        },
+        header: {
+            class: ['flex items-center justify-between', 'p-2 text-gray-700 bg-white font-semibold m-0 border-b border-gray-300 rounded-t-lg']
+        },
+        previousbutton: {
+            class: [
+                'flex items-center justify-center cursor-pointer overflow-hidden relative',
+                'w-8 h-8 text-gray-600 border-0 bg-transparent rounded-full transition-colors duration-200 ease-in-out',
+                'hover:text-gray-700 hover:border-transparent hover:bg-gray-200'
+            ]
+        },
+        title: {
+            class: ['leading-8 mx-auto']
+        },
+        monthTitle: {
+            class: ['text-gray-700 transition duration-200 font-semibold p-2', 'mr-2', 'hover:text-blue-500']
+        },
+        yearTitle: {
+            class: ['text-gray-700 transition duration-200 font-semibold p-2', 'hover:text-blue-500']
+        },
+        nextbutton: {
+            class: [
+                'flex items-center justify-center cursor-pointer overflow-hidden relative',
+                'w-8 h-8 text-gray-600 border-0 bg-transparent rounded-full transition-colors duration-200 ease-in-out',
+                'hover:text-gray-700 hover:border-transparent hover:bg-gray-200'
+            ]
+        },
+        table: {
+            class: ['border-collapse w-full', 'my-2']
+        },
+        tableheadercell: {
+            class: ['p-2']
+        },
+        day: {
+            class: ['p-2']
+        },
+        daylabel: {
+            class: ['w-10 h-10 rounded-full transition-shadow duration-200 border-transparent border', 'flex items-center cursor-pointer justify-center mx-auto overflow-hidden relative']
+        }
+    },
+    listbox: {
+        root: ({ props }) => ({
+            class: ['bg-white border border-gray-400 transition-colors duration-200 ease-in-out rounded-md', 'w-full md:w-56']
+        }),
+        wrapper: {
+            class: ['overflow-auto']
+        },
+        list: {
+            class: ['py-3 list-none m-0']
+        },
+        item: ({ context }) => ({
+            class: [
+                'cursor-pointer font-normal overflow-hidden relative whitespace-nowrap',
+                'm-0 p-3 border-0  transition-shadow duration-200 rounded-none',
+                'dark:text-white/80 dark:hover:bg-gray-800',
+                'hover:text-gray-700 hover:bg-gray-200',
+                { 'text-gray-700 bg-transparent': !context.selected, 'text-blue-600 bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-700': context.selected }
+            ]
+        }),
+        itemgroup: {
+            class: ['m-0 p-3 text-gray-800 bg-white font-bold', 'dark:bg-gray-900 dark:text-white/80', 'cursor-auto']
+        },
+        header: {
+            class: ['p-3 border-b border-gray-300 text-gray-700 bg-gray-100 mt-0 rounded-tl-lg rounded-tr-lg', 'dark:bg-gray-800 dark:text-white/80 dark:border-blue-900/40']
+        },
+        filtercontainer: {
+            class: ['relative']
+        },
+        filterinput: {
+            class: [
+                'pr-7 -mr-7',
+                'w-full',
+                'font-sans text-base text-gray-700 bg-white py-3 px-3 border border-gray-300 transition duration-200 rounded-lg appearance-none',
+                'dark:bg-gray-900 dark:border-blue-900/40 dark:hover:border-blue-300 dark:text-white/80',
+                'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
+            ]
+        },
+        filtericon: {
+            class: ['-mt-2 absolute top-1/2']
+        }
+    },
+    multiselect: {
+        root: ({ props }) => ({
+            class: ['inline-flex cursor-pointer select-none', 'bg-white border border-gray-400 transition-colors duration-200 ease-in-out rounded-md', 'w-full md:w-80', { 'opacity-60 select-none pointer-events-none cursor-default': props?.disabled }]
+        }),
+        labelContainer: {
+            class: ['overflow-hidden flex flex-auto cursor-pointer']
+        },
+        label: ({ props, parent, context }) => ({
+            class: [
+                'block overflow-hidden whitespace-nowrap cursor-pointer overflow-ellipsis',
+                'text-gray-800',
+                'p-3 transition duration-200',
+                {
+                    '!p-3': props.display !== 'chip' && (props?.modelValue == null || props?.modelValue == undefined),
+                    '!py-1.5 px-3': props.display == 'chip' && props?.modelValue !== null,
+                    '!p-3': props.display == 'chip' && props?.modelValue == null
+                }
+            ]
+        }),
+        token: {
+            class: ['py-1 px-2 mr-2 bg-gray-300 text-gray-700 rounded-full', 'cursor-default inline-flex items-center']
+        },
+        removeTokenIcon: {
+            class: ['ml-2']
+        },
+        trigger: {
+            class: ['flex items-center justify-center flex-shrink-0', 'bg-transparent text-gray-600 w-12 rounded-tr-lg rounded-br-lg']
+        },
+        panel: {
+            class: ['bg-white text-gray-700 border-0 rounded-md shadow-lg']
+        },
+        header: {
+            class: ['p-3 border-b border-gray-300 text-gray-700 bg-gray-100 rounded-t-lg', 'flex items-center justify-between']
+        },
+        headerCheckboxContainer: {
+            class: ['inline-flex cursor-pointer select-none align-bottom relative', 'mr-2', 'w-6 h-6']
+        },
+        headerCheckbox: ({ props, context }) => ({
+            class: [
+                'flex items-center justify-center',
+                'border-2 w-6 h-6 text-gray-600 rounded-lg transition-colors duration-200',
+                'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]',
+                { 'border-gray-300 bg-white': !context?.selected, 'border-blue-500 bg-blue-500': context?.selected }
+            ]
+        }),
+        headercheckboxicon: {
+            class: ['w-4 h-4 transition-all duration-200 text-white text-base']
+        },
+        closeButton: {
+            class: [
+                'flex items-center justify-center overflow-hidden relative',
+                'w-8 h-8 text-gray-500 border-0 bg-transparent rounded-full transition duration-200 ease-in-out mr-2 last:mr-0',
+                'hover:text-gray-700 hover:border-transparent hover:bg-gray-200',
+                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]', // focus
+                'dark:hover:text-white/80 dark:hover:border-transparent dark:hover:bg-gray-800/80 dark:focus:shadow-[inset_0_0_0_0.2rem_rgba(147,197,253,0.5)]'
+            ]
+        },
+        closeButtonIcon: {
+            class: ['w-4 h-4 inline-block']
+        },
+        wrapper: {
+            class: ['max-h-[200px] overflow-auto', 'bg-white text-gray-700 border-0 rounded-md shadow-lg', 'dark:bg-gray-900 dark:text-white/80']
+        },
+        list: {
+            class: ['py-3 list-none m-0']
+        },
+        item: ({ context }) => ({
+            class: [
+                'cursor-pointer font-normal overflow-hidden relative whitespace-nowrap',
+                'm-0 p-3 border-0  transition-shadow duration-200 rounded-none',
+                'dark:text-white/80 dark:hover:bg-gray-800',
+                'hover:text-gray-700 hover:bg-gray-200',
+                { 'text-gray-700 bg-transparent': !context.selected, 'text-blue-600 bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-700': context.selected }
+            ]
+        }),
+        checkboxContainer: {
+            class: ['inline-flex cursor-pointer select-none align-bottom relative', 'mr-2', 'w-6 h-6']
+        },
+        checkbox: ({ context }) => ({
+            class: [
+                'flex items-center justify-center',
+                'border-2 w-6 h-6 text-gray-600 rounded-lg transition-colors duration-200',
+                'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]',
+                { 'border-gray-300 bg-white': !context?.selected, 'border-blue-500 bg-blue-500': context?.selected }
+            ]
+        }),
+        checkboxicon: {
+            class: ['w-4 h-4 transition-all duration-200 text-white text-base']
+        },
+        itemgroup: {
+            class: ['m-0 p-3 text-gray-800 bg-white font-bold', 'dark:bg-gray-900 dark:text-white/80', 'cursor-auto']
+        },
+        filtercontainer: {
+            class: ['relative']
+        },
+        filterinput: {
+            class: [
+                'pr-7 -mr-7',
+                'w-full',
+                'font-sans text-base text-gray-700 bg-white py-3 px-3 border border-gray-300 transition duration-200 rounded-lg appearance-none',
+                'dark:bg-gray-900 dark:border-blue-900/40 dark:hover:border-blue-300 dark:text-white/80',
+                'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
+            ]
+        },
+        filtericon: {
+            class: ['-mt-2 absolute top-1/2']
+        },
+        clearicon: {
+            class: ['text-gray-500 right-12 -mt-2 absolute top-1/2']
+        }
+    },
+    textarea: {
+        root: ({ context }) => ({
+            class: [
+                'm-0',
+                'font-sans text-base text-gray-600 bg-white p-3 border border-gray-300 transition-colors duration-200 appearance-none rounded-lg',
+                'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]',
+                { 'opacity-60 select-none pointer-events-none cursor-default': context.disabled }
+            ]
+        })
+    },
+    treeselect: {
+        root: ({ props }) => ({
+            class: ['inline-flex cursor-pointer select-none', 'bg-white border border-gray-400 transition-colors duration-200 ease-in-out rounded-md', 'w-full md:w-80', { 'opacity-60 select-none pointer-events-none cursor-default': props?.disabled }]
+        }),
+        labelContainer: {
+            class: ['overflow-hidden flex flex-auto cursor-pointer']
+        },
+        label: ({ props }) => ({
+            class: ['block overflow-hidden whitespace-nowrap cursor-pointer overflow-ellipsis', 'text-gray-800', 'p-3 transition duration-200']
+        }),
+        trigger: {
+            class: ['flex items-center justify-center flex-shrink-0', 'bg-transparent text-gray-600 w-12 rounded-tr-lg rounded-br-lg']
+        },
+        panel: {
+            class: ['bg-white text-gray-700 border-0 rounded-md shadow-lg']
+        },
+        wrapper: {
+            class: ['max-h-[200px] overflow-auto', 'bg-white text-gray-700 border-0 rounded-md shadow-lg', 'dark:bg-gray-900 dark:text-white/80']
+        }
+        // tree: {
+        //     class: ['border border-solid border-gray-300 bg-white text-gray-700 p-5 rounded-md']
+        // },
+        // container: {
+        //     class: ['m-0 p-0 list-none overflow-auto']
+        // },
+        // node: {
+        //     class: ['p-0.5 outline-none']
+        // },
+        // content: {
+        //     class: ['rounded-md shadow-sm transition-shadow duration-200 p-2', 'flex items-center', 'cursor-pointer select-none', 'hover:text-gray-700 hover:bg-gray-200']
+        // }
+    },
+    autocomplete: {
+        root: ({ props }) => ({
+            class: ['relative inline-flex', { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }, { 'w-full': props.multiple }]
+        }),
+        container: {
+            class: [
+                'm-0 list-none cursor-text overflow-hidden flex items-center flex-wrap w-full',
+                'px-3 py-2 gap-2',
+                'font-sans text-base text-gray-700 bg-white border border-gray-300 transition duration-200 ease-in-out appearance-none rounded-md',
+                'focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] hover:border-blue-500 focus:outline-none'
+            ]
+        },
+        inputtoken: {
+            class: ['py-0.375rem px-0', 'flex-1 inline-flex']
+        },
+        input: ({ props }) => ({
+            class: [
+                'm-0',
+                ' transition-colors duration-200 appearance-none rounded-lg',
+                ' ',
+                { 'rounded-tr-none rounded-br-none': props.dropdown },
+                {
+                    'font-sans text-base text-gray-700 bg-white p-3 border border-gray-300 focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] hover:border-blue-500 focus:outline-none': !props.multiple,
+                    'font-sans text-base text-gray-700 border-0 outline-none bg-transparent m-0 p-0 shadow-none rounded-none w-full': props.multiple
+                }
+            ]
+        }),
+        token: {
+            class: ['py-1 px-2 mr-2 bg-gray-300 text-gray-700 rounded-full', 'cursor-default inline-flex items-center']
+        },
+        dropdownbutton: {
+            root: {
+                class: ['rounded-tl-none rounded-bl-none']
+            }
+        },
+        panel: {
+            class: ['bg-white text-gray-700 border-0 rounded-md shadow-lg', 'max-h-[200px] overflow-auto', 'bg-white text-gray-700 border-0 rounded-md shadow-lg', 'dark:bg-gray-900 dark:text-white/80']
+        },
+        list: {
+            class: ['py-3 list-none m-0']
+        },
+        item: ({ context }) => ({
+            class: [
+                'cursor-pointer font-normal overflow-hidden relative whitespace-nowrap',
+                'm-0 p-3 border-0  transition-shadow duration-200 rounded-none',
+                'dark:text-white/80 dark:hover:bg-gray-800',
+                'hover:text-gray-700 hover:bg-gray-200',
+                { 'text-gray-700 bg-transparent': !context.selected, 'text-blue-600 bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-700': context.selected }
+            ]
+        }),
+        itemgroup: {
+            class: ['m-0 p-3 text-gray-800 bg-white font-bold', 'dark:bg-gray-900 dark:text-white/80', 'cursor-auto']
+        }
+    },
+    chips: {
+        root: ({ props }) => ({
+            class: ['flex', { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }]
+        }),
+        container: {
+            class: [
+                'm-0 py-1.5 px-3 list-none cursor-text overflow-hidden flex items-center flex-wrap',
+                'w-full',
+                'm-0',
+                'font-sans text-base text-gray-600 bg-white p-3 border border-gray-300 transition-colors duration-200 appearance-none rounded-lg',
+                'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]'
+            ]
+        },
+
+        inputtoken: {
+            class: ['py-1.5 px-0', 'flex flex-1 inline-flex']
+        },
+        input: {
+            class: ['font-sans text-base text-gray-700 p-0 m-0', 'border-0 outline-none bg-transparent shadow-none rounded-none w-full']
+        },
+        token: {
+            class: ['py-1 px-2 mr-2 bg-gray-300 text-gray-700 rounded-full', 'cursor-default inline-flex items-center']
+        },
+        removeTokenIcon: {
+            class: ['ml-2']
+        }
+    },
+    colorpicker: {
+        root: ({ props }) => ({
+            class: ['inline-block', { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }]
+        }),
+        input: {
+            class: [
+                'm-0',
+                'font-sans text-base text-gray-600 bg-white p-3 border border-gray-300 transition-colors duration-200  rounded-lg cursor-pointer',
+                'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]',
+                'w-8 h-8'
+            ]
+        },
+        panel: ({ props }) => ({
+            class: ['shadow-md', 'bg-gray-800 border-gray-900', { 'relative h-48 w-52': props.inline, 'absolute h-48 w-52': !props.inline }]
+        }),
+        selector: {
+            class: ['absolute h-44 w-40 top-2 left-2']
+        },
+        color: {
+            class: ['h-44 w-40'],
+            style: 'background: linear-gradient(to top, #000 0%, rgb(0 0 0 / 0) 100%), linear-gradient(to right, #fff 0%, rgb(255 255 255 / 0) 100%)'
+        },
+        colorhandle: {
+            class: ['rounded-full border border-solid cursor-pointer h-3 w-3 absolute  opacity-85', 'border-white']
+        },
+        hue: {
+            class: ['h-44 w-6 absolute top-2 left-44 opacity-85'],
+            style: 'background: linear-gradient(0deg, red 0, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, red)'
+        },
+        huehandle: {
+            class: ['border-solid border-2 cursor-pointer h-2 w-8 left-0 -ml-1 -mt-1 opacity-85 absolute']
+        }
+    },
+    editor: {
+        toolbar: {
+            class: ['bg-gray-100 rounded-tr-md rounded-tl-md', 'border border-gray-300 box-border font-sans px-2 py-1']
+        },
+        formats: {
+            class: ['inline-block align-middle', 'mr-4']
+        },
+        header: {
+            class: ['text-gray-700 inline-block float-left text-base font-medium h-6 relative align-middle', 'w-28', 'border-0 text-gray-600']
+        }
+    },
     //MISC
 
     badge: {
         root: ({ props }) => ({
             class: [
-                console.log(props),
                 'rounded-full p-0 text-center inline-block',
                 'bg-blue-500 text-white font-bold',
                 {
@@ -554,11 +1226,10 @@ const tailwindLight = {
         })
     },
     avatar: {
-        root: ({ props }) => ({
+        root: ({ props, parent }) => ({
             class: [
                 'flex items-center justify-center',
                 'bg-gray-300',
-                console.log(props),
                 { 'rounded-lg': props.shape == 'square', 'rounded-full': props.shape == 'circle' },
                 { 'text-base h-8 w-8': props.size == null || props.size == 'normal', 'w-12 h-12 text-xl': props.size == 'large', 'w-16 h-16 text-2xl': props.size == 'xlarge' }
             ]
@@ -593,11 +1264,147 @@ const tailwindLight = {
         root: ({ props }) => ({
             class: ['overflow-hidden relative', 'border-0 h-6 bg-gray-200 rounded-md']
         }),
-        value: {
-            class: ['transition-width duration-1000 ease-in-out', 'items-center border-0 flex h-full justify-center overflow-hidden absolute w-0', 'border-0 m-0 bg-blue-500']
-        },
+        value: ({ props }) => ({
+            class: [
+                'transition-width duration-1000 ease-in-out',
+                'items-center border-0 flex h-full justify-center overflow-hidden absolute w-0',
+                'border-0 m-0 bg-blue-500',
+                { 'before:absolute before:bottom-0 before:top-0 before:left-0 before:inherit before:bg-inherit': props.mode == 'indeterminate' }
+            ]
+        }),
         label: {
             class: ['inline-flex', 'text-white leading-6']
+        }
+    },
+
+    //MENU
+
+    breadcrumb: {
+        root: {
+            class: ['overflow-x-auto', 'bg-white border border-gray-300 rounded-md p-4']
+        },
+        menu: {
+            class: ['m-0 p-0 list-none flex items-center flex-nowrap']
+        },
+        action: {
+            class: ['text-decoration-none flex items-center', 'transition-shadow duration-200 rounded-md text-gray-600', 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]']
+        },
+        icon: {
+            class: ['text-gray-600']
+        },
+        separator: {
+            class: ['mx-2 text-gray-600', 'flex items-center']
+        }
+    },
+    contextmenu: {
+        root: {
+            class: ['py-1 bg-white text-gray-700 border-none shadow-md rounded-lg w-52']
+        },
+        menu: {
+            class: ['m-0 p-0 list-none', 'outline-none']
+        },
+        menuitem: {
+            class: ['relative']
+        },
+        content: {
+            class: ['text-gray-700 transition-shadow duration-200 rounded-none', 'hover:text-gray-700 hover:bg-gray-200']
+        },
+        action: {
+            class: ['cursor-pointer flex items-center no-underline overflow-hidden relative', 'text-gray-700 py-3 px-5 select-none']
+        },
+        icon: {
+            class: ['text-gray-600 mr-2']
+        },
+        label: {
+            class: ['text-gray-600', '']
+        }
+    },
+    dock: {
+        root: ({ props }) => ({
+            class: [
+                'absolute z-1 flex justify-center items-center pointer-events-none',
+                { 'left-0 bottom-0 w-full': props.position == 'bottom', 'left-0 top-0 w-full': props.position == 'top', 'left-0 top-0 h-full': props.position == 'left', 'right-0 top-0 h-full': props.position == 'right' }
+            ]
+        }),
+        container: {
+            class: ['flex pointer-events-auto', 'bg-white/10 border-white/20 p-2 border rounded-md']
+        },
+        menu: ({ props }) => ({
+            class: [
+                'm-0 p-0 list-none flex items-center justify-center',
+                'outline-none',
+                {
+                    'flex-col': props.position == 'left' || props.position == 'right'
+                }
+            ]
+        }),
+        menuitem: ({ props }) => ({
+            class: [
+                'p-2 rounded-md',
+                'transition-all duration-200 ease-cubic-bezier-will-change-transform transform ',
+                'hover:scale-150 hover:mx-6',
+                {
+                    'origin-bottom': props.position == 'bottom',
+                    'origin-top': props.position == 'top',
+                    'origin-left': props.position == 'left',
+                    'origin-right': props.position == 'right'
+                }
+            ]
+        }),
+        action: {
+            class: ['flex flex-col items-center justify-center relative overflow-hidden cursor-default', 'w-16 h-16']
+        }
+    },
+
+    menu: {
+        root: {
+            class: ['py-1 bg-white text-gray-700 border border-gray-300 rounded-md w-48	']
+        },
+        menu: {
+            class: ['m-0 p-0 list-none', 'outline-none']
+        },
+        content: {
+            class: ['text-gray-700 transition-shadow duration-200 rounded-none', 'hover:text-gray-700 hover:bg-gray-200']
+        },
+        action: {
+            class: ['text-gray-700 py-3 px-5 select-none', 'cursor-pointer flex items-center no-underline overflow-hidden relative']
+        },
+        icon: {
+            class: ['text-gray-600 mr-2"']
+        },
+        submenuheader: {
+            class: ['m-0 p-3 text-gray-700 bg-white font-bold rounded-tl-none rounded-tr-none']
+        }
+    },
+
+    menubar: {
+        root: {
+            class: ['p-2 bg-gray-100 text-gray-700 border border-gray-300 rounded-md', 'flex items-center']
+        },
+        menu: {
+            class: ['m-0 p-0 list-none', 'outline-none', 'flex items-center flex-wrap']
+        },
+        menuitem: {
+            class: ['relative']
+        },
+        content: ({ props, context }) => ({
+            class: [
+                ' transition-shadow duration-200',
+                { 'rounded-md': props.root, 'hover:text-gray-700 hover:bg-gray-200': !props.root },
+                { 'text-gray-700 hover:text-gray-700 hover:bg-gray-200': !context.active && props.root, 'text-blue-600 bg-blue-50': context.active && props.root }
+            ]
+        }),
+        action: ({ props, context }) => ({
+            class: ['text-gray-700 select-none', 'cursor-pointer flex items-center no-underline overflow-hidden relative', 'py-3 px-5 select-none']
+        }),
+        icon: {
+            class: ['text-gray-600 mr-2']
+        },
+        submenuicon: {
+            class: ['text-gray-600 ml-2']
+        },
+        submenu: {
+            class: ['py-1  bg-white border-0 shadow-sm w-48', 'absolute z-10', 'm-0 list-none']
         }
     },
 
