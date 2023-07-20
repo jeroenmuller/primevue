@@ -2373,6 +2373,11 @@ const tailwindLight = {
                     'dark:bg-gray-900 dark:border-blue-900/40 dark:text-white/80' //Dark Mode
                 ]
             },
+            filtermatchmodedropdown: {
+                root: {
+                    class: 'flex'
+                }
+            },
             filterrowitems: {
                 class: 'm-0 p-0 py-3 list-none '
             },
@@ -2381,7 +2386,7 @@ const tailwindLight = {
             }),
             filteroperator: {
                 class: [
-                    'px-5 py-3 border border-solid border-gray-300 text-slate-700 bg-slate-50 rounded-l-md',
+                    'px-5 py-3 border-b border-solid border-gray-300 text-slate-700 bg-slate-50 rounded-t-md',
                     'dark:border-blue-900/40 dark:text-white/80 dark:bg-gray-900' // Dark Mode
                 ]
             },
