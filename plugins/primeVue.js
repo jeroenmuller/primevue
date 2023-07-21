@@ -2375,7 +2375,7 @@ const tailwindLight = {
             },
             filtermatchmodedropdown: {
                 root: {
-                    class: 'flex'
+                    class: 'min-[0px]:flex mb-2'
                 }
             },
             filterrowitems: {
@@ -2390,6 +2390,11 @@ const tailwindLight = {
                     'dark:border-blue-900/40 dark:text-white/80 dark:bg-gray-900' // Dark Mode
                 ]
             },
+            filteroperatordropdown: {
+                root: {
+                    class: 'min-[0px]:flex'
+                }
+            },
             filterconstraint: {
                 class: 'p-5 border-b border-solid border-gray-300 dark:border-blue-900/40'
             },
@@ -2398,10 +2403,13 @@ const tailwindLight = {
             },
             filteraddrulebutton: {
                 root: {
-                    class: 'justify-center'
+                    class: 'justify-center w-full min-[0px]:text-sm'
                 },
                 label: {
-                    class: 'grow-0'
+                    class: 'flex-auto grow-0'
+                },
+                icon: {
+                    class: 'mr-2'
                 }
             },
             filterremovebutton: {
@@ -2413,7 +2421,17 @@ const tailwindLight = {
                 }
             },
             filterbuttonbar: {
-                class: 'flex items-center justify-space-between p-5'
+                class: 'flex items-center justify-between p-5'
+            },
+            filterclearbutton: {
+                root: {
+                    class: 'w-auto min-[0px]:text-sm border-blue-500 text-blue-500 px-4 py-3'
+                }
+            },
+            filterapplybutton: {
+                root: {
+                    class: 'w-auto min-[0px]:text-sm px-4 py-3'
+                }
             },
             filtermenubutton: ({ context }) => ({
                 class: [
@@ -2534,7 +2552,7 @@ const tailwindLight = {
         bodyrow: ({ context }) => ({
             class: [
                 context.selected ? 'bg-blue-50 text-blue-700 dark:bg-blue-300' : 'bg-white text-gray-600 dark:bg-gray-900',
-                context.stripedRows ? (context.index % 2 === 0 ? 'bg-white text-gray-600 dark:bg-gray-900' : 'bg-blue-50/50 text-gray-600 dark:bg-gray-950') : 'bg-white text-gray-600 dark:bg-gray-900',
+                context.stripedRows ? (context.index % 2 === 0 ? 'bg-white text-gray-600 dark:bg-gray-900' : 'bg-blue-50/50 text-gray-600 dark:bg-gray-950') : '',
                 'transition duration-200',
                 'focus:outline focus:outline-[0.15rem] focus:outline-blue-200 focus:outline-offset-[-0.15rem]', // Focus
                 'dark:text-white/80 dark:focus:outline dark:focus:outline-[0.15rem] dark:focus:outline-blue-300 dark:focus:outline-offset-[-0.15rem]', // Dark Mode
