@@ -113,6 +113,26 @@ const tailwindLight = {
             root: {
                 class: ['block absolute bg-white bg-opacity-50 rounded-full transform scale-0 pointer-events-none']
             }
+        },
+        badge: {
+            root: ({ instance }) => ({
+                class: [
+                    'rounded-full p-0 text-center absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 origin-top-right m-0',
+                    'p-0 rounded-full',
+                    'text-xsmin-w-6 h-6 flex items-center justify-center',
+                    'text-center inline-block',
+                    'bg-blue-500 text-white font-bold',
+                    console.log(instance)
+                ]
+            })
+        },
+        tooltip: {
+            root: {
+                class: ['absolute bg-gray-700 text-white p-3 shadow-md rounded-md']
+            },
+            arrow: ({ props }) => ({
+                class: ['border-r border-gray-700']
+            })
         }
     },
     //PANELS
