@@ -736,6 +736,26 @@ const tailwindLight = {
             ]
         })
     },
+    inputnumber: {
+        root: ({ props, context }) => ({
+            class: ['w-full inline-flex', console.log(props)]
+        }),
+        input: ({ props, context }) => ({
+            class: ['', { 'rounded-tr-none rounded-br-none': props.showButtons && props.buttonLayout == 'stacked' }]
+        }),
+        buttongroup: ({ props, context }) => ({
+            class: [{ 'flex flex-col': props.showButtons && props.buttonLayout == 'stacked' }]
+        }),
+        incrementbutton: ({ props, context }) => ({
+            class: ['flex !items-center !justify-center', { 'rounded-br-none rounded-bl-none rounded-bl-none !p-0 flex-1 w-[3rem]': props.showButtons && props.buttonLayout == 'stacked' }]
+        }),
+        label: {
+            class: ['hidden']
+        },
+        decrementbutton: ({ props, context }) => ({
+            class: ['flex !items-center !justify-center', { 'rounded-tr-none rounded-tl-none rounded-tl-none !p-0 flex-1 w-[3rem]': props.showButtons && props.buttonLayout == 'stacked' }]
+        })
+    },
     knob: {
         root: ({ props }) => ({
             class: ['focus:outline-none focus:outline-offset-0 focus:shadow-0', { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }]
