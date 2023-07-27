@@ -131,7 +131,7 @@ const tailwindLight = {
                 class: ['absolute bg-gray-700 text-white p-3 shadow-md rounded-md']
             },
             arrow: ({ props }) => ({
-                class: ['border-r border-gray-700']
+                class: [console.log(props), 'border-r border-gray-700']
             })
         }
     },
@@ -1943,6 +1943,7 @@ const tailwindLight = {
             class: ['block', 'whitespace-nowrap overflow-hidden overflow-ellipsis max-w-full', 'mt-2 text-gray-500 dark:text-white/60']
         }
     },
+
     tabmenu: {
         root: {
             class: ['overflow-x-auto']
@@ -1953,12 +1954,15 @@ const tailwindLight = {
         menuitem: {
             class: ['mr-0']
         },
-        action: ({ props, context }) => ({
+        action: ({ context, state }) => ({
             class: [
-                console.log(props.activeIndex),
                 'cursor-pointer select-none flex items-center relative no-underline overflow-hidden',
-                'border-b-2 border-gray-300 bg-white text-gray-600 p-5 font-bold rounded-t-lg ',
-                'hover:bg-white  hover:border-gray-400 hover:text-gray-600'
+                'border-b-2 p-5 font-bold rounded-t-lg ',
+                'focus:outline-none focus:outline-offset-0 focus:shadow-[inset_0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[inset_0_0_0_0.2rem_rgba(147,197,253,0.5)]',
+                {
+                    'border-gray-300 bg-white text-gray-700 hover:bg-white hover:border-gray-400 hover:text-gray-600 dark:bg-gray-900 dark:border-blue-900/40 dark:text-white/80 dark:hover:bg-gray-800/80': state.d_activeIndex !== context.index, // Condition-based hover styles.
+                    'bg-white border-blue-500 text-blue-500 dark:bg-gray-900 dark:border-blue-300 dark:text-blue-300': state.d_activeIndex === context.index // Condition-based active styles.
+                }
             ],
             style: 'top:2px'
         }),
