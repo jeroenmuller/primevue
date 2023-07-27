@@ -1697,9 +1697,19 @@ const tailwindLight = {
         menuitem: {
             class: ['relative']
         },
-        content: {
-            class: ['text-gray-700 dark:text-white/80 transition-shadow duration-200 rounded-none', 'hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80']
-        },
+        content: ({ context }) => ({
+            class: [
+                console.log(context),
+                'transition-shadow duration-200 rounded-none',
+                'hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80', // Hover
+                {
+                    'text-gray-700': !context.focused && !context.active,
+                    'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90': context.focused && !context.active,
+                    'bg-blue-500 text-blue-700 dark:bg-blue-400 dark:text-white/80': context.focused && context.active,
+                    'bg-blue-50 text-blue-700 dark:bg-blue-300 dark:text-white/80': !context.focused && context.active
+                }
+            ]
+        }),
         action: {
             class: ['cursor-pointer flex items-center no-underline overflow-hidden relative', 'text-gray-700 dark:text-white/80 py-3 px-5 select-none']
         },
@@ -1774,7 +1784,7 @@ const tailwindLight = {
 
     menubar: {
         root: {
-            class: ['p-2 bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-white/80 border border-gray-300 dark:border-blue-900/40 rounded-md', 'flex items-center relative']
+            class: ['p-2 bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-blue-900/40 rounded-md', 'flex items-center relative']
         },
         menu: ({ props, context }) => ({
             class: [
@@ -1793,21 +1803,24 @@ const tailwindLight = {
         content: ({ props, context }) => ({
             class: [
                 ' transition-shadow duration-200',
+                'hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80',
                 { 'rounded-md': props.root, '': !props.root },
-                { 'text-gray-700 dark:text-white/80 hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80': !context.active, 'text-blue-600 bg-blue-100': context.active }
+                {
+                    'text-gray-700 dark:text-white/80': !context.focused && !context.active,
+                    'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90': context.focused && !context.active,
+                    'bg-blue-100 text-blue-700 dark:bg-blue-400 dark:text-white/80': context.focused && context.active,
+                    'bg-blue-50 text-blue-700 dark:bg-blue-300 dark:text-white/80': !context.focused && context.active
+                }
             ]
         }),
         action: ({ props, context }) => ({
             class: ['select-none', 'cursor-pointer flex items-center no-underline overflow-hidden relative', 'py-3 px-5 select-none']
         }),
-        icon: ({ props, context }) => ({
-            class: ['mr-2', { 'text-gray-600 dark:text-white/70': !context.active, 'text-blue-600': context.active }]
-        }),
+        icon: {
+            class: 'mr-2'
+        },
         submenuicon: ({ props, context }) => ({
-            class: [
-                { 'text-gray-600 dark:text-white/70': !context.active, 'text-blue-600': context.active },
-                { 'ml-2': props.root, 'ml-auto': !props.root }
-            ]
+            class: [{ 'ml-2': props.root, 'ml-auto': !props.root }]
         }),
         submenu: ({ props, context }) => ({
             class: ['py-1 bg-white dark:bg-gray-900 border-0  sm:shadow-md sm:w-48', 'w-full static shadow-none', 'sm:absolute z-10', 'm-0 list-none', { 'sm:absolute sm:left-full sm:top-0': props.level > 1 }]
@@ -1826,11 +1839,7 @@ const tailwindLight = {
     },
     megamenu: {
         root: ({ props, context }) => ({
-            class: [
-                'bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-white/80 border border-gray-300 dark:border-blue-900/40  rounded-md',
-                'flex relative',
-                { 'p-2 items-center': props.orientation == 'horizontal', 'flex-col w-48 p-0 py-1': props.orientation !== 'horizontal' }
-            ]
+            class: ['bg-gray-100 dark:bg-gray-900  border border-gray-300 dark:border-blue-900/40  rounded-md', 'flex relative', { 'p-2 items-center': props.orientation == 'horizontal', 'flex-col w-48 p-0 py-1': props.orientation !== 'horizontal' }]
         }),
         menu: ({ props, context }) => ({
             class: ['m-0 sm:p-0 list-none relative', 'outline-none', 'flex items-center flex-wrap flex-row top-auto left-auto relative bg-transparent shadow-none w-auto']
@@ -1841,18 +1850,24 @@ const tailwindLight = {
         content: ({ props, context }) => ({
             class: [
                 'transition-shadow duration-200',
+                'hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80', //Hover
                 { 'rounded-md': props.level < 1 && props.horizontal },
-                { 'text-gray-700 dark:text-white/80 hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80': !context.active, 'text-blue-600 bg-blue-100': context.active }
+                {
+                    'text-gray-700 dark:text-white/80': !context.focused && !context.active,
+                    'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90': context.focused && !context.active,
+                    'bg-blue-100 text-blue-700 dark:bg-blue-400 dark:text-white/80': context.focused && context.active,
+                    'bg-blue-50 text-blue-700 dark:bg-blue-300 dark:text-white/80': !context.focused && context.active
+                }
             ]
         }),
         action: ({ props, context }) => ({
             class: ['select-none', 'cursor-pointer flex items-center no-underline overflow-hidden relative', 'py-3 px-5 select-none']
         }),
-        icon: ({ props, context }) => ({
-            class: ['mr-2', { 'text-gray-600 dark:text-white/70': !context.active, 'text-blue-600': context.active }]
-        }),
+        icon: {
+            class: 'mr-2'
+        },
         submenuicon: ({ props, context }) => ({
-            class: [console.log(props), { 'ml-2': props.horizontal, 'ml-auto': !props.horizontal }]
+            class: [{ 'ml-2': props.horizontal, 'ml-auto': !props.horizontal }]
         }),
         panel: ({ props, context }) => ({
             class: ['py-1 bg-white dark:bg-gray-900 border-0 shadow-md w-auto', 'absolute z-10', { 'left-full top-0': !props.horizontal }]
@@ -1980,10 +1995,19 @@ const tailwindLight = {
         menuitem: {
             class: ['relative']
         },
-        content: ({ props, context }) => ({
-            class: ['transition-shadow duration-200 border-none rounded-none', 'hover:bg-gray-200 hover:text-gray-700 dark:hover:text-white/80 dark:hover:bg-gray-800/80']
+        content: ({ context }) => ({
+            class: [
+                'transition-shadow duration-200 border-none rounded-none',
+                'hover:bg-gray-200 hover:text-gray-700 dark:hover:text-white/80 dark:hover:bg-gray-800/80', //Hover
+                {
+                    'text-gray-700': !context.focused && !context.active,
+                    'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90': context.focused && !context.active,
+                    'bg-blue-100 text-blue-700 dark:bg-blue-400 dark:text-white/80': context.focused && context.active,
+                    'bg-blue-50 text-blue-700 dark:bg-blue-300 dark:text-white/80': !context.focused && context.active
+                }
+            ]
         }),
-        action: ({ props, context }) => ({
+        action: ({ context }) => ({
             class: [
                 'py-3 px-5 select-none',
                 'flex items-center cursor-pointer no-underline relative overflow-hidden',
