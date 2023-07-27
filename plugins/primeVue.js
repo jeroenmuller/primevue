@@ -671,9 +671,8 @@ const tailwindLight = {
         })
     },
     speeddial: {
-        root: ({ props, state }) => ({
+        root: ({ props }) => ({
             class: [
-                console.log(state.d_visible),
                 'absolute flex',
                 {
                     'items-center flex-col-reverse': props.direction == 'up',
@@ -685,10 +684,13 @@ const tailwindLight = {
         }),
         button: {
             root: {
-                class: ['w-16 h-16']
+                class: ['w-16 h-16 min-[0px]:rounded-[50%]']
+            },
+            label: {
+                class: 'min-[0px]:hidden'
             }
         },
-        menu: ({ props, context }) => ({
+        menu: ({ props }) => ({
             class: [
                 'm-0 p-0 list-none flex items-center justify-center transition delay-200 pointer-events-none z-2',
                 {
@@ -701,7 +703,8 @@ const tailwindLight = {
         }),
         menuitem: ({ props, context }) => ({
             class: [
-                'transform scale-0 opacity-0 transition-transform duration-200 ease-out delay-0 transition-opacity duration-800',
+                'transform transition-transform duration-200 ease-out transition-opacity duration-800',
+                context.hidden ? 'opacity-0 scale-0' : 'opacity-1 scale-100',
                 {
                     'my-1 first:mb-2': props.direction == 'up',
                     'my-1 first:mt-2': props.direction == 'down',
@@ -720,7 +723,7 @@ const tailwindLight = {
         },
         button: {
             root: {
-                class: 'min-[0px]:rounded-r-none'
+                class: ['min-[0px]:rounded-r-none']
             }
         },
         menubutton: {
@@ -1065,7 +1068,12 @@ const tailwindLight = {
                 'm-0 p-3 border-0  transition-shadow duration-200 rounded-none',
                 'dark:text-white/80 dark:hover:bg-gray-800',
                 'hover:text-gray-700 hover:bg-gray-200',
-                { 'text-gray-700 bg-transparent': !context.selected, 'text-blue-600 bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-700': context.selected }
+                {
+                    'text-gray-700': !context.focused && !context.selected,
+                    'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90': context.focused && !context.selected,
+                    'bg-blue-400 text-blue-700 dark:bg-blue-400 dark:text-white/80': context.focused && context.selected,
+                    'bg-blue-50 text-blue-700 dark:bg-blue-300 dark:text-white/80': !context.focused && context.selected
+                }
             ]
         }),
         itemgroup: {
@@ -1224,7 +1232,15 @@ const tailwindLight = {
                 'm-0 p-3 border-0  transition-shadow duration-200 rounded-none',
                 'dark:text-white/80 dark:hover:bg-gray-800',
                 'hover:text-gray-700 hover:bg-gray-200',
-                { 'text-gray-700 bg-transparent': !context.selected, 'text-blue-600 bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-700': context.selected }
+                {
+                    // 'text-gray-700 bg-transparent': !context.selected,
+                    // 'text-blue-600 bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-700': context.selected
+
+                    'text-gray-700': !context.focused && !context.selected,
+                    'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90': context.focused && !context.selected,
+                    'bg-blue-400 text-blue-700 dark:bg-blue-400 dark:text-white/80': context.focused && context.selected,
+                    'bg-blue-50 text-blue-700 dark:bg-blue-300 dark:text-white/80': !context.focused && context.selected
+                }
             ]
         }),
         itemgroup: {
@@ -1325,7 +1341,12 @@ const tailwindLight = {
                 'm-0 p-3 border-0  transition-shadow duration-200 rounded-none',
                 'dark:text-white/80 dark:hover:bg-gray-800',
                 'hover:text-gray-700 hover:bg-gray-200',
-                { 'text-gray-700 bg-transparent': !context.selected, 'text-blue-600 bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-700': context.selected }
+                {
+                    'text-gray-700': !context.focused && !context.selected,
+                    'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90': context.focused && !context.selected,
+                    'bg-blue-400 text-blue-700 dark:bg-blue-400 dark:text-white/80': context.focused && context.selected,
+                    'bg-blue-50 text-blue-700 dark:bg-blue-300 dark:text-white/80': !context.focused && context.selected
+                }
             ]
         }),
         checkboxContainer: {
@@ -1443,11 +1464,22 @@ const tailwindLight = {
         },
         item: ({ context }) => ({
             class: [
+                console.log(context),
                 'cursor-pointer font-normal overflow-hidden relative whitespace-nowrap',
                 'm-0 p-3 border-0  transition-shadow duration-200 rounded-none',
                 'dark:text-white/80 dark:hover:bg-gray-800',
                 'hover:text-gray-700 hover:bg-gray-200',
-                { 'text-gray-700 bg-transparent': !context.selected, 'text-blue-600 bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-700': context.selected }
+                {
+                    // 'text-gray-700': !context.selected,
+                    // 'text-blue-600 bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-700': context.selected,
+                    // 'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90': context.focused
+                    // 'bg-blue-50 text-blue-700 dark:bg-blue-300 dark:text-white/80': !context.focused && context.active
+
+                    'text-gray-700': !context.focused && !context.selected,
+                    'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90': context.focused && !context.selected,
+                    'bg-blue-500 text-blue-700 dark:bg-blue-400 dark:text-white/80': context.focused && context.selected,
+                    'bg-blue-50 text-blue-700 dark:bg-blue-300 dark:text-white/80': !context.focused && context.selected
+                }
             ]
         }),
         itemgroup: {
