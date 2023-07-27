@@ -170,13 +170,16 @@ const tailwindLight = {
         root: {
             class: ['mb-1']
         },
-        tab: {
+        accordiontab: {
+            root: {
+                class: ['mb-1']
+            },
             header: ({ props }) => ({
                 class: [
                     { 'select-none pointer-events-none cursor-default opacity-60': props?.disabled } // Condition
                 ]
             }),
-            headerAction: ({ tab }) => ({
+            headerAction: ({ context }) => ({
                 class: [
                     'flex items-center cursor-pointer relative no-underline select-none', // Alignments
                     'p-5 transition duration-200 ease-in-out rounded-t-md font-bold transition-shadow duration-200', // Padding and transition
@@ -184,7 +187,7 @@ const tailwindLight = {
                     'dark:bg-gray-900 dark:border-blue-900/40 dark:text-white/80 dark:hover:bg-gray-800/80 dark:focus:shadow-[inset_0_0_0_0.2rem_rgba(147,197,253,0.5)]', // Dark mode
                     'hover:border-gray-300 hover:bg-gray-200 hover:text-gray-800', // Hover
                     'focus:outline-none focus:outline-offset-0 focus:shadow-[inset_0_0_0_0.2rem_rgba(191,219,254,1)]', // Focus
-                    { 'rounded-br-md rounded-bl-md': !tab.context.active, 'rounded-br-0 rounded-bl-0 text-gray-800': tab.context.active } // Condition
+                    { 'rounded-br-md rounded-bl-md': !context.active, 'rounded-br-0 rounded-bl-0 text-gray-800': context.active } // Condition
                 ]
             }),
             headerIcon: {
@@ -319,11 +322,11 @@ const tailwindLight = {
         nav: {
             class: ['flex flex-1 list-none m-0 p-0', 'bg-white border border-gray-300 border-0 border-b-2', 'dark:bg-gray-900 dark:border-blue-900/40 dark:text-white/80 '] // Flex, list, margin, padding, and border styles.
         },
-        tab: {
-            header: ({ tab }) => ({
-                class: ['mr-0', { 'cursor-default pointer-events-none select-none user-select-none opacity-60': tab.props?.disabled }] // Margin and condition-based styles.
+        tabpanel: {
+            header: ({ props }) => ({
+                class: ['mr-0', { 'cursor-default pointer-events-none select-none user-select-none opacity-60': props?.disabled }] // Margin and condition-based styles.
             }),
-            headerAction: ({ tab }) => ({
+            headerAction: ({ parent, context }) => ({
                 class: [
                     'items-center cursor-pointer flex overflow-hidden relative select-none text-decoration-none user-select-none', // Flex and overflow styles.
                     'border-b-2 p-5 font-bold rounded-t-lg transition-shadow duration-200 m-0', // Border, padding, font, and transition styles.
@@ -331,8 +334,8 @@ const tailwindLight = {
                     'focus:outline-none focus:outline-offset-0 focus:shadow-[inset_0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[inset_0_0_0_0.2rem_rgba(147,197,253,0.5)]', // Focus styles.
                     {
                         'border-gray-300 bg-white text-gray-700 hover:bg-white hover:border-gray-400 hover:text-gray-600 dark:bg-gray-900 dark:border-blue-900/40 dark:text-white/80 dark:hover:bg-gray-800/80':
-                            tab.parent.state.d_activeIndex !== tab.context.index, // Condition-based hover styles.
-                        'bg-white border-blue-500 text-blue-500 dark:bg-gray-900 dark:border-blue-300 dark:text-blue-300': tab.parent.state.d_activeIndex === tab.context.index // Condition-based active styles.
+                            parent.state.d_activeIndex !== context.index, // Condition-based hover styles.
+                        'bg-white border-blue-500 text-blue-500 dark:bg-gray-900 dark:border-blue-300 dark:text-blue-300': parent.state.d_activeIndex === context.index // Condition-based active styles.
                     }
                 ],
                 style: 'margin-bottom:-2px' // Negative margin style.
