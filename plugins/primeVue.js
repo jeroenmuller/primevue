@@ -718,11 +718,16 @@ const tailwindLight = {
         root: {
             class: ['inline-flex relative', 'rounded-md']
         },
-        button: ({ props, context }) => ({
+        button: {
             root: {
-                class: ['first:flex-1 first:rounded-r-none first:border-r-0', 'border-r-0']
+                class: 'min-[0px]:rounded-r-none'
             }
-        })
+        },
+        menubutton: {
+            root: {
+                class: 'min-[0px]:rounded-l-none'
+            }
+        }
     },
     //FORMS
 
