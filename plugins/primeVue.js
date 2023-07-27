@@ -1699,7 +1699,6 @@ const tailwindLight = {
         },
         content: ({ context }) => ({
             class: [
-                console.log(context),
                 'transition-shadow duration-200 rounded-none',
                 'hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80', // Hover
                 {
@@ -1768,14 +1767,20 @@ const tailwindLight = {
         menu: {
             class: ['m-0 p-0 list-none', 'outline-none']
         },
-        content: {
-            class: ['text-gray-700 dark:text-white/80 transition-shadow duration-200 rounded-none', 'hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80']
-        },
+        content: ({ context }) => ({
+            class: [
+                'text-gray-700 dark:text-white/80 transition-shadow duration-200 rounded-none',
+                'hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80', // Hover
+                {
+                    'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90': context.focused
+                }
+            ]
+        }),
         action: {
             class: ['text-gray-700 dark:text-white/80 py-3 px-5 select-none', 'cursor-pointer flex items-center no-underline overflow-hidden relative']
         },
         icon: {
-            class: ['text-gray-600 dark:text-white/70 mr-2"']
+            class: ['text-gray-600 dark:text-white/70 mr-2']
         },
         submenuheader: {
             class: ['m-0 p-3 text-gray-700 dark:text-white/80 bg-white dark:bg-gray-900 font-bold rounded-tl-none rounded-tr-none']
@@ -1887,19 +1892,21 @@ const tailwindLight = {
     },
     panelmenu: {
         root: ({ props, instance }) => ({
-            class: [console.log(instance), 'w-full md:w-[25rem]']
+            class: ['w-full md:w-[25rem]']
         }),
         panel: {
             class: ['mb-1']
         },
-        header: {
-            class: ['outline-none']
-        },
+        header: ({ context }) => ({
+            class: [
+                'outline-none',
+                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]' // Focus
+            ]
+        }),
         headercontent: {
             class: [
                 'border border-solid border-gray-300 dark:border-blue-900/40 text-gray-700 dark:text-white/80 bg-gray-100 dark:bg-gray-900 rounded-md transition-shadow duration-200',
-                'hover:bg-gray-200 dark:hover:bg-gray-800/80  hover:text-gray-700 dark:hover:text-white/80',
-                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
+                'hover:bg-gray-200 dark:hover:bg-gray-800/80  hover:text-gray-700 dark:hover:text-white/80'
             ]
         },
         headeraction: {
@@ -1917,9 +1924,15 @@ const tailwindLight = {
         menu: {
             class: ['outline-none', 'm-0 p-0 list-none']
         },
-        content: {
-            class: ['text-gray-700 dark:text-white/80 transition-shadow duration-200 border-none rounded-none', 'hover:bg-gray-200 dark:hover:bg-gray-800/80  hover:text-gray-700 dark:hover:text-white/80']
-        },
+        content: ({ context }) => ({
+            class: [
+                'text-gray-700 dark:text-white/80 transition-shadow duration-200 border-none rounded-none',
+                'hover:bg-gray-200 dark:hover:bg-gray-800/80  hover:text-gray-700 dark:hover:text-white/80', // Hover
+                {
+                    'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90': context.focused
+                }
+            ]
+        }),
         action: {
             class: ['text-gray-700 dark:text-white/80 py-3 px-5 select-none', 'flex items-center cursor-pointer no-underline relative overflow-hidden']
         },
