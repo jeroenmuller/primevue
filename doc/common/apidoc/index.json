@@ -5148,6 +5148,13 @@
                             "readonly": false,
                             "type": "ButtonContext",
                             "default": ""
+                        },
+                        {
+                            "name": "parent",
+                            "optional": false,
+                            "readonly": false,
+                            "type": "any",
+                            "default": ""
                         }
                     ],
                     "methods": []
@@ -37073,6 +37080,14 @@
                             "type": "boolean",
                             "default": "false",
                             "description": "Current active state of menuitem as a boolean."
+                        },
+                        {
+                            "name": "hidden",
+                            "optional": false,
+                            "readonly": false,
+                            "type": "boolean",
+                            "default": "false",
+                            "description": "Current hidden state of menuitem as a boolean."
                         }
                     ],
                     "methods": []
