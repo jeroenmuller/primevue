@@ -317,16 +317,16 @@ const tailwindLight = {
     },
     scrollpanel: {
         wrapper: {
-            class: 'float-left h-full overflow-hidden relative w-full z-10'
+            class: 'overflow-hidden relative float-left h-full w-full z-[1]'
         },
         content: {
-            class: 'box-border h-[calc(100% + 18px)] overflow-scroll pr-18 pb-18 relative scrollbar-none w-[calc(100% + 18px)] [&::-webkit-scrollbar]:hidden'
+            class: 'box-border h-[calc(100%+18px)] overflow-scroll pr-[18px] pb-[18px] pl-0 pt-0 relative scrollbar-none w-[calc(100%+18px)] [&::-webkit-scrollbar]:hidden'
         },
         barX: {
-            class: 'bg-gray-50 border-0 transition-none invisible absolute bottom-0 h-3 z-2 rounded cursor-pointer opacity-0 relative'
+            class: ['relative bg-gray-100 invisible rounded cursor-pointer h-[9px] bottom-0 z-[2]', 'transition duration-[250ms] ease-linear']
         },
         barY: {
-            class: 'bg-gray-50 border-0 transition-none top-0 w-3 h-full z-2 rounded cursor-pointer opacity-0 relative'
+            class: ['relative bg-gray-100 rounded cursor-pointer w-[9px] top-0 z-[2]', 'transition duration-[250ms] ease-linear']
         }
     },
     tabview: {
