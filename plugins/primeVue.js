@@ -388,7 +388,7 @@ const tailwindLight = {
     },
     splitterpanel: {
         root: ({ props }) => ({
-            class: [console.log(props), 'flex-grow', 'flex justify-center items-center']
+            class: ['flex-grow', 'flex justify-center items-center']
         })
     },
     dialog: {
@@ -559,7 +559,6 @@ const tailwindLight = {
     message: {
         root: ({ props, context }) => ({
             class: [
-                console.log(props.severity),
                 'my-4 rounded-md',
                 {
                     'bg-blue-100 border-solid border-0 border-l-4 border-blue-500 text-blue-700': props.severity == 'info',
@@ -605,7 +604,6 @@ const tailwindLight = {
         }),
         container: ({ props, context }) => ({
             class: [
-                console.log(props.message.severity),
                 'my-4 rounded-md w-full',
                 {
                     'bg-blue-100 border-solid border-0 border-l-4 border-blue-500 text-blue-700': props.message.severity == 'info',
@@ -814,7 +812,7 @@ const tailwindLight = {
     },
     inputnumber: {
         root: ({ props, context }) => ({
-            class: ['w-full inline-flex', console.log(props)]
+            class: ['w-full inline-flex']
         }),
         input: ({ props, context }) => ({
             class: ['', { 'rounded-tr-none rounded-br-none': props.showButtons && props.buttonLayout == 'stacked' }]
@@ -882,7 +880,6 @@ const tailwindLight = {
         },
         item: ({ props }) => ({
             class: [
-                console.log(props),
                 'cursor-pointer font-normal whitespace-nowrap',
                 'm-0 border-0 bg-transparent transition-shadow rounded-none',
                 'text-gray-700 dark:text-white/80 hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80'
@@ -906,7 +903,6 @@ const tailwindLight = {
     inputmask: {
         root: ({ props, context }) => ({
             class: [
-                console.log(props),
                 'font-sans text-base text-gray-700 dark:text-white/80 bg-white dark:bg-gray-900 py-3 px-3 border border-gray-300 dark:border-blue-900/40 hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)] transition duration-200 ease-in-out appearance-none rounded-md'
             ]
         })
@@ -1216,7 +1212,6 @@ const tailwindLight = {
         },
         daylabel: ({ props }) => ({
             class: [
-                console.log(props),
                 'w-10 h-10 rounded-full transition-shadow duration-200 border-transparent border dark:text-white/80',
                 'flex items-center cursor-pointer justify-center mx-auto overflow-hidden relative',
                 'hover:bg-gray-200 dark:hover:bg-gray-800/80  focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
@@ -1298,9 +1293,6 @@ const tailwindLight = {
                 'dark:text-white/80 dark:hover:bg-gray-800',
                 'hover:text-gray-700 hover:bg-gray-200',
                 {
-                    // 'text-gray-700 bg-transparent': !context.selected,
-                    // 'text-blue-600 bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-700': context.selected
-
                     'text-gray-700': !context.focused && !context.selected,
                     'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90': context.focused && !context.selected,
                     'bg-blue-400 text-blue-700 dark:bg-blue-400 dark:text-white/80': context.focused && context.selected,
@@ -1529,17 +1521,11 @@ const tailwindLight = {
         },
         item: ({ context }) => ({
             class: [
-                console.log(context),
                 'cursor-pointer font-normal overflow-hidden relative whitespace-nowrap',
                 'm-0 p-3 border-0  transition-shadow duration-200 rounded-none',
                 'dark:text-white/80 dark:hover:bg-gray-800',
                 'hover:text-gray-700 hover:bg-gray-200',
                 {
-                    // 'text-gray-700': !context.selected,
-                    // 'text-blue-600 bg-blue-50 hover:text-blue-600 hover:bg-blue-100 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-700': context.selected,
-                    // 'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90': context.focused
-                    // 'bg-blue-50 text-blue-700 dark:bg-blue-300 dark:text-white/80': !context.focused && context.active
-
                     'text-gray-700': !context.focused && !context.selected,
                     'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90': context.focused && !context.selected,
                     'bg-blue-500 text-blue-700 dark:bg-blue-400 dark:text-white/80': context.focused && context.selected,
@@ -1644,7 +1630,6 @@ const tailwindLight = {
     avatar: {
         root: ({ props, parent }) => ({
             class: [
-                console.log(parent.instance.$css),
                 'flex items-center justify-center',
                 'bg-gray-300 dark:bg-gray-800',
                 { 'rounded-lg': props.shape == 'square', 'rounded-full': props.shape == 'circle' },
@@ -1684,7 +1669,6 @@ const tailwindLight = {
         }),
         value: ({ props }) => ({
             class: [
-                console.log(props),
                 'transition-width duration-1000 ease-in-out',
                 'items-center border-0 flex h-full justify-center overflow-hidden absolute w-0',
                 'border-0 m-0 bg-blue-500',
@@ -1709,7 +1693,6 @@ const tailwindLight = {
     skeleton: {
         root: ({ props }) => ({
             class: [
-                console.log(props),
                 'overflow-hidden',
                 '!mb-2',
                 'bg-gray-300 dark:bg-gray-800',
@@ -1721,7 +1704,6 @@ const tailwindLight = {
     tag: {
         root: ({ props }) => ({
             class: [
-                console.log(props.rounded),
                 'inline-flex items-center justify-center',
                 'bg-blue-500 text-white text-xs font-semibold px-2 py-1 ',
                 {
@@ -1744,12 +1726,12 @@ const tailwindLight = {
     },
     inplace: {
         display: ({ props }) => ({
-            class: [console.log(props), 'p-3 rounded-md transition duration-200 ', 'inline cursor-pointer', 'hover:bg-gray-200 hover:text-gray-700 dark:hover:bg-gray-800/80 dark:hover:text-white/80']
+            class: ['p-3 rounded-md transition duration-200 ', 'inline cursor-pointer', 'hover:bg-gray-200 hover:text-gray-700 dark:hover:bg-gray-800/80 dark:hover:text-white/80']
         })
     },
     scrolltop: {
         root: ({ props }) => ({
-            class: [console.log(props), 'fixed bottom-20 right-20 flex items-center justify-center', 'bg-blue-500 text-white rounded-md h-8 w-8', 'ml-auto']
+            class: ['fixed bottom-20 right-20 flex items-center justify-center', 'bg-blue-500 text-white rounded-md h-8 w-8', 'ml-auto']
         })
     },
     terminal: {
@@ -2053,11 +2035,7 @@ const tailwindLight = {
             class: ['p-0 m-0 list-none flex']
         },
         menuitem: ({ props }) => ({
-            class: [
-                console.log(props),
-                'relative flex justify-center flex-1 overflow-hidden',
-                'before:border-t before:border-gray-300 before:dark:border-blue-900/40 before:w-full before:absolute before:top-1/4 before:left-0 before:transform before:-translate-y-1/2'
-            ]
+            class: ['relative flex justify-center flex-1 overflow-hidden', 'before:border-t before:border-gray-300 before:dark:border-blue-900/40 before:w-full before:absolute before:top-1/4 before:left-0 before:transform before:-translate-y-1/2']
         }),
         action: {
             class: [
@@ -2342,7 +2320,6 @@ const tailwindLight = {
         },
         content: ({ context, props }) => ({
             class: [
-                console.log(context),
                 'flex items-center',
                 'rounded-lg transition-shadow duration-200 p-2',
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
