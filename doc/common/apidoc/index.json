@@ -465,6 +465,14 @@
                             "type": "AccordionTabPassThroughOptionType",
                             "default": "",
                             "description": "Used to pass attributes to the content's DOM element."
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -2978,6 +2986,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -6080,6 +6096,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -7964,6 +7988,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -10050,6 +10082,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -12634,6 +12674,13 @@
                             "readonly": false,
                             "type": "Object",
                             "default": ""
+                        },
+                        {
+                            "name": "global",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "Object",
+                            "default": ""
                         }
                     ],
                     "methods": [],
@@ -14065,6 +14112,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -14371,6 +14426,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -16123,7 +16186,7 @@
                             "readonly": false,
                             "type": "DataTablePassThroughOptionType",
                             "default": "",
-                            "description": "Used to pass attributes to the footerr ow's DOM element."
+                            "description": "Used to pass attributes to the footer row's DOM element."
                         },
                         {
                             "name": "resizeHelper",
@@ -16180,6 +16243,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -18522,6 +18593,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -19827,6 +19906,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -21410,6 +21497,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -22925,6 +23020,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -23740,6 +23843,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -27521,6 +27632,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -28530,6 +28649,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -29139,6 +29266,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -30189,6 +30324,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -31225,6 +31368,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -32052,6 +32203,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -32441,6 +32600,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -32879,6 +33046,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -33689,6 +33864,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -34857,7 +35040,7 @@
                             "name": "pt",
                             "optional": true,
                             "readonly": false,
-                            "type": "RadioButtonPassThroughMethodOptions",
+                            "type": "RadioButtonPassThroughOptions",
                             "default": "",
                             "description": "Used to pass attributes to DOM elements inside the component."
                         },
@@ -35896,6 +36079,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -36483,6 +36674,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -40741,6 +40940,13 @@
                             "readonly": false,
                             "type": "Object",
                             "default": ""
+                        },
+                        {
+                            "name": "global",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "Object",
+                            "default": ""
                         }
                     ],
                     "methods": [],
@@ -41372,6 +41578,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -42158,6 +42372,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -44213,6 +44435,14 @@
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
+                        },
+                        {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "any",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
