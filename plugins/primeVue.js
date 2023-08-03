@@ -490,8 +490,8 @@ const tailwindLight = {
         })
     },
     dialog: {
-        root: ({ props, state }) => ({
-            class: ['rounded-lg shadow-lg border-0', 'max-h-90 transform scale-100', 'm-0 w-[50vw]', 'dark:border dark:border-blue-900/40']
+        root: ({ state }) => ({
+            class: ['rounded-lg shadow-lg border-0', 'max-h-90 transform scale-100', 'm-0 w-[50vw]', 'dark:border dark:border-blue-900/40', { 'transition-none transform-none !w-screen !h-screen !max-h-full !top-0 !left-0': state.maximized }]
         }),
         header: {
             class: ['flex items-center justify-between shrink-0', 'bg-white text-gray-800 border-t-0  rounded-tl-lg rounded-tr-lg p-6', 'dark:bg-gray-900  dark:text-white/80']
@@ -514,14 +514,14 @@ const tailwindLight = {
         closeButtonIcon: {
             class: ['w-4 h-4 inline-block']
         },
-        content: {
-            class: ['overflow-y-auto', 'bg-white text-gray-700 px-6 pb-8 pt-0', 'rounded-bl-lg rounded-br-lg', 'dark:bg-gray-900  dark:text-white/80 ']
-        },
+        content: ({ state }) => ({
+            class: ['overflow-y-auto', 'bg-white text-gray-700 px-6 pb-8 pt-0', 'rounded-bl-lg rounded-br-lg', 'dark:bg-gray-900  dark:text-white/80 ', { grow: state.maximized }]
+        }),
         footer: {
             class: ['shrink-0 ', 'border-t-0 bg-white text-gray-700 px-6 pb-6 text-right rounded-b-lg', 'dark:bg-gray-900  dark:text-white/80']
         },
         mask: {
-            class: ['bg-opacity-40 transition duration-200']
+            class: ['bg-black/40 transition duration-200']
         }
     },
     confirmpopup: {
@@ -1795,7 +1795,9 @@ const tailwindLight = {
         }
     },
     //MISC
-
+    blockui: {
+        root: 'relative'
+    },
     badge: {
         root: ({ props }) => ({
             class: [
