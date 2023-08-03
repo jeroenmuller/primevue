@@ -490,8 +490,8 @@ const tailwindLight = {
         })
     },
     dialog: {
-        root: ({ props }) => ({
-            class: ['rounded-lg shadow-lg border-0', 'flex flex-col max-h-90 transform scale-100', 'm-0  w-[50vw] z-40 relative', 'dark:border dark:border-blue-900/40']
+        root: ({ props, state }) => ({
+            class: ['rounded-lg shadow-lg border-0', 'max-h-90 transform scale-100', 'm-0 w-[50vw]', 'dark:border dark:border-blue-900/40']
         }),
         header: {
             class: ['flex items-center justify-between shrink-0', 'bg-white text-gray-800 border-t-0  rounded-tl-lg rounded-tr-lg p-6', 'dark:bg-gray-900  dark:text-white/80']
@@ -520,44 +520,8 @@ const tailwindLight = {
         footer: {
             class: ['shrink-0 ', 'border-t-0 bg-white text-gray-700 px-6 pb-6 text-right rounded-b-lg', 'dark:bg-gray-900  dark:text-white/80']
         },
-        mask: ({ props }) => ({
-            class: ['fixed top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none', { 'bg-black bg-opacity-40 transition duration-200 !pointer-events-auto': props.modal !== null }]
-        }),
-        transition: ({ props }) => {
-            return props.position === 'top'
-                ? {
-                      enterFromClass: 'opacity-0 scale-75 translate-x-0 -translate-y-full translate-z-0',
-                      enterActiveClass: 'transition-all duration-200 ease-out',
-                      leaveActiveClass: 'transition-all duration-200 ease-out',
-                      leaveToClass: 'opacity-0 scale-75 translate-x-0 -translate-y-full translate-z-0'
-                  }
-                : props.position === 'bottom'
-                ? {
-                      enterFromClass: 'opacity-0 scale-75 translate-y-full',
-                      enterActiveClass: 'transition-all duration-200 ease-out',
-                      leaveActiveClass: 'transition-all duration-200 ease-out',
-                      leaveToClass: 'opacity-0 scale-75 translate-x-0 translate-y-full translate-z-0'
-                  }
-                : props.position === 'left' || props.position === 'topleft' || props.position === 'bottomleft'
-                ? {
-                      enterFromClass: 'opacity-0 scale-75 -translate-x-full translate-y-0 translate-z-0',
-                      enterActiveClass: 'transition-all duration-200 ease-out',
-                      leaveActiveClass: 'transition-all duration-200 ease-out',
-                      leaveToClass: 'opacity-0 scale-75  -translate-x-full translate-y-0 translate-z-0'
-                  }
-                : props.position === 'right' || props.position === 'topright' || props.position === 'bottomright'
-                ? {
-                      enterFromClass: 'opacity-0 scale-75 translate-x-full translate-y-0 translate-z-0',
-                      enterActiveClass: 'transition-all duration-200 ease-out',
-                      leaveActiveClass: 'transition-all duration-200 ease-out',
-                      leaveToClass: 'opacity-0 scale-75 opacity-0 scale-75 translate-x-full translate-y-0 translate-z-0'
-                  }
-                : {
-                      enterFromClass: 'opacity-0 scale-75',
-                      enterActiveClass: 'transition-all duration-200 ease-out',
-                      leaveActiveClass: 'transition-all duration-200 ease-out',
-                      leaveToClass: 'opacity-0 scale-75'
-                  };
+        mask: {
+            class: ['bg-opacity-40 transition duration-200']
         }
     },
     confirmpopup: {
