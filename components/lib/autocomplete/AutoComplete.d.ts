@@ -7,13 +7,15 @@
  * @module autocomplete
  *
  */
-import { HTMLAttributes, InputHTMLAttributes, VNode } from 'vue';
+import { HTMLAttributes, InputHTMLAttributes, TransitionProps, VNode } from 'vue';
 import { ComponentHooks } from '../basecomponent';
 import { ButtonPassThroughOptionType } from '../button';
 import { ClassComponent, GlobalComponentConstructor } from '../ts-helpers';
 import { VirtualScrollerItemOptions, VirtualScrollerPassThroughOptionType, VirtualScrollerProps } from '../virtualscroller';
 
 export declare type AutoCompletePassThroughOptionType = AutoCompletePassThroughAttributes | ((options: AutoCompletePassThroughMethodOptions) => AutoCompletePassThroughAttributes | string) | string | null | undefined;
+
+export declare type AutoCompletePassThroughTransitionType = TransitionProps | ((options: AutoCompletePassThroughMethodOptions) => TransitionProps) | undefined;
 
 /**
  * Custom passthrough(pt) option method.
@@ -174,7 +176,7 @@ export interface AutoCompletePassThroughOptions {
     /**
      * Used to control Vue Transition API.
      */
-    transition?: any;
+    transition?: AutoCompletePassThroughTransitionType;
 }
 
 /**
@@ -540,7 +542,7 @@ export interface AutoCompleteSlots {
         index: number;
     }): VNode[];
     /**
-     * Custom panel template.
+     * Custom content template.
      * @param {Object} scope - content slot's params.
      */
     content(scope: {

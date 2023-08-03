@@ -470,7 +470,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "AccordionTabPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -672,6 +672,9 @@
             "values": {
                 "AccordionTabPassThroughOptionType": {
                     "values": "AccordionTabPassThroughAttributes | (options: AccordionTabPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "AccordionTabPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: AccordionTabPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -2991,7 +2994,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "AutoCompletePassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -3556,7 +3559,7 @@
                                 }
                             ],
                             "returnType": "VNode<RendererNode, RendererElement, Object>[]",
-                            "description": "Custom panel template."
+                            "description": "Custom content template."
                         },
                         {
                             "name": "loader",
@@ -3757,6 +3760,9 @@
             "values": {
                 "AutoCompletePassThroughOptionType": {
                     "values": "AutoCompletePassThroughAttributes | (options: AutoCompletePassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "AutoCompletePassThroughTransitionType": {
+                    "values": "TransitionProps | (options: AutoCompletePassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -6101,7 +6107,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "CalendarPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -7016,6 +7022,9 @@
             "values": {
                 "CalendarPassThroughOptionType": {
                     "values": "CalendarPassThroughAttributes | (options: CalendarPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "CalendarPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: CalendarPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -7993,7 +8002,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "CascadeSelectPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -8555,6 +8564,9 @@
             "values": {
                 "CascadeSelectPassThroughOptionType": {
                     "values": "CascadeSelectPassThroughAttributes | (options: CascadeSelectPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "CascadeSelectPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: CascadeSelectPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -10087,7 +10099,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "ColorPickerPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -10282,6 +10294,9 @@
             "values": {
                 "ColorPickerPassThroughOptionType": {
                     "values": "ColorPickerPassThroughAttributes | (options: ColorPickerPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "ColorPickerPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: ColorPickerPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -14117,7 +14132,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "ConfirmPopupPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -14248,6 +14263,9 @@
             "values": {
                 "ConfirmPopupPassThroughOptionType": {
                     "values": "ConfirmPopupPassThroughAttributes | (options: ConfirmPopupPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "ConfirmPopupPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: ConfirmPopupPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -14431,7 +14449,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "ContextMenuPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -14780,6 +14798,9 @@
             "values": {
                 "ContextMenuPassThroughOptionType": {
                     "values": "ContextMenuPassThroughAttributes | (options: ContextMenuPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "ContextMenuPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: ContextMenuPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -16248,7 +16269,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "DataTablePassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -17602,6 +17623,9 @@
             "values": {
                 "DataTablePassThroughOptionType": {
                     "values": "DataTablePassThroughAttributes | (options: DataTablePassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "DataTablePassThroughTransitionType": {
+                    "values": "TransitionProps | (options: DataTablePassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -18598,7 +18622,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "DialogPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -19016,6 +19040,9 @@
             "values": {
                 "DialogPassThroughOptionType": {
                     "values": "DialogPassThroughAttributes | (options: DialogPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "DialogPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: DialogPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -19911,7 +19938,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "DropdownPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -20670,6 +20697,9 @@
             "values": {
                 "DropdownPassThroughOptionType": {
                     "values": "DropdownPassThroughAttributes | (options: DropdownPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "DropdownPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: DropdownPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -21502,7 +21532,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "FieldsetPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -21661,6 +21691,9 @@
             "values": {
                 "FieldsetPassThroughOptionType": {
                     "values": "FieldsetPassThroughAttributes | (options: FieldsetPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "FieldsetPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: FieldsetPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -23025,7 +23058,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "GalleriaPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -23535,6 +23568,9 @@
             "values": {
                 "GalleriaPassThroughOptionType": {
                     "values": "GalleriaPassThroughAttributes | (options: GalleriaPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "GalleriaPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: GalleriaPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -23848,7 +23884,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "ImagePassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -24058,6 +24094,9 @@
             "values": {
                 "ImagePassThroughOptionType": {
                     "values": "ImagePassThroughAttributes | (options: ImagePassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "ImagePassThroughTransitionType": {
+                    "values": "TransitionProps | (options: ImagePassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -27637,7 +27676,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "MenuPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -27915,6 +27954,9 @@
             "values": {
                 "MenuPassThroughOptionType": {
                     "values": "MenuPassThroughAttributes | (options: MenuPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "MenuPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: MenuPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -28224,6 +28266,14 @@
                             "type": "boolean",
                             "default": "false",
                             "description": "Current focused state of menuitem as a boolean."
+                        },
+                        {
+                            "name": "level",
+                            "optional": false,
+                            "readonly": false,
+                            "type": "number",
+                            "default": "",
+                            "description": "Current level of the menuitem."
                         }
                     ],
                     "methods": []
@@ -28654,7 +28704,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "MessagePassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -28833,6 +28883,9 @@
             "values": {
                 "MessagePassThroughOptionType": {
                     "values": "MessagePassThroughAttributes | (options: MessagePassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "MessagePassThroughTransitionType": {
+                    "values": "TransitionProps | (options: MessagePassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -29271,7 +29324,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "MultiSelectPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -30123,6 +30176,9 @@
             "values": {
                 "MultiSelectPassThroughOptionType": {
                     "values": "MultiSelectPassThroughAttributes | (options: MultiSelectPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "MultiSelectPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: MultiSelectPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -30329,7 +30385,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "OrderListPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -30690,6 +30746,9 @@
             "values": {
                 "OrderListPassThroughOptionType": {
                     "values": "OrderListPassThroughAttributes | (options: OrderListPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "OrderListPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: OrderListPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -31373,7 +31432,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "OverlayPanelPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -31546,6 +31605,9 @@
             "values": {
                 "OverlayPanelPassThroughOptionType": {
                     "values": "OverlayPanelPassThroughAttributes | (options: OverlayPanelPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "OverlayPanelPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: OverlayPanelPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -32197,20 +32259,20 @@
                             "description": "Used to pass attributes to the footer's DOM element."
                         },
                         {
+                            "name": "transition",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "PanelPassThroughTransitionType",
+                            "default": "",
+                            "description": "Used to control Vue Transition API."
+                        },
+                        {
                             "name": "hooks",
                             "optional": true,
                             "readonly": false,
                             "type": "ComponentHooks",
                             "default": "",
                             "description": "Used to manage all lifecycle hooks"
-                        },
-                        {
-                            "name": "transition",
-                            "optional": true,
-                            "readonly": false,
-                            "type": "any",
-                            "default": "",
-                            "description": "Used to control Vue Transition API."
                         }
                     ],
                     "methods": []
@@ -32389,6 +32451,9 @@
             "values": {
                 "PanelPassThroughOptionType": {
                     "values": "PanelPassThroughAttributes | (options: PanelPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "PanelPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: PanelPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -32605,7 +32670,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "PanelMenuPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -32914,6 +32979,9 @@
             "values": {
                 "PanelMenuPassThroughOptionType": {
                     "values": "PanelMenuPassThroughAttributes | (options: PanelMenuPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "PanelMenuPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: PanelMenuPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -33051,7 +33119,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "PasswordPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -33455,6 +33523,9 @@
             "values": {
                 "PasswordPassThroughOptionType": {
                     "values": "PasswordPassThroughAttributes | (options: PasswordPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "PasswordPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: PasswordPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -33869,7 +33940,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "PickListPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -34440,6 +34511,9 @@
             "values": {
                 "PickListPassThroughOptionType": {
                     "values": "PickListPassThroughAttributes | (options: PickListPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "PickListPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: PickListPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -36084,7 +36158,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "ScrollTopPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -36201,6 +36275,9 @@
             "values": {
                 "ScrollTopPassThroughOptionType": {
                     "values": "ScrollTopPassThroughAttributes | (options: ScrollTopPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "ScrollTopPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: ScrollTopPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -36679,7 +36756,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "SidebarPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -36874,6 +36951,9 @@
             "values": {
                 "SidebarPassThroughOptionType": {
                     "values": "SidebarPassThroughAttributes | (options: SidebarPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "SidebarPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: SidebarPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -41583,7 +41663,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "TieredMenuPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -41932,6 +42012,9 @@
             "values": {
                 "TieredMenuPassThroughOptionType": {
                     "values": "TieredMenuPassThroughAttributes | (options: TieredMenuPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "TieredMenuPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: TieredMenuPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -42377,7 +42460,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "ToastPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -42685,6 +42768,9 @@
             "values": {
                 "ToastPassThroughOptionType": {
                     "values": "ToastPassThroughAttributes | (options: ToastPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "ToastPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: ToastPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }
@@ -42779,6 +42865,13 @@
                             "readonly": false,
                             "type": "ToggleButtonState",
                             "default": ""
+                        },
+                        {
+                            "name": "context",
+                            "optional": false,
+                            "readonly": false,
+                            "type": "ToggleButtonContext",
+                            "default": ""
                         }
                     ],
                     "methods": []
@@ -42861,7 +42954,38 @@
                             "readonly": false,
                             "type": "boolean",
                             "default": "",
-                            "description": "Focused state as a number."
+                            "description": "Focused state as a boolean."
+                        }
+                    ],
+                    "methods": []
+                },
+                "ToggleButtonContext": {
+                    "description": "Defines current options in ToggleButton component.",
+                    "relatedProp": "",
+                    "props": [
+                        {
+                            "name": "focused",
+                            "optional": false,
+                            "readonly": false,
+                            "type": "boolean",
+                            "default": "false",
+                            "description": "Current focused state as a boolean."
+                        },
+                        {
+                            "name": "disabled",
+                            "optional": false,
+                            "readonly": false,
+                            "type": "boolean",
+                            "default": "false",
+                            "description": "Current disabled state as a boolean."
+                        },
+                        {
+                            "name": "highlighted",
+                            "optional": false,
+                            "readonly": false,
+                            "type": "boolean",
+                            "default": "false",
+                            "description": "Current highlighted state as a boolean."
                         }
                     ],
                     "methods": []
@@ -44440,7 +44564,7 @@
                             "name": "transition",
                             "optional": true,
                             "readonly": false,
-                            "type": "any",
+                            "type": "TreeSelectPassThroughTransitionType",
                             "default": "",
                             "description": "Used to control Vue Transition API."
                         }
@@ -44871,6 +44995,9 @@
             "values": {
                 "TreeSelectPassThroughOptionType": {
                     "values": "TreeSelectPassThroughAttributes | (options: TreeSelectPassThroughMethodOptions) => undefined | string | null | undefined"
+                },
+                "TreeSelectPassThroughTransitionType": {
+                    "values": "TransitionProps | (options: TreeSelectPassThroughMethodOptions) => TransitionProps | undefined"
                 }
             }
         }

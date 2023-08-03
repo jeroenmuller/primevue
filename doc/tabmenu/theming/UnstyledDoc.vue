@@ -9,13 +9,6 @@
 export default {
     data() {
         return {
-            items: [
-                { label: 'Home', icon: 'pi pi-fw pi-home', to: '/tabmenu' },
-                { label: 'Calendar', icon: 'pi pi-fw pi-calendar', to: '/tabmenu/calendar' },
-                { label: 'Edit', icon: 'pi pi-fw pi-pencil', to: '/tabmenu/edit' },
-                { label: 'Documentation', icon: 'pi pi-fw pi-file', to: '/tabmenu/documentation' },
-                { label: 'Settings', icon: 'pi pi-fw pi-cog', to: '/tabmenu/settings' }
-            ],
             code: {
                 composition: `
 <template>
@@ -62,7 +55,7 @@ const items = ref([
                         tabName: 'HomeDemo',
                         content: `
 <template>
-    <div class="tabmenudemo-content">
+    <div class="p-4">
         <h5>Home Component Content</h5>
     </div>
 </template>
@@ -78,7 +71,7 @@ export default {
                         tabName: 'CalendarDemo',
                         content: `
 <template>
-    <div class="tabmenudemo-content">
+    <div class="p-4">
         <h5>Calendar Component Content</h5>
     </div>
 </template>
@@ -94,7 +87,7 @@ export default {
                         tabName: 'EditDemo',
                         content: `
 <template>
-    <div class="tabmenudemo-content">
+    <div class="p-4">
         <h5>Edit Component Content</h5>
     </div>
 </template>
@@ -110,7 +103,7 @@ export default {
                         tabName: 'DocumentationDemo',
                         content: `
 <template>
-    <div class="tabmenudemo-content">
+    <div class="p-4">
         <h5>Documentation Component Content</h5>
     </div>
 </template>
@@ -126,7 +119,7 @@ export default {
                         tabName: 'SettingsDemo',
                         content: `
 <template>
-    <div class="tabmenudemo-content">
+    <div class="p-4">
         <h5>Settings Component Content</h5>
     </div>
 </template>

@@ -12,8 +12,8 @@ export default {
             code: {
                 composition: `
 <template>
-    <div>
-        <p>Enter "date" to display the current date, "greet {0}" for a message and "random" to get a random number.</p>
+    <div class="card">
+        <p class="text-gray-700 dark:text-white/80">Enter "date" to display the current date, "greet {0}" for a message and "random" to get a random number.</p>
         <Terminal welcomeMessage="Welcome to PrimeVue" prompt="primevue $" class="dark-demo-terminal" aria-label="PrimeVue Terminal Service" />
     </div>
 </template>
@@ -54,29 +54,7 @@ const commandHandler = (text) => {
     
     TerminalService.emit('response', response);
 }
-<\/script>
-
-<style scoped>
-p {
-    margin-top: 0;
-}
-::v-deep(.dark-demo-terminal) {
-    background-color: #212121;
-    color: #ffffff;
-}
-
-::v-deep(.dark-demo-terminal .p-terminal-command) {
-    color: #80cbc4;
-}
-
-::v-deep(.dark-demo-terminal .p-terminal-prompt) {
-    color: #ffd54f;
-}
-
-::v-deep(.dark-demo-terminal .p-terminal-response) {
-    color: #9fa8da;
-}
-</style>`
+<\/script>`
             }
         };
     }

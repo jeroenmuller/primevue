@@ -9,28 +9,24 @@
 export default {
     data() {
         return {
-            value1: 42723,
-            value2: 58151,
-            value3: 2351.35,
-            value4: 50,
             code: {
                 composition: `
 <template>
     <div class="card flex flex-wrap">
         <div class="flex-auto">
-            <label for="integeronly" class="font-bold block mb-2"> Integer Only </label>
+            <label for="integeronly" class="font-bold block mb-2 text-gray-700 dark:text-white/80"> Integer Only </label>
             <InputNumber v-model="value1" inputId="integeronly" />
         </div>
         <div class="flex-auto">
-            <label for="withoutgrouping" class="font-bold block mb-2"> Without Grouping </label>
+            <label for="withoutgrouping" class="font-bold block mb-2 text-gray-700 dark:text-white/80"> Without Grouping </label>
             <InputNumber v-model="value2" inputId="withoutgrouping" :useGrouping="false" />
         </div>
         <div class="flex-auto">
-            <label for="minmaxfraction" class="font-bold block mb-2"> Min-Max Fraction Digits </label>
+            <label for="minmaxfraction" class="font-bold block mb-2 text-gray-700 dark:text-white/80"> Min-Max Fraction Digits </label>
             <InputNumber v-model="value3" inputId="minmaxfraction" :minFractionDigits="2" :maxFractionDigits="5" />
         </div>
         <div class="flex-auto">
-            <label for="minmax" class="font-bold block mb-2"> Min-Max Boundaries </label>
+            <label for="minmax" class="font-bold block mb-2 text-gray-700 dark:text-white/80"> Min-Max Boundaries </label>
             <InputNumber v-model="value4" inputId="minmax" :min="0" :max="100" />
         </div>
     </div>
