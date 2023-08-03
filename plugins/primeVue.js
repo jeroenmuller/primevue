@@ -107,12 +107,106 @@ import DocSectionText from '@/components/doc/DocSectionText';
 import CodeHighlight from '@/components/layout/CodeHighlight';
 import DevelopmentSection from '@/components/layout/DevelopmentSection';
 
+const TRANSITIONS = {
+    toggleable: {
+        enterFromClass: 'max-h-0',
+        enterActiveClass: 'overflow-hidden transition-all duration-500 ease-in-out',
+        enterToClass: 'max-h-40	',
+        leaveFromClass: 'max-h-40',
+        leaveActiveClass: 'overflow-hidden transition-all duration-500 ease-in',
+        leaveToClass: 'max-h-0'
+    },
+    overlay: {
+        enterFromClass: 'opacity-0 scale-75',
+        enterActiveClass: 'transition-transform transition-opacity duration-150 ease-in',
+        leaveActiveClass: 'transition-opacity duration-150 ease-linear',
+        leaveToClass: 'opacity-0'
+    }
+};
 const tailwindLight = {
+    global: {
+        css: `
+        *[data-pd-ripple="true"]{
+            overflow: hidden;
+            position: relative;
+        }
+        span[data-p-ink-active="true"]{
+            animation: ripple 0.4s linear;
+        }
+        @keyframes ripple {
+            100% {
+                opacity: 0;
+                transform: scale(2.5);
+            }
+        }
+
+        .progress-spinner-circle {
+            stroke-dasharray: 89, 200;
+            stroke-dashoffset: 0;
+            animation: p-progress-spinner-dash 1.5s ease-in-out infinite, p-progress-spinner-color 6s ease-in-out infinite;
+            stroke-linecap: round;
+        }
+
+        @keyframes p-progress-spinner-dash{
+            0% {
+                stroke-dasharray: 1, 200;
+                stroke-dashoffset: 0;
+            }
+            
+            50% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -35px;
+            }
+            100% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -124px;
+            }
+        }
+        @keyframes p-progress-spinner-color {
+            100%, 0% {
+                stroke: #ff5757;
+            }
+            40% {
+                stroke: #696cff;
+            }
+            66% {
+                stroke: #1ea97c;
+            }
+            80%, 90% {
+                stroke: #cc8925;
+            }
+        }
+
+        .progressbar-value-animate::after {
+            will-change: left, right;
+            animation: p-progressbar-indeterminate-anim-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+        }
+        .progressbar-value-animate::before {
+            will-change: left, right;
+            animation: p-progressbar-indeterminate-anim 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+        }
+        @keyframes p-progressbar-indeterminate-anim {
+            0% {
+                left: -35%;
+                right: 100%;
+            }
+            60% {
+                left: 100%;
+                right: -90%;
+            }
+            100% {
+                left: 100%;
+                right: -90%;
+            }
+        }
+`
+    },
     directives: {
         ripple: {
-            root: {
-                class: ['block absolute bg-white bg-opacity-50 rounded-full transform scale-0 pointer-events-none']
-            }
+            root: ({ context }) => ({
+                class: ['block absolute bg-white/50 rounded-full pointer-events-none'],
+                style: 'transform: scale(0)'
+            })
         },
         badge: {
             root: ({ context }) => ({
@@ -189,9 +283,11 @@ const tailwindLight = {
             class: [
                 'p-5 border border-gray-300 bg-white text-gray-700 border-t-0 last:rounded-br-lg last:rounded-bl-lg',
                 'dark:bg-gray-900 dark:border-blue-900/40 dark:text-white/80' // Dark mode
-            ] // padding, borders, and colors
-        }
+            ]
+        },
+        transition: TRANSITIONS.toggleable
     },
+
     accordion: {
         root: {
             class: ['mb-1']
@@ -227,7 +323,8 @@ const tailwindLight = {
                     'p-5 border border-gray-300 bg-white text-gray-700 border-t-0 rounded-tl-none rounded-tr-none rounded-br-lg rounded-bl-lg',
                     'dark:bg-gray-900 dark:border-blue-900/40 dark:text-white/80' // Dark mode
                 ]
-            }
+            },
+            transition: TRANSITIONS.toggleable
         }
     },
     card: {
@@ -313,7 +410,8 @@ const tailwindLight = {
         },
         content: {
             class: 'p-5' // Padding.
-        }
+        },
+        transition: TRANSITIONS.toggleable
     },
     scrollpanel: {
         wrapper: {
@@ -392,8 +490,8 @@ const tailwindLight = {
         })
     },
     dialog: {
-        root: ({ props, state }) => ({
-            class: ['rounded-lg shadow-lg border-0', 'flex flex-col max-h-90 transform scale-100', 'm-0  w-[50vw] z-40 relative', '', 'dark:border dark:border-blue-900/40']
+        root: ({ props }) => ({
+            class: ['rounded-lg shadow-lg border-0', 'flex flex-col max-h-90 transform scale-100', 'm-0  w-[50vw] z-40 relative', 'dark:border dark:border-blue-900/40']
         }),
         header: {
             class: ['flex items-center justify-between shrink-0', 'bg-white text-gray-800 border-t-0  rounded-tl-lg rounded-tr-lg p-6', 'dark:bg-gray-900  dark:text-white/80']
@@ -422,8 +520,44 @@ const tailwindLight = {
         footer: {
             class: ['shrink-0 ', 'border-t-0 bg-white text-gray-700 px-6 pb-6 text-right rounded-b-lg', 'dark:bg-gray-900  dark:text-white/80']
         },
-        mask: {
-            class: ['fixed top-0 left-0 w-full h-full flex items-center justify-center pointer-events-auto', 'bg-black bg-opacity-40 transition duration-200 z-20']
+        mask: ({ props }) => ({
+            class: ['fixed top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none', { 'bg-black bg-opacity-40 transition duration-200 !pointer-events-auto': props.modal !== null }]
+        }),
+        transition: ({ props }) => {
+            return props.position === 'top'
+                ? {
+                      enterFromClass: 'opacity-0 scale-75 translate-x-0 -translate-y-full translate-z-0',
+                      enterActiveClass: 'transition-all duration-200 ease-out',
+                      leaveActiveClass: 'transition-all duration-200 ease-out',
+                      leaveToClass: 'opacity-0 scale-75 translate-x-0 -translate-y-full translate-z-0'
+                  }
+                : props.position === 'bottom'
+                ? {
+                      enterFromClass: 'opacity-0 scale-75 translate-y-full',
+                      enterActiveClass: 'transition-all duration-200 ease-out',
+                      leaveActiveClass: 'transition-all duration-200 ease-out',
+                      leaveToClass: 'opacity-0 scale-75 translate-x-0 translate-y-full translate-z-0'
+                  }
+                : props.position === 'left' || props.position === 'topleft' || props.position === 'bottomleft'
+                ? {
+                      enterFromClass: 'opacity-0 scale-75 -translate-x-full translate-y-0 translate-z-0',
+                      enterActiveClass: 'transition-all duration-200 ease-out',
+                      leaveActiveClass: 'transition-all duration-200 ease-out',
+                      leaveToClass: 'opacity-0 scale-75  -translate-x-full translate-y-0 translate-z-0'
+                  }
+                : props.position === 'right' || props.position === 'topright' || props.position === 'bottomright'
+                ? {
+                      enterFromClass: 'opacity-0 scale-75 translate-x-full translate-y-0 translate-z-0',
+                      enterActiveClass: 'transition-all duration-200 ease-out',
+                      leaveActiveClass: 'transition-all duration-200 ease-out',
+                      leaveToClass: 'opacity-0 scale-75 opacity-0 scale-75 translate-x-full translate-y-0 translate-z-0'
+                  }
+                : {
+                      enterFromClass: 'opacity-0 scale-75',
+                      enterActiveClass: 'transition-all duration-200 ease-out',
+                      leaveActiveClass: 'transition-all duration-200 ease-out',
+                      leaveToClass: 'opacity-0 scale-75'
+                  };
         }
     },
     confirmpopup: {
@@ -447,13 +581,8 @@ const tailwindLight = {
         },
         footer: {
             class: ['text-right px-5 py-5 pt-0 ']
-        }
-        // rejectButton: {
-        //     class: ['bg-transparent text-blue-500 border-transparent', 'text-sm px-2 py-1.5 ml-0 mr-2 w-auto', 'flex items-center cursor-pointer inline-flex overflow-hidden relative text-center select-none user-select-none align-bottom']
-        // },
-        // acceptButton: {
-        //     class: ['text-white bg-blue-500 border-2 border-blue-500', 'text-sm px-2 py-1.5 ml-0 mr-2 w-auto', 'flex items-center cursor-pointer inline-flex overflow-hidden relative text-center select-none user-select-none align-bottom']
-        // }
+        },
+        transition: TRANSITIONS.overlay
     },
     overlaypanel: {
         root: ({ props, state }) => ({
@@ -467,14 +596,19 @@ const tailwindLight = {
         }),
         content: {
             class: ['p-5 items-center flex']
-        }
+        },
+        transition: TRANSITIONS.overlay
     },
     sidebar: {
         root: ({ props, state }) => ({
             class: [
                 'flex flex-col pointer-events-auto relative transform translate-x-0 translate-y-0 translate-z-0 relative transition-transform duration-300',
                 'bg-white text-gray-700 border-0 shadow-lg',
-                { 'h-full w-80': props.position == 'left' || props.position == 'right', 'h-40 w-full': props.position == 'top' || props.position == 'bottom' },
+                {
+                    '!transition-none !transform-none !w-screen !h-screen !max-h-full !top-0 !left-0': props.position == 'full',
+                    'h-full w-80': props.position == 'left' || props.position == 'right',
+                    'h-40 w-full': props.position == 'top' || props.position == 'bottom'
+                },
                 'dark:border dark:border-blue-900/40 dark:bg-gray-900 dark:text-white/80'
             ]
         }),
@@ -498,11 +632,40 @@ const tailwindLight = {
         },
         mask: ({ props, state }) => ({
             class: [
+                console.log(props),
                 'fixed top-0 left-0 w-full h-full flex  pointer-events-auto',
                 'bg-black bg-opacity-40 transition duration-200 z-20 transition-colors',
                 { 'justify-end': props.position == 'right', 'items-start': props.position == 'top', 'items-end': props.position == 'bottom' }
             ]
-        })
+        }),
+        transition: ({ props }) => {
+            return props.position === 'top'
+                ? {
+                      enterFromClass: 'translate-x-0 -translate-y-full translate-z-0',
+                      leaveToClass: 'translate-x-0 -translate-y-full translate-z-0'
+                  }
+                : props.position === 'bottom'
+                ? {
+                      enterFromClass: 'translate-x-0 translate-y-full translate-z-0',
+                      leaveToClass: 'translate-x-0 translate-y-full translate-z-0'
+                  }
+                : props.position === 'left'
+                ? {
+                      enterFromClass: '-translate-x-full translate-y-0 translate-z-0',
+                      leaveToClass: '-translate-x-full translate-y-0 translate-z-0'
+                  }
+                : props.position === 'right'
+                ? {
+                      enterFromClass: 'translate-x-full translate-y-0 translate-z-0',
+                      leaveToClass: 'opacity-0 scale-75 translate-x-full translate-y-0 translate-z-0'
+                  }
+                : {
+                      enterFromClass: 'opacity-0',
+                      enterActiveClass: 'transition-opacity duration-400 ease-in',
+                      leaveActiveClass: 'transition-opacity duration-400 ease-in',
+                      leaveToClass: 'opacity-0'
+                  };
+        }
     },
     toolbar: {
         root: {
@@ -630,6 +793,13 @@ const tailwindLight = {
         },
         closebutton: {
             class: ['w-8 h-8 rounded-full bg-transparent transition duration-200 ease-in-out', 'ml-auto overflow-hidden relative', 'flex items-center justify-center', 'hover:bg-white/30']
+        },
+        transition: {
+            enterFromClass: 'opacity-0 translate-x-0 translate-y-2/4 translate-z-0',
+            enterActiveClass: 'transition-transform transition-opacity duration-300',
+            leaveFromClass: 'max-h-40',
+            leaveActiveClass: 'transition-all duration-500 ease-in',
+            leaveToClass: 'max-h-0 opacity-0 mb-0 overflow-hidden'
         }
     },
     //BUTTONS
@@ -934,7 +1104,8 @@ const tailwindLight = {
         },
         sublist: {
             class: ['block absolute left-full top-0', 'min-w-full z-10', 'py-3 bg-white dark:bg-gray-900 border-0 shadow-md']
-        }
+        },
+        transition: TRANSITIONS.overlay
     },
     inputgroup: {
         root: {
@@ -1052,7 +1223,8 @@ const tailwindLight = {
         },
         hideicon: {
             class: ['absolute top-1/2 -mt-2', 'right-3 text-gray-600 dark:text-white/70']
-        }
+        },
+        transition: TRANSITIONS.overlay
     },
     togglebutton: {
         root: ({ props }) => ({
@@ -1201,7 +1373,8 @@ const tailwindLight = {
         },
         clearicon: {
             class: ['text-gray-500 right-12 -mt-2 absolute top-1/2']
-        }
+        },
+        transition: TRANSITIONS.overlay
     },
     calendar: {
         root: ({ props }) => ({
@@ -1319,7 +1492,8 @@ const tailwindLight = {
         },
         group: {
             class: ['flex-1', 'border-l border-gray-300 pr-0.5 pl-0.5 pt-0 pb-0', 'first:pl-0 first:border-l-0']
-        }
+        },
+        transition: TRANSITIONS.overlay
     },
     listbox: {
         root: ({ props }) => ({
@@ -1485,7 +1659,8 @@ const tailwindLight = {
         },
         clearicon: {
             class: ['text-gray-500 right-12 -mt-2 absolute top-1/2']
-        }
+        },
+        transition: TRANSITIONS.overlay
     },
     textarea: {
         root: ({ context }) => ({
@@ -1520,7 +1695,8 @@ const tailwindLight = {
         },
         wrapper: {
             class: ['max-h-[200px] overflow-auto', 'bg-white dark:bg-gray-900 text-gray-700 dark:text-white/80 border-0 rounded-md shadow-lg']
-        }
+        },
+        transition: TRANSITIONS.overlay
     },
     autocomplete: {
         root: ({ props }) => ({
@@ -1640,7 +1816,8 @@ const tailwindLight = {
         },
         huehandle: {
             class: ['border-solid border-2 cursor-pointer h-2 w-8 left-0 -ml-1 -mt-1 opacity-85 absolute']
-        }
+        },
+        transition: TRANSITIONS.overlay
     },
     editor: {
         toolbar: {
@@ -1714,10 +1891,11 @@ const tailwindLight = {
         }),
         value: ({ props }) => ({
             class: [
-                'transition-width duration-1000 ease-in-out',
-                'items-center border-0 flex h-full justify-center overflow-hidden absolute w-0',
                 'border-0 m-0 bg-blue-500',
-                { 'before:absolute before:top-0 before:left-0 before:bottom-0 before:bg-inherit after:absolute after:top-0 after:left-0 after:bottom-0 after:bg-inherit': props.mode == 'indeterminate' }
+                {
+                    'transition-width duration-1000 ease-in-out absolute items-center border-0 flex h-full justify-center overflow-hidden w-0': props.mode !== 'indeterminate',
+                    'progressbar-value-animate before:absolute before:top-0 before:left-0 before:bottom-0 before:bg-inherit after:absolute after:top-0 after:left-0 after:bottom-0 after:bg-inherit after:delay-1000': props.mode == 'indeterminate'
+                }
             ]
         }),
         label: {
@@ -1732,7 +1910,7 @@ const tailwindLight = {
             class: ['absolute top-0 bottom-0 left-0 right-0 m-auto w-full h-full transform origin-center animate-spin']
         },
         circle: {
-            class: ['text-red-500 stroke-current']
+            class: ['text-red-500 progress-spinner-circle']
         }
     },
     skeleton: {
@@ -1921,7 +2099,8 @@ const tailwindLight = {
         },
         submenuheader: {
             class: ['m-0 p-3 text-gray-700 dark:text-white/80 bg-white dark:bg-gray-900 font-bold rounded-tl-none rounded-tr-none']
-        }
+        },
+        transition: TRANSITIONS.overlay
     },
 
     menubar: {
@@ -2078,7 +2257,8 @@ const tailwindLight = {
         },
         submenu: {
             class: ['p-0 pl-4 m-0 list-none']
-        }
+        },
+        transition: TRANSITIONS.toggleable
     },
     steps: {
         root: {
