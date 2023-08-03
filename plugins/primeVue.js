@@ -565,8 +565,8 @@ const tailwindLight = {
             class: [
                 'bg-white text-gray-700 border-0 rounded-md shadow-lg',
                 'z-40 transform origin-center',
-                'mt-10 absolute left-0 top-0 ',
-                // 'before:absolute before:bottom-0 before:left-1/2 before:transform before:-translate-x-1/2 before:w-0 before:h-0 before:border-t-[10px] before:border-l-[5px] before:border-r-[5px] before:border-transparent before:border-b-[10px] before:border-t-[0] before:border-l-[5px] before:border-r-[5px] before:border-b-[0] before:border-red-500',
+                'mt-3 absolute left-0 top-0',
+                'before:absolute before:w-0 before:-top-3 before:h-0 before:border-transparent before:border-solid before:ml-6 before:border-x-[0.75rem] before:border-b-[0.75rem] before:border-t-0 before:border-b-white dark:before:border-b-gray-900',
                 'dark:border dark:border-blue-900/40 dark:bg-gray-900  dark:text-white/80'
             ]
         }),
@@ -589,8 +589,8 @@ const tailwindLight = {
             class: [
                 'bg-white text-gray-700 border-0 rounded-md shadow-lg',
                 'z-40 transform origin-center',
-                'mt-10 absolute left-0 top-0 ',
-                // 'before:absolute before:bottom-0 before:left-1/2 before:transform before:-translate-x-1/2 before:w-0 before:h-0 before:border-t-[10px] before:border-l-[5px] before:border-r-[5px] before:border-transparent before:border-b-[10px] before:border-t-[0] before:border-l-[5px] before:border-r-[5px] before:border-b-[0] before:border-red-500',
+                'absolute left-0 top-0',
+                'before:absolute before:w-0 before:-top-3 before:h-0 before:border-transparent before:border-solid before:ml-6 before:border-x-[0.75rem] before:border-b-[0.75rem] before:border-t-0 before:border-b-white dark:before:border-b-gray-900',
                 'dark:border dark:border-blue-900/40 dark:bg-gray-900  dark:text-white/80'
             ]
         }),
