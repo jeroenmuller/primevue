@@ -771,7 +771,7 @@ export default {
         }),
         button: {
             root: ({ parent }) => ({
-                class: ['w-16 h-16 min-[0px]:rounded-[50%] justify-center z-10', { 'rotate-45': parent.state.d_visible }]
+                class: ['w-16 !h-16 !rounded-full justify-center z-10', { 'rotate-45': parent.state.d_visible }]
             }),
             label: {
                 class: 'hidden'
@@ -1001,11 +1001,6 @@ export default {
             class: ['block absolute left-full top-0', 'min-w-full z-10', 'py-3 bg-white dark:bg-gray-900 border-0 shadow-md']
         },
         transition: TRANSITIONS.overlay
-    },
-    inputgroup: {
-        root: {
-            class: ['flex items-stretch w-full flex-1']
-        }
     },
     inputmask: {
         root: ({ props, context }) => ({
