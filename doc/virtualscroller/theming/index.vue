@@ -1,7 +1,7 @@
 <template>
     <div class="doc-main">
         <div class="doc-intro">
-            <h1>ProgressBar Theming</h1>
+            <h1>VirtualScroller Theming</h1>
         </div>
         <DocSections :docs="docs" />
     </div>
@@ -10,7 +10,6 @@
 
 <script>
 import StyledDoc from './StyledDoc.vue';
-import UnstyledDoc from './UnstyledDoc.vue';
 
 export default {
     data() {
@@ -20,11 +19,6 @@ export default {
                     id: 'styled',
                     label: 'Styled',
                     component: StyledDoc
-                },
-                {
-                    id: 'unstyled',
-                    label: 'Unstyled',
-                    component: UnstyledDoc
                 }
             ]
         };
