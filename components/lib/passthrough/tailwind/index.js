@@ -1,22 +1,103 @@
-<template>
-    <DocSectionText v-bind="$attrs">
-        <p>The complete API of the Tailwind theme at <i>primevue/tailwind</i> with the default values as a reference.</p>
-    </DocSectionText>
-    <div class="overflow-auto" style="height: 40rem">
-        <DocSectionCode :code="code" hideToggleCode importCode hideCodeSandbox hideStackBlitz />
-    </div>
-</template>
+export const TRANSITIONS = {
+    toggleable: {
+        enterFromClass: 'max-h-0',
+        enterActiveClass: 'overflow-hidden transition-all duration-500 ease-in-out',
+        enterToClass: 'max-h-40	',
+        leaveFromClass: 'max-h-40',
+        leaveActiveClass: 'overflow-hidden transition-all duration-500 ease-in',
+        leaveToClass: 'max-h-0'
+    },
+    overlay: {
+        enterFromClass: 'opacity-0 scale-75',
+        enterActiveClass: 'transition-transform transition-opacity duration-150 ease-in',
+        leaveActiveClass: 'transition-opacity duration-150 ease-linear',
+        leaveToClass: 'opacity-0'
+    }
+};
 
-<script>
 export default {
-    data() {
-        return {
-            code: {
-                basic: `export default {
+    global: {
+        css: `
+        *[data-pd-ripple="true"]{
+            overflow: hidden;
+            position: relative;
+        }
+        span[data-p-ink-active="true"]{
+            animation: ripple 0.4s linear;
+        }
+        @keyframes ripple {
+            100% {
+                opacity: 0;
+                transform: scale(2.5);
+            }
+        }
+
+        .progress-spinner-circle {
+            stroke-dasharray: 89, 200;
+            stroke-dashoffset: 0;
+            animation: p-progress-spinner-dash 1.5s ease-in-out infinite, p-progress-spinner-color 6s ease-in-out infinite;
+            stroke-linecap: round;
+        }
+
+        @keyframes p-progress-spinner-dash{
+            0% {
+                stroke-dasharray: 1, 200;
+                stroke-dashoffset: 0;
+            }
+            
+            50% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -35px;
+            }
+            100% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -124px;
+            }
+        }
+        @keyframes p-progress-spinner-color {
+            100%, 0% {
+                stroke: #ff5757;
+            }
+            40% {
+                stroke: #696cff;
+            }
+            66% {
+                stroke: #1ea97c;
+            }
+            80%, 90% {
+                stroke: #cc8925;
+            }
+        }
+
+        .progressbar-value-animate::after {
+            will-change: left, right;
+            animation: p-progressbar-indeterminate-anim-short 2.1s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+        }
+        .progressbar-value-animate::before {
+            will-change: left, right;
+            animation: p-progressbar-indeterminate-anim 2.1s cubic-bezier(0.65, 0.815, 0.735, 0.395) infinite;
+        }
+        @keyframes p-progressbar-indeterminate-anim {
+            0% {
+                left: -35%;
+                right: 100%;
+            }
+            60% {
+                left: 100%;
+                right: -90%;
+            }
+            100% {
+                left: 100%;
+                right: -90%;
+            }
+        }
+`
+    },
     directives: {
         ripple: {
             root: {
-                class: ['block absolute bg-white bg-opacity-50 rounded-full transform scale-0 pointer-events-none']
+                class: ['block absolute bg-white/50 rounded-full pointer-events-none'],
+                style: 'transform: scale(0)'
             }
         },
         badge: {
@@ -76,9 +157,7 @@ export default {
                 { 'p-5': !props.toggleable, 'py-3 px-5': props.toggleable } // condition
             ]
         }),
-        title: {
-            class: ['leading-none font-bold']
-        },
+        title: 'leading-none font-bold',
         toggler: {
             class: [
                 'inline-flex items-center justify-center overflow-hidden relative no-underline', // alignments
@@ -87,24 +166,19 @@ export default {
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]' // focus
             ]
         },
-        togglerIcon: {
-            class: ['inline-block']
-        },
+        togglerIcon: 'inline-block',
         content: {
             class: [
                 'p-5 border border-gray-300 bg-white text-gray-700 border-t-0 last:rounded-br-lg last:rounded-bl-lg',
                 'dark:bg-gray-900 dark:border-blue-900/40 dark:text-white/80' // Dark mode
-            ] // padding, borders, and colors
-        }
+            ]
+        },
+        transition: TRANSITIONS.toggleable
     },
     accordion: {
-        root: {
-            class: ['mb-1']
-        },
+        root: 'mb-1',
         accordiontab: {
-            root: {
-                class: ['mb-1']
-            },
+            root: 'mb-1',
             header: ({ props }) => ({
                 class: [
                     { 'select-none pointer-events-none cursor-default opacity-60': props?.disabled } // Condition
@@ -121,18 +195,15 @@ export default {
                     { 'rounded-br-md rounded-bl-md': !context.active, 'rounded-br-0 rounded-bl-0 text-gray-800': context.active } // Condition
                 ]
             }),
-            headerIcon: {
-                class: ['inline-block mr-2']
-            },
-            headerTitle: {
-                class: ['leading-none']
-            },
+            headerIcon: 'inline-block mr-2',
+            headerTitle: 'leading-none',
             content: {
                 class: [
                     'p-5 border border-gray-300 bg-white text-gray-700 border-t-0 rounded-tl-none rounded-tr-none rounded-br-lg rounded-bl-lg',
                     'dark:bg-gray-900 dark:border-blue-900/40 dark:text-white/80' // Dark mode
                 ]
-            }
+            },
+            transition: TRANSITIONS.toggleable
         }
     },
     card: {
@@ -142,24 +213,16 @@ export default {
                 'dark:bg-gray-900 dark:text-white ' //dark
             ]
         },
-        body: {
-            class: 'p-5' // Padding.
-        },
-        title: {
-            class: 'text-2xl font-bold mb-2' // Font size, font weight, and margin bottom.
-        },
+        body: 'p-5', // Padding.
+        title: 'text-2xl font-bold mb-2', // Font size, font weight, and margin bottom.
         subtitle: {
             class: [
                 'font-normal mb-2 text-gray-600', // Font weight, margin bottom, and text color.
                 'dark:text-white/60 ' //dark
             ]
         },
-        content: {
-            class: 'py-5' // Vertical padding.
-        },
-        footer: {
-            class: 'pt-5' // Top padding.
-        }
+        content: 'py-5', // Vertical padding.
+        footer: 'pt-5' // Top padding.
     },
     divider: {
         root: ({ props }) => ({
@@ -167,22 +230,17 @@ export default {
                 'flex relative', // alignments.
                 {
                     'w-full my-5 mx-0 py-0 px-5 before:block before:left-0 before:absolute before:top-1/2 before:w-full before:border-t before:border-gray-300 before:dark:border-blue-900/40': props.layout == 'horizontal', // Padding and borders for horizontal layout.
-                    'justify-center min-h-full mx-4 md:mx-5 py-5 before:block before:min-h-full before:absolute before:left-1/2 before:top-0 before:transform before:-translate-x-1/2 before:border-l before:border-gray-300 before:dark:border-blue-900/40':
+                    'min-h-full mx-4 md:mx-5 py-5 before:block before:min-h-full before:absolute before:left-1/2 before:top-0 before:transform before:-translate-x-1/2 before:border-l before:border-gray-300 before:dark:border-blue-900/40':
                         props.layout == 'vertical' // Padding and borders for vertical layout.
                 },
-                { 'before:border-solid': props.type == 'solid', 'before:border-dotted': props.type == 'dotted', 'before:border-dashed': props.type == 'dashed' }, // Border type condition.
                 {
-                    'justify-center items-center': props.align == 'center' || props.align == null, // Alignment condition for center or default alignment.
-                    'justify-end items-center': props.align == 'right', // Alignment condition for right alignment.
-                    'justify-start items-center': props.align == 'left', // Alignment condition for left alignment.
-                    'items-start': props.align == 'top', // Alignment condition for top alignment.
-                    'items-end': props.align == 'bottom' // Alignment condition for bottom alignment.
-                }
+                    'before:border-solid': props.type == 'solid',
+                    'before:border-dotted': props.type == 'dotted',
+                    'before:border-dashed': props.type == 'dashed'
+                } // Border type condition.
             ]
         }),
-        content: {
-            class: 'px-1 bg-white z-10 dark:bg-gray-900' // Padding and background color.
-        }
+        content: 'px-1 bg-white z-10 dark:bg-gray-900' // Padding and background color.
     },
     fieldset: {
         root: {
@@ -210,23 +268,14 @@ export default {
                 }
             ]
         }),
-        togglerIcon: {
-            class: 'mr-2 inline-block' // Margin and display style.
-        },
-        legendTitle: {
-            class: 'flex items-center justify-center leading-none' // alignments, and leading style.
-        },
-        content: {
-            class: 'p-5' // Padding.
-        }
+        togglerIcon: 'mr-2 inline-block', // Margin and display style.
+        legendTitle: 'flex items-center justify-center leading-none', // alignments, and leading style.
+        content: 'p-5', // Padding.
+        transition: TRANSITIONS.toggleable
     },
     scrollpanel: {
-        wrapper: {
-            class: 'overflow-hidden relative float-left h-full w-full z-[1]'
-        },
-        content: {
-            class: 'box-border h-[calc(100%+18px)] overflow-scroll pr-[18px] pb-[18px] pl-0 pt-0 relative scrollbar-none w-[calc(100%+18px)] [&::-webkit-scrollbar]:hidden'
-        },
+        wrapper: 'overflow-hidden relative float-left h-full w-full z-[1]',
+        content: 'box-border h-[calc(100%+18px)] overflow-scroll pr-[18px] pb-[18px] pl-0 pt-0 relative scrollbar-none w-[calc(100%+18px)] [&::-webkit-scrollbar]:hidden',
         barX: {
             class: ['relative bg-gray-100 invisible rounded cursor-pointer h-[9px] bottom-0 z-[2]', 'transition duration-[250ms] ease-linear']
         },
@@ -235,15 +284,13 @@ export default {
         }
     },
     tabview: {
-        navContainer: ({ props, context, parent }) => ({
+        navContainer: ({ props }) => ({
             class: [
                 'relative', // Relative positioning.
                 { 'overflow-hidden': props.scrollable } // Overflow condition.
             ]
         }),
-        navContent: {
-            class: ['overflow-y-hidden overscroll-contain overscroll-auto scroll-smooth [&::-webkit-scrollbar]:hidden'] // Overflow and scrollbar styles.
-        },
+        navContent: 'overflow-y-hidden overscroll-contain overscroll-auto scroll-smooth [&::-webkit-scrollbar]:hidden', // Overflow and scrollbar styles.
         previousButton: {
             class: ['h-full flex items-center justify-center absolute top-0 z-20', 'left-0', 'bg-white text-blue-500 w-12 shadow-md rounded-none', 'dark:bg-gray-900 dark:border-blue-900/40 dark:text-white/80 ]'] // Flex and absolute positioning styles.
         },
@@ -280,35 +327,62 @@ export default {
         }
     },
     splitter: {
-        root: {
-            class: ['border border-solid border-gray-300 dark:border-blue-900/40 bg-white dark:bg-gray-900 rounded-lg text-gray-700 dark:text-white/80']
-        },
+        root: ({ context }) => ({
+            class: [
+                'bg-white dark:bg-gray-900 rounded-lg text-gray-700 dark:text-white/80',
+                {
+                    'border border-solid border-gray-300 dark:border-blue-900/40': !context.nested
+                }
+            ]
+        }),
 
         gutter: ({ props }) => ({
-            class: ['flex items-center justify-center  flex-shrink-0', 'transition-all duration-200 bg-gray-100 dark:bg-gray-800', { 'cursor-col-resize': props.layout == 'horizontal', 'cursor-row-resize': props.layout !== 'horizontal' }]
+            class: [
+                'flex items-center justify-center shrink-0',
+                'transition-all duration-200 bg-gray-100 dark:bg-gray-800',
+                {
+                    'cursor-col-resize': props.layout == 'horizontal',
+                    'cursor-row-resize': props.layout !== 'horizontal'
+                }
+            ]
         }),
         gutterhandler: ({ props }) => ({
-            class: ['bg-gray-300 dark:bg-gray-600 transition-all duration-200', { 'h-7': props.layout == 'horizontal', 'w-7 h-2': props.layout !== 'horizontal' }]
+            class: [
+                'bg-gray-300 dark:bg-gray-600 transition-all duration-200',
+                {
+                    'h-7': props.layout == 'horizontal',
+                    'w-7 h-2': props.layout !== 'horizontal'
+                }
+            ]
         })
     },
     splitterpanel: {
-        root: ({ props }) => ({
-            class: ['flex-grow', 'flex justify-center items-center']
+        root: ({ context }) => ({
+            class: [
+                'grow flex',
+                {
+                    'justify-center items-center': !context.nested
+                }
+            ]
         })
     },
     dialog: {
-        root: ({ props, state }) => ({
-            class: ['rounded-lg shadow-lg border-0', 'flex flex-col max-h-90 transform scale-100', 'm-0  w-[50vw] z-40 relative', '', 'dark:border dark:border-blue-900/40']
+        root: ({ state }) => ({
+            class: [
+                'rounded-lg shadow-lg border-0',
+                'max-h-90 transform scale-100',
+                'm-0 w-[50vw]',
+                'dark:border dark:border-blue-900/40',
+                {
+                    'transition-none transform-none !w-screen !h-screen !max-h-full !top-0 !left-0': state.maximized
+                }
+            ]
         }),
         header: {
-            class: ['flex items-center justify-between flex-shrink-0', 'bg-white text-gray-800 border-t-0  rounded-tl-lg rounded-tr-lg p-6', 'dark:bg-gray-900  dark:text-white/80']
+            class: ['flex items-center justify-between shrink-0', 'bg-white text-gray-800 border-t-0  rounded-tl-lg rounded-tr-lg p-6', 'dark:bg-gray-900  dark:text-white/80']
         },
-        headerTitle: {
-            class: ['font-bold text-lg']
-        },
-        headerIcons: {
-            class: ['flex items-center']
-        },
+        headerTitle: 'font-bold text-lg',
+        headerIcons: 'flex items-center',
         closeButton: {
             class: [
                 'flex items-center justify-center overflow-hidden relative',
@@ -318,68 +392,100 @@ export default {
                 'dark:hover:text-white/80 dark:hover:border-transparent dark:hover:bg-gray-800/80 dark:focus:shadow-[inset_0_0_0_0.2rem_rgba(147,197,253,0.5)]'
             ]
         },
-        closeButtonIcon: {
-            class: ['w-4 h-4 inline-block']
-        },
-        content: {
-            class: ['overflow-y-auto', 'bg-white text-gray-700 px-6 pb-8 pt-0', 'rounded-bl-lg rounded-br-lg', 'dark:bg-gray-900  dark:text-white/80 ']
-        },
+        closeButtonIcon: 'w-4 h-4 inline-block',
+        content: ({ state }) => ({
+            class: [
+                'overflow-y-auto',
+                'bg-white text-gray-700 px-6 pb-8 pt-0',
+                'rounded-bl-lg rounded-br-lg',
+                'dark:bg-gray-900  dark:text-white/80 ',
+                {
+                    grow: state.maximized
+                }
+            ]
+        }),
         footer: {
-            class: ['flex-shrink-0 ', 'border-t-0 bg-white text-gray-700 px-6 pb-6 text-right rounded-b-lg', 'dark:bg-gray-900  dark:text-white/80']
+            class: ['shrink-0 ', 'border-t-0 bg-white text-gray-700 px-6 pb-6 text-right rounded-b-lg', 'dark:bg-gray-900  dark:text-white/80']
         },
-        mask: {
-            class: ['fixed top-0 left-0 w-full h-full flex items-center justify-center pointer-events-auto', 'bg-black bg-opacity-40 transition duration-200 z-20']
+        mask: ({ props }) => ({
+            class: ['transition duration-200', { 'bg-black/40': props.modal }]
+        }),
+        transition: ({ props }) => {
+            return props.position === 'top'
+                ? {
+                      enterFromClass: 'opacity-0 scale-75 translate-x-0 -translate-y-full translate-z-0',
+                      enterActiveClass: 'transition-all duration-200 ease-out',
+                      leaveActiveClass: 'transition-all duration-200 ease-out',
+                      leaveToClass: 'opacity-0 scale-75 translate-x-0 -translate-y-full translate-z-0'
+                  }
+                : props.position === 'bottom'
+                ? {
+                      enterFromClass: 'opacity-0 scale-75 translate-y-full',
+                      enterActiveClass: 'transition-all duration-200 ease-out',
+                      leaveActiveClass: 'transition-all duration-200 ease-out',
+                      leaveToClass: 'opacity-0 scale-75 translate-x-0 translate-y-full translate-z-0'
+                  }
+                : props.position === 'left' || props.position === 'topleft' || props.position === 'bottomleft'
+                ? {
+                      enterFromClass: 'opacity-0 scale-75 -translate-x-full translate-y-0 translate-z-0',
+                      enterActiveClass: 'transition-all duration-200 ease-out',
+                      leaveActiveClass: 'transition-all duration-200 ease-out',
+                      leaveToClass: 'opacity-0 scale-75  -translate-x-full translate-y-0 translate-z-0'
+                  }
+                : props.position === 'right' || props.position === 'topright' || props.position === 'bottomright'
+                ? {
+                      enterFromClass: 'opacity-0 scale-75 translate-x-full translate-y-0 translate-z-0',
+                      enterActiveClass: 'transition-all duration-200 ease-out',
+                      leaveActiveClass: 'transition-all duration-200 ease-out',
+                      leaveToClass: 'opacity-0 scale-75 opacity-0 scale-75 translate-x-full translate-y-0 translate-z-0'
+                  }
+                : {
+                      enterFromClass: 'opacity-0 scale-75',
+                      enterActiveClass: 'transition-all duration-200 ease-out',
+                      leaveActiveClass: 'transition-all duration-200 ease-out',
+                      leaveToClass: 'opacity-0 scale-75'
+                  };
         }
     },
     confirmpopup: {
-        root: ({ props, state }) => ({
+        root: {
             class: [
                 'bg-white text-gray-700 border-0 rounded-md shadow-lg',
                 'z-40 transform origin-center',
-                'mt-10 absolute left-0 top-0 ',
-                // 'before:absolute before:bottom-0 before:left-1/2 before:transform before:-translate-x-1/2 before:w-0 before:h-0 before:border-t-[10px] before:border-l-[5px] before:border-r-[5px] before:border-transparent before:border-b-[10px] before:border-t-[0] before:border-l-[5px] before:border-r-[5px] before:border-b-[0] before:border-red-500',
+                'mt-3 absolute left-0 top-0',
+                'before:absolute before:w-0 before:-top-3 before:h-0 before:border-transparent before:border-solid before:ml-6 before:border-x-[0.75rem] before:border-b-[0.75rem] before:border-t-0 before:border-b-white dark:before:border-b-gray-900',
                 'dark:border dark:border-blue-900/40 dark:bg-gray-900  dark:text-white/80'
             ]
-        }),
-        content: {
-            class: ['p-5 items-center flex']
         },
-        icon: {
-            class: ['text-2xl']
-        },
-        message: {
-            class: ['ml-4']
-        },
-        footer: {
-            class: ['text-right px-5 py-5 pt-0 ']
-        }
-        // rejectButton: {
-        //     class: ['bg-transparent text-blue-500 border-transparent', 'text-sm px-2 py-1.5 ml-0 mr-2 w-auto', 'flex items-center cursor-pointer inline-flex overflow-hidden relative text-center select-none user-select-none align-bottom']
-        // },
-        // acceptButton: {
-        //     class: ['text-white bg-blue-500 border-2 border-blue-500', 'text-sm px-2 py-1.5 ml-0 mr-2 w-auto', 'flex items-center cursor-pointer inline-flex overflow-hidden relative text-center select-none user-select-none align-bottom']
-        // }
+        content: 'p-5 items-center flex',
+        icon: 'text-2xl',
+        message: 'ml-4',
+        footer: 'text-right px-5 py-5 pt-0 ',
+        transition: TRANSITIONS.overlay
     },
     overlaypanel: {
-        root: ({ props, state }) => ({
+        root: {
             class: [
                 'bg-white text-gray-700 border-0 rounded-md shadow-lg',
                 'z-40 transform origin-center',
-                'mt-10 absolute left-0 top-0 ',
-                // 'before:absolute before:bottom-0 before:left-1/2 before:transform before:-translate-x-1/2 before:w-0 before:h-0 before:border-t-[10px] before:border-l-[5px] before:border-r-[5px] before:border-transparent before:border-b-[10px] before:border-t-[0] before:border-l-[5px] before:border-r-[5px] before:border-b-[0] before:border-red-500',
+                'absolute left-0 top-0',
+                'before:absolute before:w-0 before:-top-3 before:h-0 before:border-transparent before:border-solid before:ml-6 before:border-x-[0.75rem] before:border-b-[0.75rem] before:border-t-0 before:border-b-white dark:before:border-b-gray-900',
                 'dark:border dark:border-blue-900/40 dark:bg-gray-900  dark:text-white/80'
             ]
-        }),
-        content: {
-            class: ['p-5 items-center flex']
-        }
+        },
+        content: 'p-5 items-center flex',
+        transition: TRANSITIONS.overlay
     },
     sidebar: {
-        root: ({ props, state }) => ({
+        root: ({ props }) => ({
             class: [
                 'flex flex-col pointer-events-auto relative transform translate-x-0 translate-y-0 translate-z-0 relative transition-transform duration-300',
                 'bg-white text-gray-700 border-0 shadow-lg',
-                { 'h-full w-80': props.position == 'left' || props.position == 'right', 'h-40 w-full': props.position == 'top' || props.position == 'bottom' },
+                {
+                    '!transition-none !transform-none !w-screen !h-screen !max-h-full !top-0 !left-0': props.position == 'full',
+                    'h-full w-80': props.position == 'left' || props.position == 'right',
+                    'h-40 w-full': props.position == 'top' || props.position == 'bottom'
+                },
                 'dark:border dark:border-blue-900/40 dark:bg-gray-900 dark:text-white/80'
             ]
         }),
@@ -395,74 +501,81 @@ export default {
                 'dark:hover:text-white/80 dark:hover:text-white/80 dark:hover:border-transparent dark:hover:bg-gray-800/80 dark:focus:shadow-[inset_0_0_0_0.2rem_rgba(147,197,253,0.5)]'
             ]
         },
-        closeButtonIcon: {
-            class: ['w-4 h-4 inline-block']
-        },
+        closeButtonIcon: 'w-4 h-4 inline-block',
         content: {
-            class: ['p-5 pt-0 h-full w-full', 'flex-grow overflow-y-auto']
+            class: ['p-5 pt-0 h-full w-full', 'grow overflow-y-auto']
         },
-        mask: ({ props, state }) => ({
-            class: [
-                'fixed top-0 left-0 w-full h-full flex  pointer-events-auto',
-                'bg-black bg-opacity-40 transition duration-200 z-20 transition-colors',
-                { 'justify-end': props.position == 'right', 'items-start': props.position == 'top', 'items-end': props.position == 'bottom' }
-            ]
-        })
+        mask: {
+            class: ['flex pointer-events-auto', 'bg-black bg-opacity-40 transition duration-200 z-20 transition-colors']
+        },
+        transition: ({ props }) => {
+            return props.position === 'top'
+                ? {
+                      enterFromClass: 'translate-x-0 -translate-y-full translate-z-0',
+                      leaveToClass: 'translate-x-0 -translate-y-full translate-z-0'
+                  }
+                : props.position === 'bottom'
+                ? {
+                      enterFromClass: 'translate-x-0 translate-y-full translate-z-0',
+                      leaveToClass: 'translate-x-0 translate-y-full translate-z-0'
+                  }
+                : props.position === 'left'
+                ? {
+                      enterFromClass: '-translate-x-full translate-y-0 translate-z-0',
+                      leaveToClass: '-translate-x-full translate-y-0 translate-z-0'
+                  }
+                : props.position === 'right'
+                ? {
+                      enterFromClass: 'translate-x-full translate-y-0 translate-z-0',
+                      leaveToClass: 'opacity-0 scale-75 translate-x-full translate-y-0 translate-z-0'
+                  }
+                : {
+                      enterFromClass: 'opacity-0',
+                      enterActiveClass: 'transition-opacity duration-400 ease-in',
+                      leaveActiveClass: 'transition-opacity duration-400 ease-in',
+                      leaveToClass: 'opacity-0'
+                  };
+        }
     },
     toolbar: {
         root: {
             class: ['flex items-center justify-between flex-wrap', 'bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-blue-900/40  p-5 rounded-md gap-2']
         },
-        start: {
-            class: ['flex items-center']
-        },
-        center: {
-            class: ['flex items-center']
-        },
-        end: {
-            class: ['flex items-center']
-        }
+        start: 'flex items-center',
+        center: 'flex items-center',
+        end: 'flex items-center'
     },
-
     //UPLOAD
-
     fileupload: {
-        input: {
-            class: ['hidden']
-        },
+        input: 'hidden',
         buttonbar: {
             class: ['flex flex-wrap', 'bg-gray-50 dark:bg-gray-800 p-5 border border-solid border-gray-300 dark:border-blue-900/40 text-gray-700 dark:text-white/80 rounded-tr-lg rounded-tl-lg gap-2 border-b-0']
         },
         chooseButton: {
             class: ['text-white bg-blue-500 border border-blue-500 p-3 px-5 rounded-md text-base', 'overflow-hidden relative']
         },
-        chooseIcon: {
-            class: ['mr-2 inline-block']
+        chooseIcon: 'mr-2 inline-block',
+        chooseButtonLabel: 'flex-1 font-bold',
+        uploadbutton: {
+            icon: 'mr-2'
         },
-        chooseButtonLabel: {
-            class: ['flex-1 font-bold']
+        cancelbutton: {
+            icon: 'mr-2'
         },
-        content: ({ props }) => ({
+        content: {
             class: ['relative', 'bg-white dark:bg-gray-900 p-8 border border-gray-300 dark:border-blue-900/40 text-gray-700 dark:text-white/80 rounded-b-lg']
-        }),
+        },
         file: {
             class: ['flex items-center flex-wrap', 'p-4 border border-gray-300 dark:border-blue-900/40 rounded gap-2 mb-2', 'last:mb-0']
         },
-        thumbnail: {
-            class: ['flex-shrink-0']
-        },
-        fileName: {
-            class: ['mb-2']
-        },
-        fileSize: {
-            class: ['mr-2']
-        }
+        thumbnail: 'shrink-0',
+        fileName: 'mb-2',
+        fileSize: 'mr-2',
+        uploadicon: 'mr-2'
     },
-
     //Messages
-
     message: {
-        root: ({ props, context }) => ({
+        root: ({ props }) => ({
             class: [
                 'my-4 rounded-md',
                 {
@@ -473,21 +586,17 @@ export default {
                 }
             ]
         }),
-        wrapper: {
-            class: ['flex items-center py-5 px-7']
-        },
+        wrapper: 'flex items-center py-5 px-7',
         icon: {
             class: ['w-6 h-6', 'text-lg mr-2']
         },
-        text: {
-            class: ['text-base font-normal']
-        },
+        text: 'text-base font-normal',
         button: {
             class: ['w-8 h-8 rounded-full bg-transparent transition duration-200 ease-in-out', 'ml-auto overflow-hidden relative', 'flex items-center justify-center', 'hover:bg-white/30']
         }
     },
     inlinemessage: {
-        root: ({ props, context }) => ({
+        root: ({ props }) => ({
             class: [
                 'inline-flex items-center justify-center align-top',
                 'p-3 m-0 rounded-md',
@@ -499,15 +608,13 @@ export default {
                 }
             ]
         }),
-        icon: {
-            class: ['text-base mr-2']
-        }
+        icon: 'text-base mr-2'
     },
     toast: {
-        root: ({ props, context }) => ({
+        root: {
             class: ['w-96', 'opacity-90']
-        }),
-        container: ({ props, context }) => ({
+        },
+        container: ({ props }) => ({
             class: [
                 'my-4 rounded-md w-full',
                 {
@@ -518,55 +625,53 @@ export default {
                 }
             ]
         }),
-        content: {
-            class: ['flex items-center py-5 px-7']
-        },
+        content: 'flex items-center py-5 px-7',
         icon: {
             class: ['w-6 h-6', 'text-lg mr-2']
         },
-        text: {
-            class: ['text-base font-normal flex flex-col flex-1 flex-grow-1 flex-shrink-1 ml-4']
-        },
-        summary: {
-            class: ['font-bold block']
-        },
-        detail: {
-            class: ['mt-1 block']
-        },
+        text: 'text-base font-normal flex flex-col flex-1 grow shrink ml-4',
+        summary: 'font-bold block',
+        detail: 'mt-1 block',
         closebutton: {
             class: ['w-8 h-8 rounded-full bg-transparent transition duration-200 ease-in-out', 'ml-auto overflow-hidden relative', 'flex items-center justify-center', 'hover:bg-white/30']
+        },
+        transition: {
+            enterFromClass: 'opacity-0 translate-x-0 translate-y-2/4 translate-z-0',
+            enterActiveClass: 'transition-transform transition-opacity duration-300',
+            leaveFromClass: 'max-h-40',
+            leaveActiveClass: 'transition-all duration-500 ease-in',
+            leaveToClass: 'max-h-0 opacity-0 mb-0 overflow-hidden'
         }
     },
     //BUTTONS
     button: {
         root: ({ props, context }) => ({
             class: [
-                'items-center cursor-pointer inline-flex overflow-hidden relative select-none text-center align-bottom',
+                'items-center cursor-pointer inline-flex overflow-hidden relative select-none text-center align-bottom h-full',
                 'transition duration-200 ease-in-out',
-                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_4px_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_4px_rgba(147,197,253,0.5)]',
+                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_2px_rgba(255,255,255,1),0_0_0_4px_rgba(157,193,251,1),0_1px_2px_0_rgba(0,0,0,1)] dark:focus:shadow-[0_0_0_2px_rgba(28,33,39,1),0_0_0_4px_rgba(147,197,253,0.7),0_1px_2px_0_rgba(0,0,0,0)]', // Primary button focus
                 {
-                    'text-white bg-blue-500 border border-blue-500 hover:bg-blue-600 hover:border-blue-600': !props.link && props.severity == null && !props.text && !props.outlined && !props.plain,
+                    'text-white bg-blue-500 border border-blue-500 hover:bg-blue-600 hover:border-blue-600': !props.link && props.severity === null && !props.text && !props.outlined && !props.plain,
                     'text-blue-600 bg-transparent border-transparent': props.link
                 },
                 {
-                    'text-white bg-gray-500 border border-gray-500 hover:bg-gray-600 hover:border-gray-600': props.severity == 'secondary' && !props.text && !props.outlined && !props.plain,
-                    'text-white bg-green-500 border border-green-500 hover:bg-green-600 hover:border-green-600': props.severity == 'success' && !props.text && !props.outlined && !props.plain,
-                    'text-white bg-blue-500 border border-blue-500 hover:bg-blue-600 hover:border-blue-600': props.severity == 'info' && !props.text && !props.outlined && !props.plain,
-                    'text-white bg-orange-500 border border-orange-500 hover:bg-orange-600 hover:border-orange-600': props.severity == 'warning' && !props.text && !props.outlined && !props.plain,
-                    'text-white bg-purple-500 border border-purple-500 hover:bg-purple-600 hover:border-purple-600': props.severity == 'help' && !props.text && !props.outlined && !props.plain,
-                    'text-white bg-red-500 border border-red-500 hover:bg-red-600 hover:border-red-600': props.severity == 'danger' && !props.text && !props.outlined && !props.plain
+                    'text-white bg-gray-500 border border-gray-500 hover:bg-gray-600 hover:border-gray-600': props.severity === 'secondary' && !props.text && !props.outlined && !props.plain,
+                    'text-white bg-green-500 border border-green-500 hover:bg-green-600 hover:border-green-600': props.severity === 'success' && !props.text && !props.outlined && !props.plain,
+                    'text-white bg-blue-500 border border-blue-500 hover:bg-blue-600 hover:border-blue-600': props.severity === 'info' && !props.text && !props.outlined && !props.plain,
+                    'text-white bg-orange-500 border border-orange-500 hover:bg-orange-600 hover:border-orange-600': props.severity === 'warning' && !props.text && !props.outlined && !props.plain,
+                    'text-white bg-purple-500 border border-purple-500 hover:bg-purple-600 hover:border-purple-600': props.severity === 'help' && !props.text && !props.outlined && !props.plain,
+                    'text-white bg-red-500 border border-red-500 hover:bg-red-600 hover:border-red-600': props.severity === 'danger' && !props.text && !props.outlined && !props.plain
                 },
                 { 'shadow-lg': props.raised },
                 { 'rounded-md': !props.rounded, 'rounded-full': props.rounded },
                 {
                     'bg-transparent border-transparent': props.text && !props.plain,
-                    'text-blue-500 hover:bg-blue-300/20': props.text && props.severity == null && !props.plain,
-                    'text-gray-500 hover:bg-gray-300/20': props.text && props.severity == 'secondary' && !props.plain,
-                    'text-green-500 hover:bg-green-300/20': props.text && props.severity == 'success' && !props.plain,
-                    'text-blue-500 hover:bg-blue-300/20': props.text && props.severity == 'info' && !props.plain,
-                    'text-orange-500 hover:bg-orange-300/20': props.text && props.severity == 'warning' && !props.plain,
-                    'text-purple-500 hover:bg-purple-300/20': props.text && props.severity == 'help' && !props.plain,
-                    'text-red-500 hover:bg-red-300/20': props.text && props.severity == 'danger' && !props.plain
+                    'text-blue-500 hover:bg-blue-300/20': props.text && (props.severity === null || props.severity === 'info') && !props.plain,
+                    'text-gray-500 hover:bg-gray-300/20': props.text && props.severity === 'secondary' && !props.plain,
+                    'text-green-500 hover:bg-green-300/20': props.text && props.severity === 'success' && !props.plain,
+                    'text-orange-500 hover:bg-orange-300/20': props.text && props.severity === 'warning' && !props.plain,
+                    'text-purple-500 hover:bg-purple-300/20': props.text && props.severity === 'help' && !props.plain,
+                    'text-red-500 hover:bg-red-300/20': props.text && props.severity === 'danger' && !props.plain
                 },
                 { 'shadow-lg': props.raised && props.text },
                 {
@@ -576,173 +681,102 @@ export default {
                 },
                 {
                     'bg-transparent border': props.outlined && !props.plain,
-                    'text-blue-500 border border-blue-500 hover:bg-blue-300/20': props.outlined && props.severity == null && !props.plain,
-                    'text-gray-500 border border-gray-500 hover:bg-gray-300/20': props.outlined && props.severity == 'secondary' && !props.plain,
-                    'text-green-500 border border-green-500 hover:bg-green-300/20': props.outlined && props.severity == 'success' && !props.plain,
-                    'text-blue-500 border border-blue-500 hover:bg-blue-300/20': props.outlined && props.severity == 'info' && !props.plain,
-                    'text-orange-500 border border-orange-500 hover:bg-orange-300/20': props.outlined && props.severity == 'warning' && !props.plain,
-                    'text-purple-500 border border-purple-500 hover:bg-purple-300/20': props.outlined && props.severity == 'help' && !props.plain,
-                    'text-red-500 border border-red-500 hover:bg-red-300/20': props.outlined && props.severity == 'danger' && !props.plain
+                    'text-blue-500 border border-blue-500 hover:bg-blue-300/20': props.outlined && (props.severity === null || props.severity === 'info') && !props.plain,
+                    'text-gray-500 border border-gray-500 hover:bg-gray-300/20': props.outlined && props.severity === 'secondary' && !props.plain,
+                    'text-green-500 border border-green-500 hover:bg-green-300/20': props.outlined && props.severity === 'success' && !props.plain,
+                    'text-orange-500 border border-orange-500 hover:bg-orange-300/20': props.outlined && props.severity === 'warning' && !props.plain,
+                    'text-purple-500 border border-purple-500 hover:bg-purple-300/20': props.outlined && props.severity === 'help' && !props.plain,
+                    'text-red-500 border border-red-500 hover:bg-red-300/20': props.outlined && props.severity === 'danger' && !props.plain
                 },
-                { 'px-4 py-3 text-base': props.size == null, 'text-xs py-2 px-3': props.size == 'small', 'text-xl py-3 px-4': props.size == 'large' }
+                { 'px-4 py-3 text-base': props.size === null, 'text-xs py-2 px-3': props.size === 'small', 'text-xl py-3 px-4': props.size === 'large' },
+                { 'opacity-60 pointer-events-none cursor-default': context.disabled }
             ]
         }),
         label: ({ props }) => ({
-            class: ['flex-1', 'duration-200', 'font-bold', { 'hover:underline': props.link }]
+            class: [
+                'flex-1',
+                'duration-200',
+                'font-bold',
+                {
+                    'hover:underline': props.link
+                }
+            ]
         }),
         icon: ({ props }) => ({
             class: [
                 'mx-0',
-                { 'mr-2': props.iconPos == 'left' && props.label != null, 'ml-2': props.iconPos == 'right' && props.label != null, 'mb-2': props.iconPos == 'top' && props.label != null, 'mt-2': props.iconPos == 'bottom' && props.label != null }
+                {
+                    'mr-2': props.iconPos == 'left' && props.label != null,
+                    'ml-2': props.iconPos == 'right' && props.label != null,
+                    'mb-2': props.iconPos == 'top' && props.label != null,
+                    'mt-2': props.iconPos == 'bottom' && props.label != null
+                }
             ]
         }),
         badge: ({ props }) => ({
-            class: [{ 'ml-2 w-4 h-4 leading-none': props.badge }]
+            class: [{ 'ml-2 w-4 h-4 leading-none flex items-center justify-center': props.badge }]
         })
     },
     speeddial: {
-        root: ({ props }) => ({
-            class: [
-                'absolute flex',
-                {
-                    'items-center flex-col-reverse': props.direction == 'up',
-                    'items-center flex-col': props.direction == 'down',
-                    'justify-center flex-row-reverse': props.direction == 'left',
-                    'justify-center flex-row': props.direction == 'right'
-                }
-            ]
-        }),
+        root: 'absolute flex',
         button: {
-            root: {
-                class: ['w-16 h-16 min-[0px]:rounded-[50%]']
-            },
+            root: ({ parent }) => ({
+                class: [
+                    'w-16 !h-16 !rounded-full justify-center z-10',
+                    {
+                        'rotate-45': parent.state.d_visible
+                    }
+                ]
+            }),
             label: {
-                class: 'min-[0px]:hidden'
+                class: 'hidden'
             }
         },
-        menu: ({ props }) => ({
-            class: [
-                'm-0 p-0 list-none flex items-center justify-center transition delay-200 pointer-events-none z-2',
-                {
-                    'flex-col-reverse': props.direction == 'up',
-                    'flex-col': props.direction == 'down',
-                    'flex-row-reverse': props.direction == 'left',
-                    'flex-row': props.direction == 'right'
-                }
-            ]
-        }),
+        menu: 'm-0 p-0 list-none flex items-center justify-center transition delay-200 z-20',
         menuitem: ({ props, context }) => ({
             class: [
                 'transform transition-transform duration-200 ease-out transition-opacity duration-800',
                 context.hidden ? 'opacity-0 scale-0' : 'opacity-1 scale-100',
                 {
-                    'my-1 first:mb-2': props.direction == 'up',
-                    'my-1 first:mt-2': props.direction == 'down',
-                    'mx-1 first:mr-2': props.direction == 'left',
-                    'mx-1 first:ml-2': props.direction == 'right'
-                }
+                    'my-1 first:mb-2': props.direction == 'up' && props.type == 'linear',
+                    'my-1 first:mt-2': props.direction == 'down' && props.type == 'linear',
+                    'mx-1 first:mr-2': props.direction == 'left' && props.type == 'linear',
+                    'mx-1 first:ml-2': props.direction == 'right' && props.type == 'linear'
+                },
+                { absolute: props.type !== 'linear' }
             ]
         }),
         action: {
-            class: ['flex items-center justify-center rounded-full relative overflow-hidden', 'w-12 h-12 bg-gray-700 text-white']
-        }
+            class: ['flex items-center justify-center rounded-full relative overflow-hidden', 'w-12 h-12 bg-gray-700 hover:bg-gray-800 text-white']
+        },
+        mask: ({ state }) => ({
+            class: [
+                'absolute left-0 top-0 w-full h-full transition-opacity duration-250 ease-in-out bg-black/40 z-0',
+                {
+                    'opacity-0': !state.d_visible,
+                    'pointer-events-none opacity-100 transition-opacity duration-400 ease-in-out': state.d_visible
+                }
+            ]
+        })
     },
     splitbutton: {
-        root: {
-            class: ['inline-flex relative', 'rounded-md']
-        },
+        root: ({ props }) => ({
+            class: ['inline-flex relative', 'rounded-md', { 'shadow-lg': props.raised }]
+        }),
         button: {
             root: ({ parent }) => ({
-                class: [
-                    'min-[0px]:rounded-r-none',
-                    {
-                        'text-white bg-gray-500 border border-gray-500 hover:bg-gray-600 hover:border-gray-600': parent.props.severity == 'secondary' && !parent.props.text && !parent.props.outlined,
-                        'text-white bg-green-500 border border-green-500 hover:bg-green-600 hover:border-green-600': parent.props.severity == 'success' && !parent.props.text && !parent.props.outlined,
-                        'text-white bg-blue-500 border border-blue-500 hover:bg-blue-600 hover:border-blue-600': parent.props.severity == 'info' && !parent.props.text && !parent.props.outlined,
-                        'text-white bg-orange-500 border border-orange-500 hover:bg-orange-600 hover:border-orange-600': parent.props.severity == 'warning' && !parent.props.text && !parent.props.outlined,
-                        'text-white bg-purple-500 border border-purple-500 hover:bg-purple-600 hover:border-purple-600': parent.props.severity == 'help' && !parent.props.text && !parent.props.outlined,
-                        'text-white bg-red-500 border border-red-500 hover:bg-red-600 hover:border-red-600': parent.props.severity == 'danger' && !parent.props.text && !parent.props.outlined
-                    },
-                    { 'shadow-lg': parent.props.raised },
-                    { 'rounded-md': !parent.props.rounded, 'rounded-full': parent.props.rounded },
-                    {
-                        'bg-transparent border-transparent': parent.props.text,
-                        'text-blue-500 hover:bg-blue-300/20': parent.props.text && parent.props.severity == null,
-                        'text-gray-500 hover:bg-gray-300/20': parent.props.text && parent.props.severity == 'secondary',
-                        'text-green-500 hover:bg-green-300/20': parent.props.text && parent.props.severity == 'success',
-                        'text-blue-500 hover:bg-blue-300/20': parent.props.text && parent.props.severity == 'info',
-                        'text-orange-500 hover:bg-orange-300/20': parent.props.text && parent.props.severity == 'warning',
-                        'text-purple-500 hover:bg-purple-300/20': parent.props.text && parent.props.severity == 'help',
-                        'text-red-500 hover:bg-red-300/20': parent.props.text && parent.props.severity == 'danger'
-                    },
-                    { 'shadow-lg': parent.props.raised && parent.props.text },
-                    {
-                        'text-gray-500 hover:bg-gray-300/20': parent.props.text,
-                        'text-gray-500 border border-gray-500 hover:bg-gray-300/20': parent.props.outlined,
-                        'text-white bg-gray-500 border border-gray-500 hover:bg-gray-600 hover:border-gray-600': !parent.props.outlined & !parent.props.text
-                    },
-                    {
-                        'bg-transparent border': parent.props.outlined,
-                        'text-blue-500 border border-blue-500 hover:bg-blue-300/20': parent.props.outlined && parent.props.severity == null,
-                        'text-gray-500 border border-gray-500 hover:bg-gray-300/20': parent.props.outlined && parent.props.severity == 'secondary',
-                        'text-green-500 border border-green-500 hover:bg-green-300/20': parent.props.outlined && parent.props.severity == 'success',
-                        'text-blue-500 border border-blue-500 hover:bg-blue-300/20': parent.props.outlined && parent.props.severity == 'info',
-                        'text-orange-500 border border-orange-500 hover:bg-orange-300/20': parent.props.outlined && parent.props.severity == 'warning',
-                        'text-purple-500 border border-purple-500 hover:bg-purple-300/20': parent.props.outlined && parent.props.severity == 'help',
-                        'text-red-500 border border-red-500 hover:bg-red-300/20': parent.props.outlined && parent.props.severity == 'danger'
-                    },
-                    { 'px-4 py-3 text-base': parent.props.size == null, 'text-xs py-2 px-3': parent.props.size == 'small', 'text-xl py-3 px-4': parent.props.size == 'large' }
-                ]
-            })
+                class: ['rounded-r-none border-r-0', { 'rounded-l-full': parent.props.rounded }]
+            }),
+            icon: 'mr-2'
         },
         menubutton: {
             root: ({ parent }) => ({
-                class: [
-                    'min-[0px]:rounded-l-none',
-                    { 'text-white bg-blue-500 border border-blue-500 hover:bg-blue-600 hover:border-blue-600': parent.props.severity == null && !parent.props.text && !parent.props.outlined && !parent.props.plain },
-                    {
-                        'text-white bg-gray-500 border border-gray-500 hover:bg-gray-600 hover:border-gray-600': parent.props.severity == 'secondary' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
-                        'text-white bg-green-500 border border-green-500 hover:bg-green-600 hover:border-green-600': parent.props.severity == 'success' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
-                        'text-white bg-blue-500 border border-blue-500 hover:bg-blue-600 hover:border-blue-600': parent.props.severity == 'info' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
-                        'text-white bg-orange-500 border border-orange-500 hover:bg-orange-600 hover:border-orange-600': parent.props.severity == 'warning' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
-                        'text-white bg-purple-500 border border-purple-500 hover:bg-purple-600 hover:border-purple-600': parent.props.severity == 'help' && !parent.props.text && !parent.props.outlined && !parent.props.plain,
-                        'text-white bg-red-500 border border-red-500 hover:bg-red-600 hover:border-red-600': parent.props.severity == 'danger' && !parent.props.text && !parent.props.outlined && !parent.props.plain
-                    },
-                    { 'shadow-lg': parent.props.raised },
-                    { 'rounded-md': !parent.props.rounded, 'rounded-full': parent.props.rounded },
-                    {
-                        'bg-transparent border-transparent': parent.props.text && !parent.props.plain,
-                        'text-blue-500 hover:bg-blue-300/20': parent.props.text && parent.props.severity == null && !parent.props.plain,
-                        'text-gray-500 hover:bg-gray-300/20': parent.props.text && parent.props.severity == 'secondary' && !parent.props.plain,
-                        'text-green-500 hover:bg-green-300/20': parent.props.text && parent.props.severity == 'success' && !parent.props.plain,
-                        'text-blue-500 hover:bg-blue-300/20': parent.props.text && parent.props.severity == 'info' && !parent.props.plain,
-                        'text-orange-500 hover:bg-orange-300/20': parent.props.text && parent.props.severity == 'warning' && !parent.props.plain,
-                        'text-purple-500 hover:bg-purple-300/20': parent.props.text && parent.props.severity == 'help' && !parent.props.plain,
-                        'text-red-500 hover:bg-red-300/20': parent.props.text && parent.props.severity == 'danger' && !parent.props.plain
-                    },
-                    { 'shadow-lg': parent.props.raised && parent.props.text },
-                    {
-                        'text-gray-500 hover:bg-gray-300/20': parent.props.plain & parent.props.text,
-                        'text-gray-500 border border-gray-500 hover:bg-gray-300/20': parent.props.plain & parent.props.outlined,
-                        'text-white bg-gray-500 border border-gray-500 hover:bg-gray-600 hover:border-gray-600': parent.props.plain & !parent.props.outlined & !parent.props.text
-                    },
-                    {
-                        'bg-transparent border': parent.props.outlined && !parent.props.plain,
-                        'text-blue-500 border border-blue-500 hover:bg-blue-300/20': parent.props.outlined && parent.props.severity == null && !parent.props.plain,
-                        'text-gray-500 border border-gray-500 hover:bg-gray-300/20': parent.props.outlined && parent.props.severity == 'secondary' && !parent.props.plain,
-                        'text-green-500 border border-green-500 hover:bg-green-300/20': parent.props.outlined && parent.props.severity == 'success' && !parent.props.plain,
-                        'text-blue-500 border border-blue-500 hover:bg-blue-300/20': parent.props.outlined && parent.props.severity == 'info' && !parent.props.plain,
-                        'text-orange-500 border border-orange-500 hover:bg-orange-300/20': parent.props.outlined && parent.props.severity == 'warning' && !parent.props.plain,
-                        'text-purple-500 border border-purple-500 hover:bg-purple-300/20': parent.props.outlined && parent.props.severity == 'help' && !parent.props.plain,
-                        'text-red-500 border border-red-500 hover:bg-red-300/20': parent.props.outlined && parent.props.severity == 'danger' && !parent.props.plain
-                    },
-                    { 'px-4 py-3 text-base': parent.props.size == null, 'text-xs py-2 px-3': parent.props.size == 'small', 'text-xl py-3 px-4': parent.props.size == 'large' }
-                ]
-            })
+                class: ['rounded-l-none', { 'rounded-r-full': parent.props.rounded }]
+            }),
+            label: 'hidden'
         }
     },
     //FORMS
-
     inputtext: {
         root: ({ props, context }) => ({
             class: [
@@ -752,47 +786,62 @@ export default {
                     'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]': !context.disabled,
                     'opacity-60 select-none pointer-events-none cursor-default': context.disabled
                 },
-                { 'text-lg px-4 py-4': props.size == 'large', 'text-xs px-2 py-2': props.size == 'small', 'p-3 text-base': props.size == null }
+                {
+                    'text-lg px-4 py-4': props.size == 'large',
+                    'text-xs px-2 py-2': props.size == 'small',
+                    'p-3 text-base': props.size == null
+                }
             ]
         })
     },
     inputnumber: {
-        root: ({ props, context }) => ({
-            class: ['w-full inline-flex']
+        root: 'w-full inline-flex',
+        input: ({ props }) => ({
+            class: [{ 'rounded-tr-none rounded-br-none': props.showButtons && props.buttonLayout == 'stacked' }]
         }),
-        input: ({ props, context }) => ({
-            class: ['', { 'rounded-tr-none rounded-br-none': props.showButtons && props.buttonLayout == 'stacked' }]
-        }),
-        buttongroup: ({ props, context }) => ({
+        buttongroup: ({ props }) => ({
             class: [{ 'flex flex-col': props.showButtons && props.buttonLayout == 'stacked' }]
         }),
-        incrementbutton: ({ props, context }) => ({
-            class: ['flex !items-center !justify-center', { 'rounded-br-none rounded-bl-none rounded-bl-none !p-0 flex-1 w-[3rem]': props.showButtons && props.buttonLayout == 'stacked' }]
+        incrementbutton: ({ props }) => ({
+            class: [
+                'flex !items-center !justify-center',
+                {
+                    'rounded-br-none rounded-bl-none rounded-bl-none !p-0 flex-1 w-[3rem]': props.showButtons && props.buttonLayout == 'stacked'
+                }
+            ]
         }),
-        label: {
-            class: ['hidden']
-        },
-        decrementbutton: ({ props, context }) => ({
-            class: ['flex !items-center !justify-center', { 'rounded-tr-none rounded-tl-none rounded-tl-none !p-0 flex-1 w-[3rem]': props.showButtons && props.buttonLayout == 'stacked' }]
+        label: 'hidden',
+        decrementbutton: ({ props }) => ({
+            class: [
+                'flex !items-center !justify-center',
+                {
+                    'rounded-tr-none rounded-tl-none rounded-tl-none !p-0 flex-1 w-[3rem]': props.showButtons && props.buttonLayout == 'stacked'
+                }
+            ]
         })
     },
     knob: {
         root: ({ props }) => ({
-            class: ['focus:outline-none focus:outline-offset-0 focus:shadow-0', { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }]
+            class: [
+                'focus:outline-none focus:outline-offset-0 focus:shadow-0',
+                {
+                    'opacity-60 select-none pointer-events-none cursor-default': props.disabled
+                }
+            ]
         }),
-        range: {
-            class: ['stroke-current transition duration-100 ease-in stroke-gray-200 dark:stroke-gray-700 fill-none']
-        },
-        value: {
-            class: ['animate-dash-frame  stroke-blue-500 fill-none']
-        },
-        label: {
-            class: ['text-center text-xl']
-        }
+        range: 'stroke-current transition duration-100 ease-in stroke-gray-200 dark:stroke-gray-700 fill-none',
+        value: 'animate-dash-frame  stroke-blue-500 fill-none',
+        label: 'text-center text-xl'
     },
     inputswitch: {
         root: ({ props }) => ({
-            class: ['inline-block relative', 'w-12 h-7', { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }]
+            class: [
+                'inline-block relative',
+                'w-12 h-7',
+                {
+                    'opacity-60 select-none pointer-events-none cursor-default': props.disabled
+                }
+            ]
         }),
         slider: ({ props }) => ({
             class: [
@@ -800,7 +849,10 @@ export default {
                 'transition-colors duration-200 rounded-2xl',
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
                 "before:absolute before:content-'' before:top-1/2 before:bg-white before:dark:bg-gray-900 before:w-5 before:h-5 before:left-1 before:-mt-2.5 before:rounded-full before:transition-duration-200",
-                { 'bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 hover:dark:bg-gray-700 ': !props.modelValue, 'bg-blue-500 before:transform before:translate-x-5': props.modelValue }
+                {
+                    'bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 hover:dark:bg-gray-700 ': !props.modelValue,
+                    'bg-blue-500 before:transform before:translate-x-5': props.modelValue
+                }
             ]
         })
     },
@@ -816,55 +868,61 @@ export default {
             class: ['block whitespace-nowrap overflow-hidden flex flex-1 w-1 text-overflow-ellipsis cursor-pointer', 'bg-transparent border-0 p-3 text-gray-700 dark:text-white/80', 'appearance-none rounded-md']
         },
         dropdownbutton: {
-            class: ['flex items-center justify-center flex-shrink-0', 'bg-transparent text-gray-600 dark:text-white/80 w-[3rem] rounded-tr-6 rounded-br-6']
+            class: ['flex items-center justify-center shrink-0', 'bg-transparent text-gray-600 dark:text-white/80 w-[3rem] rounded-tr-6 rounded-br-6']
         },
-        panel: {
-            class: ['absolute py-3 bg-white dark:bg-gray-900 border-0 shadow-md']
-        },
-        list: {
-            class: ['m-0 sm:p-0 list-none']
-        },
-        item: ({ props }) => ({
+        panel: 'absolute py-3 bg-white dark:bg-gray-900 border-0 shadow-md',
+        list: 'm-0 sm:p-0 list-none',
+        item: {
             class: [
                 'cursor-pointer font-normal whitespace-nowrap',
                 'm-0 border-0 bg-transparent transition-shadow rounded-none',
                 'text-gray-700 dark:text-white/80 hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80'
             ]
-        }),
+        },
         content: {
             class: ['flex items-center overflow-hidden relative', 'py-3 px-5']
         },
-        groupicon: {
-            class: ['ml-auto']
-        },
+        groupicon: 'ml-auto',
         sublist: {
             class: ['block absolute left-full top-0', 'min-w-full z-10', 'py-3 bg-white dark:bg-gray-900 border-0 shadow-md']
-        }
-    },
-    inputgroup: {
-        root: {
-            class: ['flex items-stretch w-full flex-1']
-        }
+        },
+        transition: TRANSITIONS.overlay
     },
     inputmask: {
-        root: ({ props, context }) => ({
-            class: [
-                'font-sans text-base text-gray-700 dark:text-white/80 bg-white dark:bg-gray-900 py-3 px-3 border border-gray-300 dark:border-blue-900/40 hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)] transition duration-200 ease-in-out appearance-none rounded-md'
-            ]
-        })
+        root: 'font-sans text-base text-gray-700 dark:text-white/80 bg-white dark:bg-gray-900 py-3 px-3 border border-gray-300 dark:border-blue-900/40 hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)] transition duration-200 ease-in-out appearance-none rounded-md'
     },
     rating: {
         root: ({ props }) => ({
-            class: ['relative flex items-center', 'gap-2', { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }]
+            class: [
+                'relative flex items-center',
+                'gap-2',
+                {
+                    'opacity-60 select-none pointer-events-none cursor-default': props.disabled
+                }
+            ]
         }),
-        cancelitem: {
-            class: ['inline-flex items-center cursor-pointer']
-        },
+        cancelitem: ({ context }) => ({
+            class: [
+                'inline-flex items-center cursor-pointer',
+                {
+                    'outline-none outline-offset-0 shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]': context.focused
+                }
+            ]
+        }),
         cancelicon: {
             class: ['text-red-500', 'w-5 h-5', 'transition duration-200 ease-in']
         },
-        item: ({ props }) => ({
-            class: ['inline-flex items-center', { 'cursor-pointer': !props.readonly, 'cursor-default': props.readonly }]
+        item: ({ props, context }) => ({
+            class: [
+                'inline-flex items-center',
+                {
+                    'cursor-pointer': !props.readonly,
+                    'cursor-default': props.readonly
+                },
+                {
+                    'outline-none outline-offset-0 shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]': context.focused
+                }
+            ]
         }),
         officon: {
             class: ['text-gray-700 hover:text-blue-400', 'w-5 h-5', 'transition duration-200 ease-in']
@@ -877,7 +935,7 @@ export default {
         root: ({ props }) => ({
             class: [{ 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }]
         }),
-        button: ({ context, props }) => ({
+        button: ({ context }) => ({
             class: [
                 'inline-flex cursor-pointer select-none items-center align-bottom text-center overflow-hidden relative',
                 'px-4 py-3',
@@ -891,9 +949,7 @@ export default {
                 }
             ]
         }),
-        label: {
-            class: ['font-bold']
-        }
+        label: 'font-bold'
     },
     slider: {
         root: ({ props }) => ({
@@ -905,7 +961,14 @@ export default {
             ]
         }),
         range: ({ props }) => ({
-            class: ['bg-blue-500', 'block absolute', { 'top-0 left-0 h-full': props.orientation == 'horizontal', 'bottom-0 left-0 w-full': props.orientation == 'vertical' }]
+            class: [
+                'bg-blue-500',
+                'block absolute',
+                {
+                    'top-0 left-0 h-full': props.orientation == 'horizontal',
+                    'bottom-0 left-0 w-full': props.orientation == 'vertical'
+                }
+            ]
         }),
         handle: ({ props }) => ({
             class: [
@@ -913,7 +976,10 @@ export default {
                 'cursor-grab touch-action-none block',
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
                 'hover:bg-blue-500 hover:border hover:border-blue-500',
-                { 'top-[50%] mt-[-0.5715rem] ml-[-0.5715rem]': props.orientation == 'horizontal', 'left-[50%] mb-[-0.5715rem] ml-[-0.4715rem]': props.orientation == 'vertical' }
+                {
+                    'top-[50%] mt-[-0.5715rem] ml-[-0.5715rem]': props.orientation == 'horizontal',
+                    'left-[50%] mb-[-0.5715rem] ml-[-0.4715rem]': props.orientation == 'vertical'
+                }
             ]
         }),
         starthandler: ({ props }) => ({
@@ -922,7 +988,10 @@ export default {
                 'cursor-grab touch-action-none block',
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
                 'hover:bg-blue-500 hover:border hover:border-blue-500',
-                { 'top-[50%] mt-[-0.5715rem] ml-[-0.5715rem]': props.orientation == 'horizontal', 'left-[50%] mb-[-0.5715rem] ml-[-0.4715rem]': props.orientation == 'vertical' }
+                {
+                    'top-[50%] mt-[-0.5715rem] ml-[-0.5715rem]': props.orientation == 'horizontal',
+                    'left-[50%] mb-[-0.5715rem] ml-[-0.4715rem]': props.orientation == 'vertical'
+                }
             ]
         }),
         endhandler: ({ props }) => ({
@@ -931,24 +1000,32 @@ export default {
                 'cursor-grab touch-action-none block',
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
                 'hover:bg-blue-500 hover:border hover:border-blue-500',
-                { 'top-[50%] mt-[-0.5715rem] ml-[-0.5715rem]': props.orientation == 'horizontal', 'left-[50%] mb-[-0.5715rem] ml-[-0.4715rem]': props.orientation == 'vertical' }
+                {
+                    'top-[50%] mt-[-0.5715rem] ml-[-0.5715rem]': props.orientation == 'horizontal',
+                    'left-[50%] mb-[-0.5715rem] ml-[-0.4715rem]': props.orientation == 'vertical'
+                }
             ]
         })
     },
     password: {
         root: ({ props }) => ({
-            class: ['inline-flex relative', { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }]
+            class: [
+                'inline-flex relative',
+                {
+                    'opacity-60 select-none pointer-events-none cursor-default': props.disabled
+                }
+            ]
         }),
-        panel: {
-            class: ['p-5 bg-white dark:bg-gray-900 text-gray-700 dark:text-white/80 shadow-md rounded-md']
-        },
-        meter: {
-            class: ['mb-2 bg-gray-300 dark:bg-gray-700 h-3']
-        },
+        panel: 'p-5 bg-white dark:bg-gray-900 text-gray-700 dark:text-white/80 shadow-md rounded-md',
+        meter: 'mb-2 bg-gray-300 dark:bg-gray-700 h-3',
         meterlabel: ({ instance, props }) => ({
             class: [
                 'transition-width duration-1000 ease-in-out h-full',
-                { 'bg-red-500': instance?.meter?.strength == 'weak', 'bg-orange-500': instance?.meter?.strength == 'medium', 'bg-green-500': instance?.meter?.strength == 'strong' },
+                {
+                    'bg-red-500': instance?.meter?.strength == 'weak',
+                    'bg-orange-500': instance?.meter?.strength == 'medium',
+                    'bg-green-500': instance?.meter?.strength == 'strong'
+                },
                 { 'pr-[2.5rem] ': props.toggleMask }
             ]
         }),
@@ -957,15 +1034,18 @@ export default {
         },
         hideicon: {
             class: ['absolute top-1/2 -mt-2', 'right-3 text-gray-600 dark:text-white/70']
-        }
+        },
+        transition: TRANSITIONS.overlay
     },
     togglebutton: {
-        root: ({ props }) => ({
+        root: ({ props, context }) => ({
             class: [
                 'inline-flex cursor-pointer select-none items-center align-bottom text-center overflow-hidden relative',
                 'px-4 py-3 rounded-md text-base w-36',
                 'border transition duration-200 ease-in-out',
-                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
+                {
+                    'outline-none outline-offset-0 shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]': context.focused
+                },
                 {
                     'bg-white dark:bg-gray-900 border-gray-300 dark:border-blue-900/40 text-gray-700 dark:text-white/80 hover:bg-gray-100 dark:hover:bg-gray-800/80 hover:border-gray-300 dark:hover:bg-gray-800/70 hover:text-gray-700 dark:hover:text-white/80':
                         !props.modelValue,
@@ -974,11 +1054,15 @@ export default {
                 { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }
             ]
         }),
-        label: {
-            class: ['font-bold text-center w-full']
-        },
+        label: 'font-bold text-center w-full',
         icon: ({ props }) => ({
-            class: [' mr-2', { 'text-gray-600 dark:text-white/70': !props.modelValue, 'text-white': props.modelValue }]
+            class: [
+                ' mr-2',
+                {
+                    'text-gray-600 dark:text-white/70': !props.modelValue,
+                    'text-white': props.modelValue
+                }
+            ]
         })
     },
     tristatecheckbox: {
@@ -989,7 +1073,10 @@ export default {
             class: [
                 'flex items-center justify-center',
                 'border-2 w-6 h-6 rounded-lg transition-colors duration-200',
-                { 'border-blue-500 bg-blue-500 text-white dark:border-blue-400 dark:bg-blue-400': props.modelValue || !props.modelValue, 'border-gray-300 text-gray-600 bg-white dark:border-blue-900/40 dark:bg-gray-900': props.modelValue == null },
+                {
+                    'border-blue-500 bg-blue-500 text-white dark:border-blue-400 dark:bg-blue-400': props.modelValue || !props.modelValue,
+                    'border-gray-300 text-gray-600 bg-white dark:border-blue-900/40 dark:bg-gray-900': props.modelValue == null
+                },
                 {
                     'hover:border-blue-500 dark:hover:border-blue-400 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[inset_0_0_0_0.2rem_rgba(147,197,253,0.5)]': !props.disabled,
                     'cursor-default opacity-60': props.disabled
@@ -998,33 +1085,37 @@ export default {
         })
     },
     checkbox: {
-        root: ({ props }) => ({
+        root: {
             class: ['cursor-pointer inline-flex relative select-none align-bottom', 'w-6 h-6']
-        }),
+        },
         input: ({ props, context }) => ({
             class: [
                 'flex items-center justify-center',
                 'border-2 w-6 h-6 text-gray-600 rounded-lg transition-colors duration-200',
-                { 'border-gray-300 bg-white dark:border-blue-900/40 dark:bg-gray-900': !context.checked, 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400': context.checked },
+                {
+                    'border-gray-300 bg-white dark:border-blue-900/40 dark:bg-gray-900': !context.checked,
+                    'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400': context.checked
+                },
                 {
                     'hover:border-blue-500 dark:hover:border-blue-400 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[inset_0_0_0_0.2rem_rgba(147,197,253,0.5)]': !props.disabled,
                     'cursor-default opacity-60': props.disabled
                 }
             ]
         }),
-        icon: {
-            class: ['w-4 h-4 transition-all duration-200 text-white text-base dark:text-gray-900']
-        }
+        icon: 'w-4 h-4 transition-all duration-200 text-white text-base dark:text-gray-900'
     },
     radiobutton: {
-        root: ({ props }) => ({
+        root: {
             class: ['relative inline-flex cursor-pointer select-none align-bottom', 'w-6 h-6']
-        }),
+        },
         input: ({ props }) => ({
             class: [
                 'flex justify-center items-center',
                 'border-2 w-6 h-6 text-gray-700 rounded-full transition duration-200 ease-in-out',
-                { 'border-gray-300 bg-white dark:border-blue-900/40 dark:bg-gray-900 dark:text-white/80': props.value !== props.modelValue, 'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400': props.value == props.modelValue },
+                {
+                    'border-gray-300 bg-white dark:border-blue-900/40 dark:bg-gray-900 dark:text-white/80': props.value !== props.modelValue,
+                    'border-blue-500 bg-blue-500 dark:border-blue-400 dark:bg-blue-400': props.value == props.modelValue
+                },
                 {
                     'hover:border-blue-500 dark:hover:border-blue-400 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[inset_0_0_0_0.2rem_rgba(147,197,253,0.5)]': !props.disabled,
                     'cursor-default opacity-60': props.disabled
@@ -1035,7 +1126,10 @@ export default {
             class: [
                 'transform rounded-full',
                 'block w-3 h-3 transition duration-200 bg-white dark:bg-gray-900',
-                { 'backface-hidden scale-10 invisible': props.value !== props.modelValue, 'transform scale-100 visible': props.value == props.modelValue }
+                {
+                    'backface-hidden scale-10 invisible': props.value !== props.modelValue,
+                    'transform scale-100 visible': props.value == props.modelValue
+                }
             ]
         })
     },
@@ -1061,14 +1155,12 @@ export default {
             ]
         }),
         trigger: {
-            class: ['flex items-center justify-center flex-shrink-0', 'bg-transparent text-gray-500 w-12 rounded-tr-lg rounded-br-lg']
+            class: ['flex items-center justify-center shrink-0', 'bg-transparent text-gray-500 w-12 rounded-tr-lg rounded-br-lg']
         },
         wrapper: {
             class: ['max-h-[200px] overflow-auto', 'bg-white text-gray-700 border-0 rounded-md shadow-lg', 'dark:bg-gray-900 dark:text-white/80']
         },
-        list: {
-            class: ['py-3 list-none m-0']
-        },
+        list: 'py-3 list-none m-0',
         item: ({ context }) => ({
             class: [
                 'cursor-pointer font-normal overflow-hidden relative whitespace-nowrap',
@@ -1089,9 +1181,7 @@ export default {
         header: {
             class: ['p-3 border-b border-gray-300 text-gray-700 bg-gray-100 mt-0 rounded-tl-lg rounded-tr-lg', 'dark:bg-gray-800 dark:text-white/80 dark:border-blue-900/40']
         },
-        filtercontainer: {
-            class: ['relative']
-        },
+        filtercontainer: 'relative',
         filterinput: {
             class: [
                 'pr-7 -mr-7',
@@ -1101,22 +1191,34 @@ export default {
                 'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
             ]
         },
-        filtericon: {
-            class: ['-mt-2 absolute top-1/2']
-        },
-        clearicon: {
-            class: ['text-gray-500 right-12 -mt-2 absolute top-1/2']
-        }
+        filtericon: '-mt-2 absolute top-1/2',
+        clearicon: 'text-gray-500 right-12 -mt-2 absolute top-1/2',
+        transition: TRANSITIONS.overlay
     },
     calendar: {
         root: ({ props }) => ({
-            class: ['inline-flex max-w-full relative', { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }]
+            class: [
+                'inline-flex max-w-full relative',
+                {
+                    'opacity-60 select-none pointer-events-none cursor-default': props.disabled
+                }
+            ]
         }),
         input: {
-            class: ['font-sans text-base text-gray-600 dark:text-white/80 bg-white dark:bg-gray-900 p-3 border border-gray-300 dark:border-blue-900/40 transition-colors duration-200 appearance-none rounded-lg', 'hover:border-blue-500 ']
+            class: [
+                'font-sans text-base text-gray-600 dark:text-white/80 bg-white dark:bg-gray-900 p-3 border border-gray-300 dark:border-blue-900/40 transition-colors duration-200 appearance-none rounded-lg',
+                'hover:border-blue-500' //Hover
+            ]
         },
         panel: ({ props }) => ({
-            class: ['bg-white dark:bg-gray-900', 'min-w-[350px]', { 'shadow-md border-0 absolute': !props.inline, 'inline-block overflow-x-auto border border-gray-300 dark:border-blue-900/40 p-2 rounded-lg': props.inline }]
+            class: [
+                'bg-white dark:bg-gray-900',
+                'min-w-[350px]',
+                {
+                    'shadow-md border-0 absolute': !props.inline,
+                    'inline-block overflow-x-auto border border-gray-300 dark:border-blue-900/40 p-2 rounded-lg': props.inline
+                }
+            ]
         }),
         header: {
             class: ['flex items-center justify-between', 'p-2 text-gray-700 dark:text-white/80 bg-white dark:bg-gray-900 font-semibold m-0 border-b border-gray-300 dark:border-blue-900/40 rounded-t-lg']
@@ -1128,9 +1230,7 @@ export default {
                 'hover:text-gray-700 dark:hover:text-white/80 hover:border-transparent hover:bg-gray-200 dark:hover:bg-gray-800/80 '
             ]
         },
-        title: {
-            class: ['leading-8 mx-auto']
-        },
+        title: 'leading-8 mx-auto',
         monthTitle: {
             class: ['text-gray-700 dark:text-white/80 transition duration-200 font-semibold p-2', 'mr-2', 'hover:text-blue-500']
         },
@@ -1147,27 +1247,25 @@ export default {
         table: {
             class: ['border-collapse w-full', 'my-2']
         },
-        tableheadercell: {
-            class: ['p-2']
-        },
-        weekday: {
-            class: ['text-gray-600 dark:text-white/70']
-        },
-        day: {
-            class: ['p-2']
-        },
+        tableheadercell: 'p-2',
+        weekday: 'text-gray-600 dark:text-white/70',
+        day: 'p-2',
         daylabel: ({ context }) => ({
             class: [
                 'w-10 h-10 rounded-full transition-shadow duration-200 border-transparent border',
                 'flex items-center justify-center mx-auto overflow-hidden relative',
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
-                { 'opacity-60 cursor-default': context.disabled, 'cursor-pointer': !context.disabled },
-                { 'text-gray-600 dark:text-white/70 bg-transprent hover:bg-gray-200 dark:hover:bg-gray-800/80': !context.selected && !context.disabled, 'text-blue-700 bg-blue-100 hover:bg-blue-200': context.selected && !context.disabled }
+                {
+                    'opacity-60 cursor-default': context.disabled,
+                    'cursor-pointer': !context.disabled
+                },
+                {
+                    'text-gray-600 dark:text-white/70 bg-transprent hover:bg-gray-200 dark:hover:bg-gray-800/80': !context.selected && !context.disabled,
+                    'text-blue-700 bg-blue-100 hover:bg-blue-200': context.selected && !context.disabled
+                }
             ]
         }),
-        monthpicker: {
-            class: ['my-2']
-        },
+        monthpicker: 'my-2',
         month: ({ context }) => ({
             class: [
                 'w-1/3 inline-flex items-center justify-center cursor-pointer overflow-hidden relative',
@@ -1184,27 +1282,20 @@ export default {
                 'w-1/2 inline-flex items-center justify-center cursor-pointer overflow-hidden relative',
                 'p-2 transition-shadow duration-200 rounded-lg',
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
-                { 'text-gray-600 dark:text-white/70 bg-transprent hover:bg-gray-200 dark:hover:bg-gray-800/80': !context.selected && !context.disabled, 'text-blue-700 bg-blue-100 hover:bg-blue-200': context.selected && !context.disabled }
+                {
+                    'text-gray-600 dark:text-white/70 bg-transprent hover:bg-gray-200 dark:hover:bg-gray-800/80': !context.selected && !context.disabled,
+                    'text-blue-700 bg-blue-100 hover:bg-blue-200': context.selected && !context.disabled
+                }
             ]
         }),
         timepicker: {
             class: ['flex justify-center items-center', 'border-t-1 border-solid border-gray-300 p-2']
         },
-        separatorcontainer: {
-            class: ['flex items-center flex-col px-2']
-        },
-        separator: {
-            class: ['text-xl']
-        },
-        hourpicker: {
-            class: ['flex items-center flex-col px-2']
-        },
-        minutepicker: {
-            class: ['flex items-center flex-col px-2']
-        },
-        ampmpicker: {
-            class: ['flex items-center flex-col px-2']
-        },
+        separatorcontainer: 'flex items-center flex-col px-2',
+        separator: 'text-xl',
+        hourpicker: 'flex items-center flex-col px-2',
+        minutepicker: 'flex items-center flex-col px-2',
+        ampmpicker: 'flex items-center flex-col px-2',
         incrementbutton: {
             class: [
                 'flex items-center justify-center cursor-pointer overflow-hidden relative',
@@ -1219,23 +1310,18 @@ export default {
                 'hover:text-gray-700 dark:hover:text-white/80 hover:border-transparent hover:bg-gray-200 dark:hover:bg-gray-800/80 '
             ]
         },
-        groupcontainer: {
-            class: ['flex']
-        },
+        groupcontainer: 'flex',
         group: {
             class: ['flex-1', 'border-l border-gray-300 pr-0.5 pl-0.5 pt-0 pb-0', 'first:pl-0 first:border-l-0']
-        }
+        },
+        transition: TRANSITIONS.overlay
     },
     listbox: {
-        root: ({ props }) => ({
+        root: {
             class: ['bg-white dark:bg-gray-900 border border-gray-400 dark:border-blue-900/40 transition-colors duration-200 ease-in-out rounded-md', 'w-full md:w-56']
-        }),
-        wrapper: {
-            class: ['overflow-auto']
         },
-        list: {
-            class: ['py-3 list-none m-0']
-        },
+        wrapper: 'overflow-auto',
+        list: 'py-3 list-none m-0',
         item: ({ context }) => ({
             class: [
                 'cursor-pointer font-normal overflow-hidden relative whitespace-nowrap',
@@ -1256,9 +1342,7 @@ export default {
         header: {
             class: ['p-3 border-b border-gray-300 text-gray-700 bg-gray-100 mt-0 rounded-tl-lg rounded-tr-lg', 'dark:bg-gray-800 dark:text-white/80 dark:border-blue-900/40']
         },
-        filtercontainer: {
-            class: ['relative']
-        },
+        filtercontainer: 'relative',
         filterinput: {
             class: [
                 'pr-7 -mr-7',
@@ -1268,9 +1352,7 @@ export default {
                 'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
             ]
         },
-        filtericon: {
-            class: ['-mt-2 absolute top-1/2']
-        }
+        filtericon: '-mt-2 absolute top-1/2'
     },
     multiselect: {
         root: ({ props }) => ({
@@ -1281,10 +1363,8 @@ export default {
                 { 'opacity-60 select-none pointer-events-none cursor-default': props?.disabled }
             ]
         }),
-        labelContainer: {
-            class: ['overflow-hidden flex flex-auto cursor-pointer']
-        },
-        label: ({ props, parent, context }) => ({
+        labelContainer: 'overflow-hidden flex flex-auto cursor-pointer',
+        label: ({ props }) => ({
             class: [
                 'block overflow-hidden whitespace-nowrap cursor-pointer overflow-ellipsis',
                 'text-gray-800 dark:text-white/80',
@@ -1299,11 +1379,9 @@ export default {
         token: {
             class: ['py-1 px-2 mr-2 bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white/80 rounded-full', 'cursor-default inline-flex items-center']
         },
-        removeTokenIcon: {
-            class: ['ml-2']
-        },
+        removeTokenIcon: 'ml-2',
         trigger: {
-            class: ['flex items-center justify-center flex-shrink-0', 'bg-transparent text-gray-600 dark:text-white/70 w-12 rounded-tr-lg rounded-br-lg']
+            class: ['flex items-center justify-center shrink-0', 'bg-transparent text-gray-600 dark:text-white/70 w-12 rounded-tr-lg rounded-br-lg']
         },
         panel: {
             class: ['bg-white dark:bg-gray-900 text-gray-700 dark:text-white/80 border-0 rounded-md shadow-lg']
@@ -1314,17 +1392,18 @@ export default {
         headerCheckboxContainer: {
             class: ['inline-flex cursor-pointer select-none align-bottom relative', 'mr-2', 'w-6 h-6']
         },
-        headerCheckbox: ({ props, context }) => ({
+        headerCheckbox: ({ context }) => ({
             class: [
                 'flex items-center justify-center',
                 'border-2 w-6 h-6 text-gray-600 dark:text-white/70 rounded-lg transition-colors duration-200',
                 'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
-                { 'border-gray-300 dark:border-blue-900/40 bg-white dark:bg-gray-900': !context?.selected, 'border-blue-500 bg-blue-500': context?.selected }
+                {
+                    'border-gray-300 dark:border-blue-900/40 bg-white dark:bg-gray-900': !context?.selected,
+                    'border-blue-500 bg-blue-500': context?.selected
+                }
             ]
         }),
-        headercheckboxicon: {
-            class: ['w-4 h-4 transition-all duration-200 text-white text-base']
-        },
+        headercheckboxicon: 'w-4 h-4 transition-all duration-200 text-white text-base',
         closeButton: {
             class: [
                 'flex items-center justify-center overflow-hidden relative',
@@ -1333,15 +1412,11 @@ export default {
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
             ]
         },
-        closeButtonIcon: {
-            class: ['w-4 h-4 inline-block']
-        },
+        closeButtonIcon: 'w-4 h-4 inline-block',
         wrapper: {
             class: ['max-h-[200px] overflow-auto', 'bg-white text-gray-700 border-0 rounded-md shadow-lg', 'dark:bg-gray-900 dark:text-white/80']
         },
-        list: {
-            class: ['py-3 list-none m-0']
-        },
+        list: 'py-3 list-none m-0',
         item: ({ context }) => ({
             class: [
                 'cursor-pointer font-normal overflow-hidden relative whitespace-nowrap',
@@ -1364,18 +1439,17 @@ export default {
                 'flex items-center justify-center',
                 'border-2 w-6 h-6 text-gray-600 dark:text-white/80 rounded-lg transition-colors duration-200',
                 'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
-                { 'border-gray-300 dark:border-blue-900/40  bg-white dark:bg-gray-900': !context?.selected, 'border-blue-500 bg-blue-500': context?.selected }
+                {
+                    'border-gray-300 dark:border-blue-900/40  bg-white dark:bg-gray-900': !context?.selected,
+                    'border-blue-500 bg-blue-500': context?.selected
+                }
             ]
         }),
-        checkboxicon: {
-            class: ['w-4 h-4 transition-all duration-200 text-white text-base']
-        },
+        checkboxicon: 'w-4 h-4 transition-all duration-200 text-white text-base',
         itemgroup: {
             class: ['m-0 p-3 text-gray-800 bg-white font-bold', 'dark:bg-gray-900 dark:text-white/80', 'cursor-auto']
         },
-        filtercontainer: {
-            class: ['relative']
-        },
+        filtercontainer: 'relative',
         filterinput: {
             class: [
                 'pr-7 -mr-7',
@@ -1385,12 +1459,9 @@ export default {
                 'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
             ]
         },
-        filtericon: {
-            class: ['-mt-2 absolute top-1/2']
-        },
-        clearicon: {
-            class: ['text-gray-500 right-12 -mt-2 absolute top-1/2']
-        }
+        filtericon: '-mt-2 absolute top-1/2',
+        clearicon: 'text-gray-500 right-12 -mt-2 absolute top-1/2',
+        transition: TRANSITIONS.overlay
     },
     textarea: {
         root: ({ context }) => ({
@@ -1414,22 +1485,29 @@ export default {
         labelContainer: {
             class: ['overflow-hidden flex flex-auto cursor-pointer']
         },
-        label: ({ props }) => ({
+        label: {
             class: ['block overflow-hidden whitespace-nowrap cursor-pointer overflow-ellipsis', 'text-gray-800 dark:text-white/80', 'p-3 transition duration-200']
-        }),
+        },
         trigger: {
-            class: ['flex items-center justify-center flex-shrink-0', 'bg-transparent text-gray-600 dark:text-white/70 w-12 rounded-tr-lg rounded-br-lg']
+            class: ['flex items-center justify-center shrink-0', 'bg-transparent text-gray-600 dark:text-white/70 w-12 rounded-tr-lg rounded-br-lg']
         },
         panel: {
             class: ['bg-white dark:bg-gray-900 text-gray-700 dark:text-white/80 border-0 rounded-md shadow-lg']
         },
         wrapper: {
             class: ['max-h-[200px] overflow-auto', 'bg-white dark:bg-gray-900 text-gray-700 dark:text-white/80 border-0 rounded-md shadow-lg']
-        }
+        },
+        transition: TRANSITIONS.overlay
     },
     autocomplete: {
         root: ({ props }) => ({
-            class: ['relative inline-flex', { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }, { 'w-full': props.multiple }]
+            class: [
+                'relative inline-flex',
+                {
+                    'opacity-60 select-none pointer-events-none cursor-default': props.disabled
+                },
+                { 'w-full': props.multiple }
+            ]
         }),
         container: {
             class: [
@@ -1446,7 +1524,6 @@ export default {
             class: [
                 'm-0',
                 ' transition-colors duration-200 appearance-none rounded-lg',
-                ' ',
                 { 'rounded-tr-none rounded-br-none': props.dropdown },
                 {
                     'font-sans text-base text-gray-700 dark:text-white/80 bg-white dark:bg-gray-900 p-3 border border-gray-300 dark:border-blue-900/40 focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)] hover:border-blue-500 focus:outline-none':
@@ -1459,16 +1536,12 @@ export default {
             class: ['py-1 px-2 mr-2 bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white/80 rounded-full', 'cursor-default inline-flex items-center']
         },
         dropdownbutton: {
-            root: {
-                class: ['rounded-tl-none rounded-bl-none']
-            }
+            root: 'rounded-tl-none rounded-bl-none'
         },
         panel: {
             class: ['bg-white text-gray-700 border-0 rounded-md shadow-lg', 'max-h-[200px] overflow-auto', 'bg-white text-gray-700 border-0 rounded-md shadow-lg', 'dark:bg-gray-900 dark:text-white/80']
         },
-        list: {
-            class: ['py-3 list-none m-0']
-        },
+        list: 'py-3 list-none m-0',
         item: ({ context }) => ({
             class: [
                 'cursor-pointer font-normal overflow-hidden relative whitespace-nowrap',
@@ -1489,13 +1562,17 @@ export default {
     },
     chips: {
         root: ({ props }) => ({
-            class: ['flex', { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }]
+            class: [
+                'flex',
+                {
+                    'opacity-60 select-none pointer-events-none cursor-default': props.disabled
+                }
+            ]
         }),
         container: {
             class: [
                 'm-0 py-1.5 px-3 list-none cursor-text overflow-hidden flex items-center flex-wrap',
                 'w-full',
-                'm-0',
                 'font-sans text-base text-gray-600 dark:text-white/70 bg-white dark:bg-gray-900 p-3 border border-gray-300 dark:border-blue-900/40 transition-colors duration-200 appearance-none rounded-lg',
                 'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
             ]
@@ -1510,13 +1587,16 @@ export default {
         token: {
             class: ['py-1 px-2 mr-2 bg-gray-300 dark:bg-gray-700 text-gray-700 dark:text-white/80 rounded-full', 'cursor-default inline-flex items-center']
         },
-        removeTokenIcon: {
-            class: ['ml-2']
-        }
+        removeTokenIcon: 'ml-2'
     },
     colorpicker: {
         root: ({ props }) => ({
-            class: ['inline-block', { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }]
+            class: [
+                'inline-block',
+                {
+                    'opacity-60 select-none pointer-events-none cursor-default': props.disabled
+                }
+            ]
         }),
         input: {
             class: [
@@ -1527,13 +1607,18 @@ export default {
             ]
         },
         panel: ({ props }) => ({
-            class: ['shadow-md', 'bg-gray-800 border-gray-900', { 'relative h-48 w-52': props.inline, 'absolute h-48 w-52': !props.inline }]
+            class: [
+                'shadow-md',
+                'bg-gray-800 border-gray-900',
+                {
+                    'relative h-48 w-52': props.inline,
+                    'absolute h-48 w-52': !props.inline
+                }
+            ]
         }),
-        selector: {
-            class: ['absolute h-44 w-40 top-2 left-2']
-        },
+        selector: 'absolute h-44 w-40 top-2 left-2',
         color: {
-            class: ['h-44 w-40'],
+            class: 'h-44 w-40',
             style: 'background: linear-gradient(to top, #000 0%, rgb(0 0 0 / 0) 100%), linear-gradient(to right, #fff 0%, rgb(255 255 255 / 0) 100%)'
         },
         colorhandle: {
@@ -1543,9 +1628,8 @@ export default {
             class: ['h-44 w-6 absolute top-2 left-44 opacity-85'],
             style: 'background: linear-gradient(0deg, red 0, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, red)'
         },
-        huehandle: {
-            class: ['border-solid border-2 cursor-pointer h-2 w-8 left-0 -ml-1 -mt-1 opacity-85 absolute']
-        }
+        huehandle: 'border-solid border-2 cursor-pointer h-2 w-8 left-0 -ml-1 -mt-1 opacity-85 absolute',
+        transition: TRANSITIONS.overlay
     },
     editor: {
         toolbar: {
@@ -1559,7 +1643,6 @@ export default {
         }
     },
     //MISC
-
     badge: {
         root: ({ props }) => ({
             class: [
@@ -1573,7 +1656,11 @@ export default {
                     'bg-purple-500 ': props.severity == 'help',
                     'bg-red-500 ': props.severity == 'danger'
                 },
-                { 'text-xs min-w-[1.5rem] h-[1.5rem] leading-[1.5rem]': props.size == null, 'text-lg min-w-[2.25rem] h-[2.25rem] leading-[2.25rem]': props.size == 'large', 'text-2xl min-w-[3rem] h-[3rem] leading-[3rem]': props.size == 'xlarge' }
+                {
+                    'text-xs min-w-[1.5rem] h-[1.5rem] leading-[1.5rem]': props.size == null,
+                    'text-lg min-w-[2.25rem] h-[2.25rem] leading-[2.25rem]': props.size == 'large',
+                    'text-2xl min-w-[3rem] h-[3rem] leading-[3rem]': props.size == 'xlarge'
+                }
             ]
         })
     },
@@ -1582,30 +1669,31 @@ export default {
             class: [
                 'flex items-center justify-center',
                 'bg-gray-300 dark:bg-gray-800',
-                { 'rounded-lg': props.shape == 'square', 'rounded-full': props.shape == 'circle' },
-                { 'text-base h-8 w-8': props.size == null || props.size == 'normal', 'w-12 h-12 text-xl': props.size == 'large', 'w-16 h-16 text-2xl': props.size == 'xlarge' },
-                { '-ml-4 border-2 border-white dark:border-gray-900': parent.instance.$css !== undefined, '': !(parent.instance.$css !== undefined) }
+                {
+                    'rounded-lg': props.shape == 'square',
+                    'rounded-full': props.shape == 'circle'
+                },
+                {
+                    'text-base h-8 w-8': props.size == null || props.size == 'normal',
+                    'w-12 h-12 text-xl': props.size == 'large',
+                    'w-16 h-16 text-2xl': props.size == 'xlarge'
+                },
+                {
+                    '-ml-4 border-2 border-white dark:border-gray-900': parent.instance.$css !== undefined
+                }
             ]
         }),
-        image: {
-            class: ['h-full w-full']
-        }
+        image: 'h-full w-full'
     },
     avatargroup: {
-        root: {
-            class: ['flex items-center']
-        }
+        root: 'flex items-center'
     },
     chip: {
         root: {
             class: ['inline-flex items-center', 'bg-gray-200 text-gray-800 rounded-[16px] px-3 dark:text-white/80 dark:bg-gray-900']
         },
-        label: {
-            class: ['leading-6 mt-1.5 mb-1.5']
-        },
-        icon: {
-            class: ['leading-6 mr-2']
-        },
+        label: 'leading-6 mt-1.5 mb-1.5',
+        icon: 'leading-6 mr-2',
         image: {
             class: ['w-9 h-9 ml-[-0.75rem] mr-2', 'rounded-full']
         },
@@ -1614,15 +1702,16 @@ export default {
         }
     },
     progressbar: {
-        root: ({ props }) => ({
+        root: {
             class: ['overflow-hidden relative', 'border-0 h-6 bg-gray-200 rounded-md dark:bg-gray-800']
-        }),
+        },
         value: ({ props }) => ({
             class: [
-                'transition-width duration-1000 ease-in-out',
-                'items-center border-0 flex h-full justify-center overflow-hidden absolute w-0',
                 'border-0 m-0 bg-blue-500',
-                { 'before:absolute before:top-0 before:left-0 before:bottom-0 before:bg-inherit after:absolute after:top-0 after:left-0 after:bottom-0 after:bg-inherit': props.mode == 'indeterminate' }
+                {
+                    'transition-width duration-1000 ease-in-out absolute items-center border-0 flex h-full justify-center overflow-hidden w-0': props.mode !== 'indeterminate',
+                    'progressbar-value-animate before:absolute before:top-0 before:left-0 before:bottom-0 before:bg-inherit after:absolute after:top-0 after:left-0 after:bottom-0 after:bg-inherit after:delay-1000': props.mode == 'indeterminate'
+                }
             ]
         }),
         label: {
@@ -1633,12 +1722,8 @@ export default {
         root: {
             class: ['relative mx-auto w-28 h-28 inline-block', 'before:block before:pt-full']
         },
-        spinner: {
-            class: ['absolute top-0 bottom-0 left-0 right-0 m-auto w-full h-full transform origin-center animate-spin']
-        },
-        circle: {
-            class: ['text-red-500 stroke-current']
-        }
+        spinner: 'absolute top-0 bottom-0 left-0 right-0 m-auto w-full h-full transform origin-center animate-spin',
+        circle: 'text-red-500 progress-spinner-circle'
     },
     skeleton: {
         root: ({ props }) => ({
@@ -1647,7 +1732,10 @@ export default {
                 '!mb-2',
                 'bg-gray-300 dark:bg-gray-800',
                 'after:absolute after:top-0 after:left-0 after:right-0 after:bottom-0 after:content after:w-full after:h-full after:bg-blue-400 after:left-full after:transform after:translate-x-full after:z-10 after:bg-gradient-to-r after:from-transparent after:via-white after:to-transparent animate-pulse',
-                { 'rounded-md': props.shape !== 'circle', 'rounded-full': props.shape == 'circle' }
+                {
+                    'rounded-md': props.shape !== 'circle',
+                    'rounded-full': props.shape == 'circle'
+                }
             ]
         })
     },
@@ -1664,49 +1752,50 @@ export default {
                     'bg-purple-500 ': props.severity == 'help',
                     'bg-red-500 ': props.severity == 'danger'
                 },
-                { 'rounded-md': !props.rounded, 'rounded-full': props.rounded }
+                {
+                    'rounded-md': !props.rounded,
+                    'rounded-full': props.rounded
+                }
             ]
         }),
-        value: {
-            class: ['leading-6']
-        },
-        icon: {
-            class: ['mr-1 text-sm']
-        }
+        value: 'leading-6',
+        icon: 'mr-1 text-sm'
     },
     inplace: {
-        display: ({ props }) => ({
+        display: {
             class: ['p-3 rounded-md transition duration-200 text-gray-700 dark:text-white/80', 'inline cursor-pointer', 'hover:bg-gray-200 hover:text-gray-700 dark:hover:bg-gray-800/80 dark:hover:text-white/80']
-        })
+        }
     },
     scrolltop: {
         root: ({ props }) => ({
-            class: ['fixed bottom-20 right-20 flex items-center justify-center', 'bg-blue-500 text-white rounded-md h-8 w-8', 'ml-auto']
+            class: [
+                'fixed bottom-20 right-20 flex items-center justify-center',
+                'ml-auto',
+                {
+                    '!bg-blue-500 hover:bg-blue-600 text-white rounded-md h-8 w-8': props.target == 'parent',
+                    '!bg-gray-700 hover:bg-gray-800 h-12 w-12 rounded-full text-white': props.target !== 'parent'
+                }
+            ]
         })
     },
     terminal: {
-        root: ({ props }) => ({
+        root: {
             class: ['border border-gray-300 p-5', 'bg-gray-900 text-white dark:border-blue-900/40 ', 'h-72 overflow-auto']
-        }),
-        container: {
-            class: ['flex items-center']
         },
-        prompt: {
-            class: ['text-yellow-400']
-        },
-        commandtext: {
-            class: ['flex-1 flex-shrink-1 flex-grow-0 border-0 bg-transparent text-inherit p-0 outline-none']
-        }
+        container: 'flex items-center',
+        prompt: 'text-yellow-400',
+        commandtext: 'flex-1 shrink grow-0 border-0 bg-transparent text-inherit p-0 outline-none'
     },
-
+    blockui: {
+        root: 'relative',
+        mask: 'bg-black/40'
+    },
     //MENU
     breadcrumb: {
         root: {
             class: ['overflow-x-auto', 'bg-white dark:bg-gray-900 border border-gray-300 dark:border-blue-900/40 rounded-md p-4']
         },
-        menu: {
-            class: ['m-0 p-0 list-none flex items-center flex-nowrap']
-        },
+        menu: 'm-0 p-0 list-none flex items-center flex-nowrap',
         action: {
             class: [
                 'text-decoration-none flex items-center',
@@ -1714,23 +1803,17 @@ export default {
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
             ]
         },
-        icon: {
-            class: ['text-gray-600 dark:text-white/70']
-        },
+        icon: 'text-gray-600 dark:text-white/70',
         separator: {
             class: ['mx-2 text-gray-600 dark:text-white/70', 'flex items-center']
         }
     },
     contextmenu: {
-        root: {
-            class: ['py-1 bg-white dark:bg-gray-900 text-gray-700 dark:text-white/80 border-none shadow-md rounded-lg w-52']
-        },
+        root: 'py-1 bg-white dark:bg-gray-900 text-gray-700 dark:text-white/80 border-none shadow-md rounded-lg w-52',
         menu: {
             class: ['m-0 p-0 list-none', 'outline-none']
         },
-        menuitem: {
-            class: ['relative']
-        },
+        menuitem: 'relative',
         content: ({ context }) => ({
             class: [
                 'transition-shadow duration-200 rounded-none',
@@ -1746,18 +1829,19 @@ export default {
         action: {
             class: ['cursor-pointer flex items-center no-underline overflow-hidden relative', 'text-gray-700 dark:text-white/80 py-3 px-5 select-none']
         },
-        icon: {
-            class: ['text-gray-600 dark:text-white/70 mr-2']
-        },
-        label: {
-            class: ['text-gray-600 dark:text-white/70']
-        }
+        icon: 'text-gray-600 dark:text-white/70 mr-2',
+        label: 'text-gray-600 dark:text-white/70'
     },
     dock: {
         root: ({ props }) => ({
             class: [
                 'absolute z-1 flex justify-center items-center pointer-events-none',
-                { 'left-0 bottom-0 w-full': props.position == 'bottom', 'left-0 top-0 w-full': props.position == 'top', 'left-0 top-0 h-full': props.position == 'left', 'right-0 top-0 h-full': props.position == 'right' }
+                {
+                    'left-0 bottom-0 w-full': props.position == 'bottom',
+                    'left-0 top-0 w-full': props.position == 'top',
+                    'left-0 top-0 h-full': props.position == 'left',
+                    'right-0 top-0 h-full': props.position == 'right'
+                }
             ]
         }),
         container: {
@@ -1793,11 +1877,8 @@ export default {
             class: ['flex flex-col items-center justify-center relative overflow-hidden cursor-default', 'w-16 h-16']
         }
     },
-
     menu: {
-        root: {
-            class: ['py-1 bg-white dark:bg-gray-900 text-gray-700 dark:text-white/80 border border-gray-300 dark:border-blue-900/40 rounded-md w-48']
-        },
+        root: 'py-1 bg-white dark:bg-gray-900 text-gray-700 dark:text-white/80 border border-gray-300 dark:border-blue-900/40 rounded-md w-48',
         menu: {
             class: ['m-0 p-0 list-none', 'outline-none']
         },
@@ -1813,60 +1894,80 @@ export default {
         action: {
             class: ['text-gray-700 dark:text-white/80 py-3 px-5 select-none', 'cursor-pointer flex items-center no-underline overflow-hidden relative']
         },
-        icon: {
-            class: ['text-gray-600 dark:text-white/70 mr-2']
-        },
+        icon: 'text-gray-600 dark:text-white/70 mr-2',
         submenuheader: {
             class: ['m-0 p-3 text-gray-700 dark:text-white/80 bg-white dark:bg-gray-900 font-bold rounded-tl-none rounded-tr-none']
-        }
+        },
+        transition: TRANSITIONS.overlay
     },
-
     menubar: {
         root: {
             class: ['p-2 bg-gray-100 dark:bg-gray-900 border border-gray-300 dark:border-blue-900/40 rounded-md', 'flex items-center relative']
         },
-        menu: ({ props, context }) => ({
+        menu: ({ props }) => ({
             class: [
                 'm-0 sm:p-0 list-none',
                 'outline-none',
                 'sm:flex items-center flex-wrap sm:flex-row sm:top-auto sm:left-auto sm:relative sm:bg-transparent sm:shadow-none sm:w-auto',
                 'flex-col top-full left-0',
                 'absolute py-1 bg-white dark:bg-gray-900 border-0 shadow-md w-full',
-
-                { 'hidden ': !props?.mobileActive, 'flex ': props?.mobileActive }
+                {
+                    'hidden ': !props?.mobileActive,
+                    'flex ': props?.mobileActive
+                }
             ]
         }),
-        menuitem: ({ props, context }) => ({
-            class: ['sm:relative sm:w-auto', 'w-full static']
-        }),
+        menuitem: 'sm:relative sm:w-auto w-full static',
         content: ({ props, context }) => ({
             class: [
                 ' transition-shadow duration-200',
-                'hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80',
-                { 'rounded-md': props.root, '': !props.root },
+                '',
+                { 'rounded-md': props.root },
                 {
                     'text-gray-700 dark:text-white/80': !context.focused && !context.active,
                     'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90': context.focused && !context.active,
                     'bg-blue-100 text-blue-700 dark:bg-blue-400 dark:text-white/80': context.focused && context.active,
                     'bg-blue-50 text-blue-700 dark:bg-blue-300 dark:text-white/80': !context.focused && context.active
+                },
+                {
+                    'hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80': !context.active,
+                    'hover:bg-blue-200 dark:hover:bg-blue-500': context.active
                 }
             ]
         }),
-        action: ({ props, context }) => ({
-            class: ['select-none', 'cursor-pointer flex items-center no-underline overflow-hidden relative', 'py-3 px-5 select-none']
+        action: ({ context }) => ({
+            class: [
+                'select-none',
+                'cursor-pointer flex items-center no-underline overflow-hidden relative',
+                'py-3 px-5 select-none',
+                {
+                    'max-[960px]:pl-9': context.level === 1,
+                    'max-[960px]:pl-14': context.level === 2
+                }
+            ]
         }),
-        icon: {
-            class: 'mr-2'
-        },
-        submenuicon: ({ props, context }) => ({
-            class: [{ 'ml-2': props.root, 'ml-auto': !props.root }]
+        icon: 'mr-2',
+        submenuicon: ({ props }) => ({
+            class: [
+                'max-[960px]:ml-auto',
+                {
+                    'ml-2': props.root,
+                    'ml-auto': !props.root
+                }
+            ]
         }),
-        submenu: ({ props, context }) => ({
-            class: ['py-1 bg-white dark:bg-gray-900 border-0  sm:shadow-md sm:w-48', 'w-full static shadow-none', 'sm:absolute z-10', 'm-0 list-none', { 'sm:absolute sm:left-full sm:top-0': props.level > 1 }]
+        submenu: ({ props }) => ({
+            class: [
+                'py-1 bg-white dark:bg-gray-900 border-0  sm:shadow-md sm:w-48',
+                'w-full static shadow-none',
+                'sm:absolute z-10',
+                'm-0 list-none',
+                {
+                    'sm:absolute sm:left-full sm:top-0': props.level > 1
+                }
+            ]
         }),
-        separator: {
-            class: ['border-t border-gray-300 dark:border-blue-900/40 my-1']
-        },
+        separator: 'border-t border-gray-300 dark:border-blue-900/40 my-1',
         button: {
             class: [
                 'flex sm:hidden w-8 h-8 rounded-full text-gray-600 dark:text-white/80 transition duration-200 ease-in-out',
@@ -1877,46 +1978,62 @@ export default {
         }
     },
     megamenu: {
-        root: ({ props, context }) => ({
+        root: ({ props }) => ({
             class: ['bg-gray-100 dark:bg-gray-900  border border-gray-300 dark:border-blue-900/40  rounded-md', 'flex relative', { 'p-2 items-center': props.orientation == 'horizontal', 'flex-col w-48 p-0 py-1': props.orientation !== 'horizontal' }]
         }),
-        menu: ({ props, context }) => ({
+        menu: {
             class: ['m-0 sm:p-0 list-none relative', 'outline-none', 'flex items-center flex-wrap flex-row top-auto left-auto relative bg-transparent shadow-none w-auto']
-        }),
-        menuitem: ({ props, context }) => ({
-            class: ['relative', { 'w-auto': props.horizontal, 'w-full': !props.horizontal }]
+        },
+        menuitem: ({ props }) => ({
+            class: [
+                'relative',
+                {
+                    'w-auto': props.horizontal,
+                    'w-full': !props.horizontal
+                }
+            ]
         }),
         content: ({ props, context }) => ({
             class: [
                 'transition-shadow duration-200',
-                'hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80', //Hover
                 { 'rounded-md': props.level < 1 && props.horizontal },
                 {
                     'text-gray-700 dark:text-white/80': !context.focused && !context.active,
                     'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90': context.focused && !context.active,
                     'bg-blue-100 text-blue-700 dark:bg-blue-400 dark:text-white/80': context.focused && context.active,
                     'bg-blue-50 text-blue-700 dark:bg-blue-300 dark:text-white/80': !context.focused && context.active
+                },
+                {
+                    'hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80': !context.active,
+                    'hover:bg-blue-200 dark:hover:bg-blue-500': context.active
                 }
             ]
         }),
-        action: ({ props, context }) => ({
+        action: {
             class: ['select-none', 'cursor-pointer flex items-center no-underline overflow-hidden relative', 'py-3 px-5 select-none']
-        }),
+        },
         icon: {
             class: 'mr-2'
         },
-        submenuicon: ({ props, context }) => ({
-            class: [{ 'ml-2': props.horizontal, 'ml-auto': !props.horizontal }]
+        submenuicon: ({ props }) => ({
+            class: [
+                {
+                    'ml-2': props.horizontal,
+                    'ml-auto': !props.horizontal
+                }
+            ]
         }),
-        panel: ({ props, context }) => ({
-            class: ['py-1 bg-white dark:bg-gray-900 border-0 shadow-md w-auto', 'absolute z-10', { 'left-full top-0': !props.horizontal }]
+        panel: ({ props }) => ({
+            class: [
+                'py-1 bg-white dark:bg-gray-900 border-0 shadow-md w-auto',
+                'absolute z-10',
+                {
+                    'left-full top-0': !props.horizontal
+                }
+            ]
         }),
-        grid: {
-            class: ['flex']
-        },
-        column: {
-            class: ['w-1/2']
-        },
+        grid: 'flex',
+        column: 'w-1/2',
         submenu: {
             class: ['m-0 list-none', 'py-1 w-48']
         },
@@ -1925,18 +2042,14 @@ export default {
         }
     },
     panelmenu: {
-        root: ({ props, instance }) => ({
-            class: ['w-full md:w-[25rem]']
-        }),
-        panel: {
-            class: ['mb-1']
-        },
-        header: ({ context }) => ({
+        root: 'w-full md:w-[25rem]',
+        panel: 'mb-1',
+        header: {
             class: [
                 'outline-none',
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]' // Focus
             ]
-        }),
+        },
         headercontent: {
             class: [
                 'border border-solid border-gray-300 dark:border-blue-900/40 text-gray-700 dark:text-white/80 bg-gray-100 dark:bg-gray-900 rounded-md transition-shadow duration-200',
@@ -1946,15 +2059,9 @@ export default {
         headeraction: {
             class: ['flex items-center select-none cursor-pointer relative no-underline', 'text-gray-700 dark:text-white/80 p-5 font-bold']
         },
-        submenuicon: {
-            class: ['mr-2']
-        },
-        headericon: {
-            class: ['mr-2']
-        },
-        menucontent: {
-            class: ['py-1 border border-t-0 border-gray-300 dark:border-blue-900/40 bg-white dark:bg-gray-900 text-gray-700 dark:text-white/80 rounded-t-none rounded-br-md rounded-bl-md']
-        },
+        submenuicon: 'mr-2',
+        headericon: 'mr-2',
+        menucontent: 'py-1 border border-t-0 border-gray-300 dark:border-blue-900/40 bg-white dark:bg-gray-900 text-gray-700 dark:text-white/80 rounded-t-none rounded-br-md rounded-bl-md',
         menu: {
             class: ['outline-none', 'm-0 p-0 list-none']
         },
@@ -1970,23 +2077,16 @@ export default {
         action: {
             class: ['text-gray-700 dark:text-white/80 py-3 px-5 select-none', 'flex items-center cursor-pointer no-underline relative overflow-hidden']
         },
-        icon: {
-            class: ['mr-2']
-        },
-        submenu: {
-            class: ['p-0 pl-4 m-0 list-none']
-        }
+        icon: 'mr-2',
+        submenu: 'p-0 pl-4 m-0 list-none',
+        transition: TRANSITIONS.toggleable
     },
     steps: {
-        root: {
-            class: ['relative']
-        },
-        menu: {
-            class: ['p-0 m-0 list-none flex']
-        },
-        menuitem: ({ props }) => ({
+        root: 'relative',
+        menu: 'p-0 m-0 list-none flex',
+        menuitem: {
             class: ['relative flex justify-center flex-1 overflow-hidden', 'before:border-t before:border-gray-300 before:dark:border-blue-900/40 before:w-full before:absolute before:top-1/4 before:left-0 before:transform before:-translate-y-1/2']
-        }),
+        },
         action: {
             class: [
                 'inline-flex flex-col items-center overflow-hidden',
@@ -2001,17 +2101,12 @@ export default {
             class: ['block', 'whitespace-nowrap overflow-hidden overflow-ellipsis max-w-full', 'mt-2 text-gray-500 dark:text-white/60']
         }
     },
-
     tabmenu: {
-        root: {
-            class: ['overflow-x-auto']
-        },
+        root: 'overflow-x-auto',
         menu: {
             class: ['flex m-0 p-0 list-none flex-nowrap', 'bg-white border-solid border-gray-300 border-b-2', 'outline-none no-underline text-base list-none']
         },
-        menuitem: {
-            class: ['mr-0']
-        },
+        menuitem: 'mr-0',
         action: ({ context, state }) => ({
             class: [
                 'cursor-pointer select-none flex items-center relative no-underline overflow-hidden',
@@ -2024,9 +2119,7 @@ export default {
             ],
             style: 'top:2px'
         }),
-        icon: {
-            class: ['mr-2']
-        }
+        icon: 'mr-2'
     },
     tieredmenu: {
         root: {
@@ -2035,9 +2128,7 @@ export default {
         menu: {
             class: ['outline-none', 'm-0 p-0 list-none']
         },
-        menuitem: {
-            class: ['relative']
-        },
+        menuitem: 'relative',
         content: ({ context }) => ({
             class: [
                 'transition-shadow duration-200 border-none rounded-none',
@@ -2054,30 +2145,28 @@ export default {
             class: [
                 'py-3 px-5 select-none',
                 'flex items-center cursor-pointer no-underline relative overflow-hidden',
-                { 'text-gray-700 dark:text-white/80 hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80': !context.active, 'text-blue-600 bg-blue-100': context.active }
+                {
+                    'text-gray-700 dark:text-white/80 hover:text-gray-700 dark:hover:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80': !context.active,
+                    'text-blue-600 bg-blue-100': context.active
+                }
             ]
         }),
-        icon: {
-            class: ['mr-2']
-        },
-        submenuicon: {
-            class: ['ml-auto']
-        },
-        separator: {
-            class: ['border-t border-gray-300 my-1 dark:border-blue-900/40']
-        },
+        icon: 'mr-2',
+        submenuicon: 'ml-auto',
+        separator: 'border-t border-gray-300 my-1 dark:border-blue-900/40',
         submenu: {
             class: ['py-1 bg-white dark:bg-gray-900 border-0 shadow-md min-w-full', 'absolute z-10', 'left-full top-0']
         }
     },
     //MEDIA
-
     image: {
-        root: {
-            class: ['relative inline-block']
-        },
+        root: 'relative inline-block',
         button: {
-            class: ['absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300', 'bg-transparent text-gray-100', 'hover:opacity-100 hover:cursor-pointer hover:bg-black hover:bg-opacity-50']
+            class: [
+                'absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300',
+                'bg-transparent text-gray-100',
+                'hover:opacity-100 hover:cursor-pointer hover:bg-black hover:bg-opacity-50' //Hover
+            ]
         },
         mask: {
             class: ['fixed top-0 left-0 w-full h-full', 'flex items-center justify-center', 'bg-black bg-opacity-90']
@@ -2093,9 +2182,7 @@ export default {
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]'
             ]
         },
-        rotaterighticon: {
-            class: ['w-6 h-6']
-        },
+        rotaterighticon: 'w-6 h-6',
         rotateleftbutton: {
             class: [
                 'flex justify-center items-center',
@@ -2104,9 +2191,7 @@ export default {
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]'
             ]
         },
-        rotatelefticon: {
-            class: ['w-6 h-6']
-        },
+        rotatelefticon: 'w-6 h-6',
         zoomoutbutton: {
             class: [
                 'flex justify-center items-center',
@@ -2115,9 +2200,7 @@ export default {
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]'
             ]
         },
-        zoomouticon: {
-            class: ['w-6 h-6']
-        },
+        zoomouticon: 'w-6 h-6',
         zoominbutton: {
             class: [
                 'flex justify-center items-center',
@@ -2126,9 +2209,7 @@ export default {
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]'
             ]
         },
-        zoominicon: {
-            class: ['w-6 h-6']
-        },
+        zoominicon: 'w-6 h-6',
         closebutton: {
             class: [
                 'flex justify-center items-center',
@@ -2137,52 +2218,34 @@ export default {
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]'
             ]
         },
-        closeicon: {
-            class: ['w-6 h-6']
-        }
+        closeicon: 'w-6 h-6'
     },
     galleria: {
-        root: ({ instance, props }) => ({
-            class: ['flex flex-col']
-        }),
-        content: {
-            class: ['flex flex-col']
-        },
-        itemwrapper: {
-            class: ['flex flex-col relative']
-        },
-        itemcontainer: {
-            class: ['relative flex h-full']
-        },
-        item: {
-            class: ['flex justify-center items-center h-full w-full']
-        },
-        thumbnailwrapper: {
-            class: ['flex flex-col overflow-auto flex-shrink-0']
-        },
+        root: 'flex flex-col',
+        content: 'flex flex-col',
+        itemwrapper: 'flex flex-col relative',
+        itemcontainer: 'relative flex h-full',
+        item: 'flex justify-center items-center h-full w-full',
+        thumbnailwrapper: 'flex flex-col overflow-auto shrink-0',
         thumbnailcontainer: {
             class: ['flex flex-row', 'bg-black/90 p-4']
         },
         previousthumbnailbutton: {
             class: [
-                'self-center flex flex-shrink-0 justify-center items-center overflow-hidden relative',
+                'self-center flex shrink-0 justify-center items-center overflow-hidden relative',
                 'm-2 bg-transparent text-white w-8 h-8 transition duration-200 ease-in-out rounded-full',
                 'hover:bg-white/10 hover:text-white',
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]'
             ]
         },
-        thumbnailitemscontainer: {
-            class: ['overflow-hidden w-full']
-        },
-        thumbnailitems: {
-            class: ['flex']
-        },
+        thumbnailitemscontainer: 'overflow-hidden w-full',
+        thumbnailitems: 'flex',
         thumbnailitem: {
-            class: ['overflow-auto flex items-center justify-center cursor-pointer opacity-50', 'flex-1 flex-grow-0 flex-shrink-0 w-20', 'hover:opacity-100 hover:transition-opacity hover:duration-300']
+            class: ['overflow-auto flex items-center justify-center cursor-pointer opacity-50', 'flex-1 grow-0 shrink-0 w-20', 'hover:opacity-100 hover:transition-opacity hover:duration-300']
         },
         nextthumbnailbutton: {
             class: [
-                'self-center flex flex-shrink-0 justify-center items-center overflow-hidden relative',
+                'self-center flex shrink-0 justify-center items-center overflow-hidden relative',
                 'm-2 bg-transparent text-white w-8 h-8 transition duration-200 ease-in-out rounded-full',
                 'hover:bg-white/10 hover:text-white',
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]'
@@ -2191,13 +2254,15 @@ export default {
         indicators: {
             class: ['flex items-center justify-center', 'p-4']
         },
-        indicator: {
-            class: ['mr-2']
-        },
-        indicatorbutton: ({ props, context }) => ({
+        indicator: 'mr-2',
+        indicatorbutton: ({ context }) => ({
             class: [
-                'bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 w-4 h-4 transition duration-200 rounded-full',
-                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
+                'w-4 h-4 transition duration-200 rounded-full',
+                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
+                {
+                    'bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600': !context.highlighted,
+                    'bg-blue-500 hover:bg-blue-600': context.highlighted
+                }
             ]
         }),
         mask: {
@@ -2211,9 +2276,7 @@ export default {
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]'
             ]
         },
-        closeicon: {
-            class: ['w-6 h-6']
-        },
+        closeicon: 'w-6 h-6',
         previousitembutton: {
             class: [
                 'inline-flex justify-center items-center overflow-hidden',
@@ -2239,37 +2302,51 @@ export default {
         }
     },
     carousel: {
-        root: {
-            class: ['flex flex-col']
-        },
-        content: {
-            class: ['flex flex-col overflow-auto']
-        },
-        container: ({ props, context }) => ({
-            class: ['flex', { 'flex-row': props.orientation !== 'vertical', 'flex-col': props.orientation == 'vertical' }]
+        root: 'flex flex-col',
+        content: 'flex flex-col overflow-auto',
+        container: ({ props }) => ({
+            class: [
+                'flex',
+                {
+                    'flex-row': props.orientation !== 'vertical',
+                    'flex-col': props.orientation == 'vertical'
+                }
+            ]
         }),
-        previousbutton: ({ props, context }) => ({
-            class: ['flex justify-center items-center self-center overflow-hidden relative flex-shrink-0 flex-grow-0', 'w-8 h-8 text-gray-600 border-0 bg-transparent rounded-full transition duration-200 ease-in-out mx-2']
-        }),
-        itemscontent: {
-            class: ['overflow-hidden w-full']
+        previousbutton: {
+            class: ['flex justify-center items-center self-center overflow-hidden relative shrink-0 grow-0', 'w-8 h-8 text-gray-600 border-0 bg-transparent rounded-full transition duration-200 ease-in-out mx-2']
         },
-        itemscontainer: ({ props, context }) => ({
-            class: ['flex ', { 'flex-row': props.orientation !== 'vertical', 'flex-col h-full': props.orientation == 'vertical' }]
+        itemscontent: 'overflow-hidden w-full',
+        itemscontainer: ({ props }) => ({
+            class: [
+                'flex ',
+                {
+                    'flex-row': props.orientation !== 'vertical',
+                    'flex-col h-full': props.orientation == 'vertical'
+                }
+            ]
         }),
-        item: ({ props, context }) => ({
-            class: ['flex flex-shrink-0 grow', { 'w-1/3': props.orientation !== 'vertical', 'w-full': props.orientation == 'vertical' }]
+        item: ({ props }) => ({
+            class: [
+                'flex shrink-0 grow',
+                {
+                    'w-1/3': props.orientation !== 'vertical',
+                    'w-full': props.orientation == 'vertical'
+                }
+            ]
         }),
         indicators: {
             class: ['flex flex-row justify-center flex-wrap']
         },
-        indicator: {
-            class: ['mr-2 mb-2']
-        },
-        indicatorbutton: ({ props, instance }) => ({
+        indicator: 'mr-2 mb-2',
+        indicatorbutton: ({ context }) => ({
             class: [
-                'bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 w-8 h-2 transition duration-200 rounded-0',
-                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
+                'w-8 h-2 transition duration-200 rounded-0',
+                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
+                {
+                    'bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600': !context.highlighted,
+                    'bg-blue-500 hover:bg-blue-600': context.highlighted
+                }
             ]
         })
     },
@@ -2277,15 +2354,9 @@ export default {
         root: {
             class: ['max-w-[30rem] md:w-full', 'border border-solid border-gray-300 dark:border-blue-900/40 bg-white dark:bg-gray-900 text-gray-700 dark:text-white/80 p-5 rounded-md']
         },
-        wrapper: {
-            class: ['overflow-auto']
-        },
-        container: {
-            class: ['m-0 p-0 list-none overflow-auto']
-        },
-        node: {
-            class: ['p-1 outline-none']
-        },
+        wrapper: 'overflow-auto',
+        container: 'm-0 p-0 list-none overflow-auto',
+        node: 'p-1 outline-none',
         content: ({ context, props }) => ({
             class: [
                 'flex items-center',
@@ -2297,31 +2368,36 @@ export default {
         }),
         toggler: ({ context }) => ({
             class: [
-                'cursor-pointer select-none inline-flex items-center justify-center overflow-hidden relative flex-shrink-0',
+                'cursor-pointer select-none inline-flex items-center justify-center overflow-hidden relative shrink-0',
                 'mr-2 w-8 h-8 border-0 bg-transparent rounded-full transition duration-200',
                 'hover:border-transparent focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
-                { 'text-gray-500 dark:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80  hover:text-gray-800 dark:hover:text-white/80': !context.selected, 'text-blue-600 hover:bg-white/30': context.selected }
+                {
+                    'text-gray-500 dark:text-white/80 hover:bg-gray-200 dark:hover:bg-gray-800/80  hover:text-gray-800 dark:hover:text-white/80': !context.selected,
+                    'text-blue-600 hover:bg-white/30': context.selected
+                },
+                {
+                    hidden: context.leaf
+                }
             ]
         }),
-        checkboxcontainer: {
-            class: ['mr-2']
-        },
+        checkboxcontainer: 'mr-2',
         checkbox: ({ context, props }) => ({
             class: [
                 'cursor-pointer inline-flex relative select-none align-bottom',
                 'w-6 h-6',
                 'flex items-center justify-center',
                 'border-2 w-6 h-6 rounded-lg transition-colors duration-200 text-white text-base dark:text-gray-900',
-                { 'border-gray-300 bg-white dark:border-blue-900/40 dark:bg-gray-900': !context.checked, 'border-blue-500 text-white bg-blue-500 dark:border-blue-400 dark:bg-blue-400': context.checked },
+                {
+                    'border-gray-300 bg-white dark:border-blue-900/40 dark:bg-gray-900': !context.checked,
+                    'border-blue-500 text-white bg-blue-500 dark:border-blue-400 dark:bg-blue-400': context.checked
+                },
                 {
                     'hover:border-blue-500 dark:hover:border-blue-400 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[inset_0_0_0_0.2rem_rgba(147,197,253,0.5)]': !props.disabled,
                     'cursor-default opacity-60': props.disabled
                 }
             ]
         }),
-        nodeicon: {
-            class: ['mr-2 text-gray-600 dark:text-white/70']
-        },
+        nodeicon: 'mr-2 text-gray-600 dark:text-white/70',
         subgroup: {
             class: ['m-0 list-none', 'p-0 pl-4']
         },
@@ -2335,15 +2411,13 @@ export default {
                 'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
             ]
         },
-        searchicon: {
-            class: ['absolute top-1/2 -mt-2 right-3 text-gray-600 dark:hover:text-white/70']
-        }
+        searchicon: 'absolute top-1/2 -mt-2 right-3 text-gray-600 dark:hover:text-white/70'
     },
     // DATA
     timeline: {
         root: ({ props }) => ({
             class: [
-                'flex flex-grow',
+                'flex grow',
                 {
                     'flex-col': props.layout === 'vertical',
                     'flex-row flex-1': props.layout === 'horizontal'
@@ -2382,12 +2456,10 @@ export default {
                 }
             ]
         }),
-        marker: {
-            class: ['flex self-baseline w-4 h-4 rounded-full border-2 border-blue-500 bg-white dark:border-blue-300 dark:bg-blue-900/40']
-        },
+        marker: 'flex self-baseline w-4 h-4 rounded-full border-2 border-blue-500 bg-white dark:border-blue-300 dark:bg-blue-900/40',
         connector: ({ props }) => ({
             class: [
-                'flex-grow bg-gray-300 dark:bg-blue-900/40',
+                'grow bg-gray-300 dark:bg-blue-900/40',
                 {
                     'w-[2px]': props.layout === 'vertical',
                     'w-full h-[2px]': props.layout === 'horizontal'
@@ -2407,7 +2479,7 @@ export default {
                 },
                 {
                     'min-h-0': props.layout === 'vertical' && context.index === context.count,
-                    'flex-grow-0': props.layout === 'horizontal' && context.index === context.count
+                    'grow-0': props.layout === 'horizontal' && context.index === context.count
                 }
             ]
         })
@@ -2419,12 +2491,8 @@ export default {
                 'dark:bg-gray-900 dark:text-white/80' // Dark Mode
             ]
         },
-        grid: {
-            class: 'flex flex-wrap ml-0 mr-0 mt-0 bg-white dark:bg-gray-900'
-        },
-        header: {
-            class: 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white/80 border-gray-200 dark:border-blue-900/40 border-t border-b p-4 font-bold'
-        }
+        grid: 'flex flex-wrap ml-0 mr-0 mt-0 bg-white dark:bg-gray-900',
+        header: 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white/80 border-gray-200 dark:border-blue-900/40 border-t border-b p-4 font-bold'
     },
     dataviewlayoutoptions: {
         listbutton: ({ props }) => ({
@@ -2445,21 +2513,15 @@ export default {
         })
     },
     organizationchart: {
-        table: {
-            class: 'mx-auto my-0 border-spacing-0 border-separate'
-        },
-        cell: {
-            class: 'text-center align-top py-0 px-3'
-        },
+        table: 'mx-auto my-0 border-spacing-0 border-separate',
+        cell: 'text-center align-top py-0 px-3',
         node: {
             class: [
                 'relative inline-block bg-white border border-gray-300 text-gray-600 p-5',
                 'dark:border-blue-900/40 dark:bg-gray-900 dark:text-white/80' // Dark Mode
             ]
         },
-        linecell: {
-            class: 'text-center align-top py-0 px-3'
-        },
+        linecell: 'text-center align-top py-0 px-3',
         linedown: {
             class: [
                 'mx-auto my-0 w-px h-[20px] bg-gray-300',
@@ -2469,41 +2531,33 @@ export default {
         lineleft: ({ context }) => ({
             class: [
                 'text-center align-top py-0 px-3 rounded-none border-r border-gray-300',
+                'dark:border-blue-900/40', //Dark Mode
                 {
                     'border-t': context.lineTop
-                },
-                'dark:border-blue-900/40' //Dark Mode
+                }
             ]
         }),
         lineright: ({ context }) => ({
             class: [
                 'text-center align-top py-0 px-3 rounded-none',
+                'dark:border-blue-900/40', //Dark Mode
                 {
                     'border-t border-gray-300': context.lineTop
-                },
-                'dark:border-blue-900/40' //Dark Mode
+                }
             ]
         }),
-        nodecell: {
-            class: 'text-center align-top py-0 px-3'
-        },
+        nodecell: 'text-center align-top py-0 px-3',
         nodetoggler: {
             class: [
                 'absolute bottom-[-0.75rem] left-2/4 -ml-3 w-6 h-6 bg-inherit text-inherit rounded-full z-2 cursor-pointer no-underline select-none',
                 'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]' // Focus styles
             ]
         },
-        nodetogglericon: {
-            class: 'relative inline-block w-4 h-4'
-        }
+        nodetogglericon: 'relative inline-block w-4 h-4'
     },
     orderlist: {
-        root: {
-            class: 'flex'
-        },
-        controls: {
-            class: 'flex flex-col justify-center p-5'
-        },
+        root: 'flex',
+        controls: 'flex flex-col justify-center p-5',
         moveupbutton: {
             root: ({ context }) => ({
                 class: [
@@ -2517,7 +2571,8 @@ export default {
                         'cursor-default pointer-events-none opacity-60': context.disabled
                     }
                 ]
-            })
+            }),
+            label: 'flex-initial w-0'
         },
         movetopbutton: {
             root: ({ context }) => ({
@@ -2532,7 +2587,8 @@ export default {
                         'cursor-default pointer-events-none opacity-60': context.disabled
                     }
                 ]
-            })
+            }),
+            label: 'flex-initial w-0'
         },
         movedownbutton: {
             root: ({ context }) => ({
@@ -2547,7 +2603,8 @@ export default {
                         'cursor-default pointer-events-none opacity-60': context.disabled
                     }
                 ]
-            })
+            }),
+            label: 'flex-initial w-0'
         },
         movebottombutton: {
             root: ({ context }) => ({
@@ -2562,11 +2619,10 @@ export default {
                         'cursor-default pointer-events-none opacity-60': context.disabled
                     }
                 ]
-            })
+            }),
+            label: 'flex-initial w-0'
         },
-        container: {
-            class: 'flex-auto'
-        },
+        container: 'flex-auto',
         header: {
             class: [
                 'bg-slate-50 text-slate-700 border border-gray-300 p-5 font-bold border-b-0 rounded-t-md',
@@ -2594,12 +2650,8 @@ export default {
         })
     },
     picklist: {
-        root: {
-            class: 'flex'
-        },
-        sourcecontrols: {
-            class: 'flex flex-col justify-center p-5'
-        },
+        root: 'flex',
+        sourcecontrols: 'flex flex-col justify-center p-5',
         sourcemoveupbutton: {
             root: ({ context }) => ({
                 class: [
@@ -2613,7 +2665,8 @@ export default {
                         'cursor-default pointer-events-none opacity-60': context.disabled
                     }
                 ]
-            })
+            }),
+            label: 'flex-initial w-0'
         },
         sourcemovetopbutton: {
             root: ({ context }) => ({
@@ -2628,7 +2681,8 @@ export default {
                         'cursor-default pointer-events-none opacity-60': context.disabled
                     }
                 ]
-            })
+            }),
+            label: 'flex-initial w-0'
         },
         sourcemovedownbutton: {
             root: ({ context }) => ({
@@ -2643,7 +2697,8 @@ export default {
                         'cursor-default pointer-events-none opacity-60': context.disabled
                     }
                 ]
-            })
+            }),
+            label: 'flex-initial w-0'
         },
         sourcemovebottombutton: {
             root: ({ context }) => ({
@@ -2658,11 +2713,10 @@ export default {
                         'cursor-default pointer-events-none opacity-60': context.disabled
                     }
                 ]
-            })
+            }),
+            label: 'flex-initial w-0'
         },
-        sourcewrapper: {
-            class: 'grow shrink basis-2/4'
-        },
+        sourcewrapper: 'grow shrink basis-2/4',
         sourceheader: {
             class: [
                 'bg-slate-50 text-slate-700 border border-gray-300 p-5 font-bold border-b-0 rounded-t-md',
@@ -2688,9 +2742,7 @@ export default {
                 }
             ]
         }),
-        buttons: {
-            class: 'flex flex-col justify-center p-5'
-        },
+        buttons: 'flex flex-col justify-center p-5',
         movetotargetbutton: {
             root: ({ context }) => ({
                 class: [
@@ -2704,7 +2756,8 @@ export default {
                         'cursor-default pointer-events-none opacity-60': context.disabled
                     }
                 ]
-            })
+            }),
+            label: 'flex-initial w-0'
         },
         movealltotargetbutton: {
             root: ({ context }) => ({
@@ -2719,7 +2772,8 @@ export default {
                         'cursor-default pointer-events-none opacity-60': context.disabled
                     }
                 ]
-            })
+            }),
+            label: 'flex-initial w-0'
         },
         movetosourcebutton: {
             root: ({ context }) => ({
@@ -2734,7 +2788,8 @@ export default {
                         'cursor-default pointer-events-none opacity-60': context.disabled
                     }
                 ]
-            })
+            }),
+            label: 'flex-initial w-0'
         },
         movealltosourcebutton: {
             root: ({ context }) => ({
@@ -2749,11 +2804,10 @@ export default {
                         'cursor-default pointer-events-none opacity-60': context.disabled
                     }
                 ]
-            })
+            }),
+            label: 'flex-initial w-0'
         },
-        targetcontrols: {
-            class: 'flex flex-col justify-center p-5'
-        },
+        targetcontrols: 'flex flex-col justify-center p-5',
         targetmoveupbutton: {
             root: ({ context }) => ({
                 class: [
@@ -2767,7 +2821,8 @@ export default {
                         'cursor-default pointer-events-none opacity-60': context.disabled
                     }
                 ]
-            })
+            }),
+            label: 'flex-initial w-0'
         },
         targetmovetopbutton: {
             root: ({ context }) => ({
@@ -2782,7 +2837,8 @@ export default {
                         'cursor-default pointer-events-none opacity-60': context.disabled
                     }
                 ]
-            })
+            }),
+            label: 'flex-initial w-0'
         },
         targetmovedownbutton: {
             root: ({ context }) => ({
@@ -2797,7 +2853,8 @@ export default {
                         'cursor-default pointer-events-none opacity-60': context.disabled
                     }
                 ]
-            })
+            }),
+            label: 'flex-initial w-0'
         },
         targetmovebottombutton: {
             root: ({ context }) => ({
@@ -2812,11 +2869,10 @@ export default {
                         'cursor-default pointer-events-none opacity-60': context.disabled
                     }
                 ]
-            })
+            }),
+            label: 'flex-initial w-0'
         },
-        targetwrapper: {
-            class: 'grow shrink basis-2/4'
-        },
+        targetwrapper: 'grow shrink basis-2/4',
         targetheader: {
             class: [
                 'bg-slate-50 text-slate-700 border border-gray-300 p-5 font-bold border-b-0 rounded-t-md',
@@ -2931,12 +2987,8 @@ export default {
                     'dark:bg-gray-900 dark:text-white/80 dark:border-blue-900/40' //Dark Mode
                 ]
             },
-            wrapper: {
-                class: 'overflow-auto'
-            },
-            list: {
-                class: 'm-0 p-0 py-3 list-none'
-            },
+            wrapper: 'overflow-auto',
+            list: 'm-0 p-0 py-3 list-none',
             item: ({ context }) => ({
                 class: [
                     'relative font-normal cursor-pointer space-nowrap overflow-hidden',
@@ -2952,9 +3004,7 @@ export default {
             })
         },
         jumptopageinput: {
-            root: {
-                class: 'inline-flex mx-2'
-            },
+            root: 'inline-flex mx-2',
             input: {
                 class: [
                     'font-sans text-base text-gray-600 p-3 m-0 rounded-md apperance-none',
@@ -2997,12 +3047,8 @@ export default {
                     'dark:bg-gray-900 dark:text-white/80 dark:border-blue-900/40' //Dark Mode
                 ]
             },
-            wrapper: {
-                class: 'overflow-auto'
-            },
-            list: {
-                class: 'm-0 p-0 py-3 list-none'
-            },
+            wrapper: 'overflow-auto',
+            list: 'm-0 p-0 py-3 list-none',
             item: ({ context }) => ({
                 class: [
                     'relative font-normal cursor-pointer space-nowrap overflow-hidden',
@@ -3035,9 +3081,7 @@ export default {
                 'dark:bg-gray-950/40' // Dark Mode
             ]
         },
-        loadingicon: {
-            class: 'w-8 h-8'
-        },
+        loadingicon: 'w-8 h-8',
         header: {
             class: [
                 'bg-slate-50 text-slate-700 border border-x-0 border-t-0 border-gray-300 p-4 font-bold',
@@ -3058,9 +3102,7 @@ export default {
                 'dark:bg-gray-900 dark:text-white/70 dark:border-blue-900/40' // Dark Mode
             ]
         },
-        table: {
-            class: 'border-collapse table-fixed w-full'
-        },
+        table: 'border-collapse table-fixed w-full',
         thead: ({ props }) => ({
             class: [
                 {
@@ -3149,9 +3191,7 @@ export default {
                     'dark:text-white/80 dark:bg-blue-500/40' // Dark Mode
                 ]
             },
-            columnresizer: {
-                class: 'block absolute top-0 right-0 m-0 w-2 h-full p-0 cursor-col-resize border border-transparent'
-            },
+            columnresizer: 'block absolute top-0 right-0 m-0 w-2 h-full p-0 cursor-col-resize border border-transparent',
             checkboxwrapper: {
                 class: ['cursor-pointer inline-flex relative select-none align-bottom', 'w-6 h-6 mr-2']
             },
@@ -3174,9 +3214,7 @@ export default {
                 ]
             })
         },
-        resizehelper: {
-            class: ['absolute hidden w-px z-10 bg-blue-500 dark:bg-blue-300']
-        }
+        resizehelper: 'absolute hidden w-px z-10 bg-blue-500 dark:bg-blue-300'
     },
     datatable: {
         root: ({ props }) => ({
@@ -3195,9 +3233,7 @@ export default {
                 'dark:bg-gray-950/40' // Dark Mode
             ]
         },
-        loadingicon: {
-            class: 'w-8 h-8'
-        },
+        loadingicon: 'w-8 h-8',
         wrapper: ({ props }) => ({
             class: [
                 {
@@ -3213,9 +3249,7 @@ export default {
                 props.showGridlines ? 'border-x border-t border-b-0' : 'border-y border-x-0'
             ]
         }),
-        table: {
-            class: 'w-full border-spacing-0'
-        },
+        table: 'w-full border-spacing-0',
         thead: ({ context }) => ({
             class: [
                 {
@@ -3258,9 +3292,7 @@ export default {
                     }
                 ]
             }),
-            headercontent: {
-                class: 'flex items-center'
-            },
+            headercontent: 'flex items-center',
             bodycell: ({ props, context }) => ({
                 class: [
                     'text-left border-0 border-b border-solid border-gray-300',
@@ -3295,9 +3327,7 @@ export default {
                     'dark:text-white/80 dark:bg-blue-400' // Dark Mode
                 ]
             },
-            columnfilter: {
-                class: 'inline-flex items-center ml-auto'
-            },
+            columnfilter: 'inline-flex items-center ml-auto',
             filteroverlay: {
                 class: [
                     'bg-white text-gray-600 border-0 rounded-md min-w-[12.5rem]',
@@ -3305,13 +3335,9 @@ export default {
                 ]
             },
             filtermatchmodedropdown: {
-                root: {
-                    class: 'min-[0px]:flex mb-2'
-                }
+                root: 'min-[0px]:flex mb-2'
             },
-            filterrowitems: {
-                class: 'm-0 p-0 py-3 list-none '
-            },
+            filterrowitems: 'm-0 p-0 py-3 list-none ',
             filterrowitem: ({ context }) => ({
                 class: ['m-0 py-3 px-5 bg-transparent', 'transition duration-200', context?.highlighted ? 'text-blue-700 bg-blue-100 dark:text-white/80 dark:bg-blue-300' : 'text-gray-600 bg-transparent dark:text-white/80 dark:bg-transparent']
             }),
@@ -3322,47 +3348,25 @@ export default {
                 ]
             },
             filteroperatordropdown: {
-                root: {
-                    class: 'min-[0px]:flex'
-                }
+                root: 'min-[0px]:flex'
             },
-            filterconstraint: {
-                class: 'p-5 border-b border-solid border-gray-300 dark:border-blue-900/40'
-            },
-            filteraddrule: {
-                class: 'py-3 px-5'
-            },
+            filterconstraint: 'p-5 border-b border-solid border-gray-300 dark:border-blue-900/40',
+            filteraddrule: 'py-3 px-5',
             filteraddrulebutton: {
-                root: {
-                    class: 'justify-center w-full min-[0px]:text-sm'
-                },
-                label: {
-                    class: 'flex-auto grow-0'
-                },
-                icon: {
-                    class: 'mr-2'
-                }
+                root: 'justify-center w-full min-[0px]:text-sm',
+                label: 'flex-auto grow-0',
+                icon: 'mr-2'
             },
             filterremovebutton: {
-                root: {
-                    class: 'ml-2'
-                },
-                label: {
-                    class: 'grow-0'
-                }
+                root: 'ml-2',
+                label: 'grow-0'
             },
-            filterbuttonbar: {
-                class: 'flex items-center justify-between p-5'
-            },
+            filterbuttonbar: 'flex items-center justify-between p-5',
             filterclearbutton: {
-                root: {
-                    class: 'w-auto min-[0px]:text-sm border-blue-500 text-blue-500 px-4 py-3'
-                }
+                root: 'w-auto min-[0px]:text-sm border-blue-500 text-blue-500 px-4 py-3'
             },
             filterapplybutton: {
-                root: {
-                    class: 'w-auto min-[0px]:text-sm px-4 py-3'
-                }
+                root: 'w-auto min-[0px]:text-sm px-4 py-3'
             },
             filtermenubutton: ({ context }) => ({
                 class: [
@@ -3386,12 +3390,8 @@ export default {
                     }
                 ]
             }),
-            columnresizer: {
-                class: 'block absolute top-0 right-0 m-0 w-2 h-full p-0 cursor-col-resize border border-transparent'
-            },
-            rowreordericon: {
-                class: 'cursor-move'
-            },
+            columnresizer: 'block absolute top-0 right-0 m-0 w-2 h-full p-0 cursor-col-resize border border-transparent',
+            rowreordericon: 'cursor-move',
             roweditorinitbutton: {
                 class: [
                     'inline-flex items-center justify-center overflow-hidden relative',
@@ -3459,9 +3459,7 @@ export default {
                     }
                 ]
             }),
-            headercheckboxicon: {
-                class: ['w-4 h-4 transition-all duration-200 text-white text-base dark:text-gray-900']
-            },
+            headercheckboxicon: 'w-4 h-4 transition-all duration-200 text-white text-base dark:text-gray-900',
             checkboxwrapper: {
                 class: ['cursor-pointer inline-flex relative select-none align-bottom', 'w-6 h-6']
             },
@@ -3476,9 +3474,7 @@ export default {
                     }
                 ]
             }),
-            checkboxicon: {
-                class: ['w-4 h-4 transition-all duration-200 text-white text-base dark:text-gray-900']
-            }
+            checkboxicon: 'w-4 h-4 transition-all duration-200 text-white text-base dark:text-gray-900'
         },
         bodyrow: ({ context }) => ({
             class: [
@@ -3493,9 +3489,7 @@ export default {
                 }
             ]
         }),
-        rowexpansion: {
-            class: 'bg-white text-gray-600 dark:bg-gray-900 dark:text-white/80'
-        },
+        rowexpansion: 'bg-white text-gray-600 dark:bg-gray-900 dark:text-white/80',
         rowgroupheader: {
             class: ['sticky z-[1]', 'bg-white text-gray-600', 'transition duration-200']
         },
@@ -3511,16 +3505,11 @@ export default {
                 'dark:text-white/70' // Dark Mode
             ]
         },
-        rowgrouptogglericon: {
-            class: 'inline-block w-4 h-4'
-        },
-        resizehelper: {
-            class: ['absolute hidden w-px z-10 bg-blue-500 dark:bg-blue-300']
-        }
-    }
-}`
-            }
-        };
+        rowgrouptogglericon: 'inline-block w-4 h-4',
+        resizehelper: 'absolute hidden w-px z-10 bg-blue-500 dark:bg-blue-300'
+    },
+    // CHART
+    chart: {
+        root: 'relative'
     }
 };
-</script>
