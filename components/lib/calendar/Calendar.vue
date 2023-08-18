@@ -1416,7 +1416,7 @@ export default {
         },
         incrementHour(event) {
             let prevHour = this.currentHour;
-            let newHour = this.currentHour + this.stepHour;
+            let newHour = this.currentHour + Number(this.stepHour);
             let newPM = this.pm;
 
             if (this.hourFormat == '24') newHour = newHour >= 24 ? newHour - 24 : newHour;
@@ -1458,7 +1458,7 @@ export default {
             event.preventDefault();
         },
         incrementMinute(event) {
-            let newMinute = this.currentMinute + this.stepMinute;
+            let newMinute = this.currentMinute + Number(this.stepMinute);
 
             if (this.validateTime(this.currentHour, newMinute, this.currentSecond, this.pm)) {
                 this.currentMinute = newMinute > 59 ? newMinute - 60 : newMinute;
@@ -1478,7 +1478,7 @@ export default {
             event.preventDefault();
         },
         incrementSecond(event) {
-            let newSecond = this.currentSecond + this.stepSecond;
+            let newSecond = this.currentSecond + Number(this.stepSecond);
 
             if (this.validateTime(this.currentHour, this.currentMinute, newSecond, this.pm)) {
                 this.currentSecond = newSecond > 59 ? newSecond - 60 : newSecond;
@@ -2582,13 +2582,14 @@ export default {
                 if (!this.responsiveStyleElement) {
                     this.responsiveStyleElement = document.createElement('style');
                     this.responsiveStyleElement.type = 'text/css';
+                    DomHandler.setAttribute(this.responsiveStyleElement, 'nonce', this.$primevue?.config?.csp?.nonce);
                     document.body.appendChild(this.responsiveStyleElement);
                 }
 
                 let innerHTML = '';
 
                 if (this.responsiveOptions) {
-                    let responsiveOptions = [...this.responsiveOptions].filter((o) => !!(o.breakpoint && o.numMonths)).sort((o1, o2) => -1 * o1.breakpoint.localeCompare(o2.breakpoint, undefined, { numeric: true }));
+                    let responsiveOptions = [...this.responsiveOptions].filter((o) => !!(o.breakpoint && o.numMonths)).sort((o1, o2) => -1 * new Intl.Collator(undefined, { numeric: true }).compare(o1.breakpoint, o2.breakpoint));
 
                     for (let i = 0; i < responsiveOptions.length; i++) {
                         let { breakpoint, numMonths } = responsiveOptions[i];

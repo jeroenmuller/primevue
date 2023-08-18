@@ -2,11 +2,11 @@
     <DocSectionText v-bind="$attrs">
         <p>
             PrimeVue offers a built-in Tailwind theme to get you started quickly. The default values related to the component are displayed below. The component can easily be styled with your own design based on Tailwind utilities, see the
-            <NuxtLink to="/tailwind">Tailwind Customization</NuxtLink> section for an example.
+            <PrimeVueNuxtLink to="/tailwind">Tailwind Customization</PrimeVueNuxtLink> section for an example.
         </p>
         <DocSectionCode :code="code1" hideToggleCode importCode hideCodeSandbox hideStackBlitz />
-        <p>A playground sample with the pre-built Tailwind theme.</p>
-        <DocSectionCode :code="code2" embedded />
+        <p class="mt-4">A playground sample with the pre-built Tailwind theme.</p>
+        <DocSectionCode :code="code2" embedded :service="['PhotoService']" />
     </DocSectionText>
 </template>
 
@@ -96,14 +96,19 @@ export default {
         },
         caption: {
             class: ['absolute bottom-0 left-0 w-full', 'bg-black/50 text-white p-4']
+        },
+        transition: {
+            enterFromClass: 'opacity-0 scale-75',
+            enterActiveClass: 'transition-all duration-150 ease-in-out',
+            leaveActiveClass: 'transition-all duration-150 ease-in',
+            leaveToClass: 'opacity-0 scale-75'
         }
     }
 }
 `
             },
             code2: {
-                composition: `
-<template>
+                composition: `<template>
     <div class="card md:flex md:justify-center">
         <Galleria :value="images" :responsiveOptions="responsiveOptions" :numVisible="5" containerStyle="max-width: 640px">
             <template #item="slotProps">
