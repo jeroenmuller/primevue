@@ -3,7 +3,16 @@
         <p>Ripple is enabled by adding add <i>p-ripple</i> class to the target and attach the directive with the v- prefix.</p>
     </DocSectionText>
     <div class="card flex justify-content-center align-items-center">
-        <div v-ripple class="p-ripple bg-primary flex select-none justify-content-center align-items-center shadow-2 border-round p-6 font-bold">Default</div>
+        <div
+            v-ripple="{
+                pt: {
+                    root: 'bg-yellow-400'
+                }
+            }"
+            class="p-ripple bg-primary flex select-none justify-content-center align-items-center shadow-2 border-round p-6 font-bold"
+        >
+            Default
+        </div>
     </div>
     <DocSectionCode :code="code" />
 </template>
@@ -13,10 +22,8 @@ export default {
     data() {
         return {
             code: {
-                basic: `
-<div v-ripple class="p-ripple bg-primary flex select-none justify-content-center align-items-center shadow-2 border-round p-6 font-bold">Default</div>`,
-                options: `
-<template>
+                basic: `<div v-ripple class="p-ripple bg-primary flex select-none justify-content-center align-items-center shadow-2 border-round p-6 font-bold">Default</div>`,
+                options: `<template>
     <div class="card card-container flex justify-content-center align-items-center">
         <div v-ripple class="p-ripple bg-primary flex select-none justify-content-center align-items-center shadow-2 border-round p-6 font-bold">Default</div>
     </div>
@@ -24,8 +31,7 @@ export default {
 
 <script>
 <\/script>`,
-                composition: `
-<template>
+                composition: `<template>
     <div class="card card-container flex justify-content-center align-items-center">
         <div v-ripple class="p-ripple bg-primary flex select-none justify-content-center align-items-center shadow-2 border-round p-6 font-bold">Default</div>
     </div>

@@ -10,21 +10,28 @@
 
 <script>
 import StyledDoc from './StyledDoc.vue';
-import UnstyledDoc from './UnstyledDoc.vue';
+import TailwindDoc from './TailwindDoc.vue';
 
 export default {
     data() {
         return {
             docs: [
                 {
-                    id: 'styled',
+                    id: 'theming.styled',
                     label: 'Styled',
                     component: StyledDoc
                 },
                 {
-                    id: 'unstyled',
+                    id: 'theming.unstyled',
                     label: 'Unstyled',
-                    component: UnstyledDoc
+                    description: 'Theming is implemented with the pass through properties in unstyled mode.',
+                    children: [
+                        {
+                            id: 'theming.tailwind',
+                            label: 'Tailwind',
+                            component: TailwindDoc
+                        }
+                    ]
                 }
             ]
         };
