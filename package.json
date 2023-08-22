@@ -1,6 +1,6 @@
 {
     "name": "primevue",
-    "version": "3.32.0",
+    "version": "3.32.2-SNAPSHOT",
     "homepage": "https://primevue.org/",
     "repository": {
         "type": "git",
@@ -39,7 +39,8 @@
         "bootstrap",
         "fluent",
         "tailwind",
-        "unstyled"
+        "unstyled",
+        "passthrough"
     ],
     "devDependencies": {
         "@babel/eslint-parser": "^7.18.9",

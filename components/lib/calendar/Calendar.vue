@@ -80,7 +80,7 @@
                                         :aria-label="currentView === 'year' ? $primevue.config.locale.prevDecade : currentView === 'month' ? $primevue.config.locale.prevYear : $primevue.config.locale.prevMonth"
                                         v-bind="ptm('previousButton')"
                                     >
-                                        <slot name="previousicon">
+                                        <slot name="previousicon" :class="cx('previousIcon')">
                                             <component :is="previousIcon ? 'span' : 'ChevronLeftIcon'" :class="[cx('previousIcon'), previousIcon]" v-bind="ptm('previousIcon')" />
                                         </slot>
                                     </button>
@@ -125,7 +125,7 @@
                                         :aria-label="currentView === 'year' ? $primevue.config.locale.nextDecade : currentView === 'month' ? $primevue.config.locale.nextYear : $primevue.config.locale.nextMonth"
                                         v-bind="ptm('nextButton')"
                                     >
-                                        <slot name="nexticon">
+                                        <slot name="nexticon" :class="cx('nextIcon')">
                                             <component :is="nextIcon ? 'span' : 'ChevronRightIcon'" :class="[cx('nextIcon'), nextIcon]" v-bind="ptm('nextIcon')" />
                                         </slot>
                                     </button>
@@ -392,13 +392,13 @@
                         </div>
                         <div v-if="hourFormat == '12'" :class="cx('ampmPicker')" v-bind="ptm('ampmPicker')">
                             <button v-ripple :class="cx('incrementButton')" :aria-label="$primevue.config.locale.am" @click="toggleAMPM($event)" type="button" :disabled="disabled" v-bind="ptm('incrementButton')">
-                                <slot name="incrementicon">
+                                <slot name="incrementicon" :class="cx('incrementIcon')">
                                     <component :is="incrementIcon ? 'span' : 'ChevronUpIcon'" :class="cx('incrementIcon')" v-bind="ptm('incrementIcon')" />
                                 </slot>
                             </button>
                             <span v-bind="ptm('ampm')">{{ pm ? $primevue.config.locale.pm : $primevue.config.locale.am }}</span>
                             <button v-ripple :class="cx('decrementButton')" :aria-label="$primevue.config.locale.pm" @click="toggleAMPM($event)" type="button" :disabled="disabled" v-bind="ptm('decrementButton')">
-                                <slot name="decrementicon">
+                                <slot name="decrementicon" :class="cx('decrementIcon')">
                                     <component :is="decrementIcon ? 'span' : 'ChevronDownIcon'" :class="cx('decrementIcon')" v-bind="ptm('decrementIcon')" />
                                 </slot>
                             </button>
@@ -2589,7 +2589,8 @@ export default {
                 let innerHTML = '';
 
                 if (this.responsiveOptions) {
-                    let responsiveOptions = [...this.responsiveOptions].filter((o) => !!(o.breakpoint && o.numMonths)).sort((o1, o2) => -1 * new Intl.Collator(undefined, { numeric: true }).compare(o1.breakpoint, o2.breakpoint));
+                    const comparer = new Intl.Collator(undefined, { numeric: true }).compare;
+                    let responsiveOptions = [...this.responsiveOptions].filter((o) => !!(o.breakpoint && o.numMonths)).sort((o1, o2) => -1 * comparer(o1.breakpoint, o2.breakpoint));
 
                     for (let i = 0; i < responsiveOptions.length; i++) {
                         let { breakpoint, numMonths } = responsiveOptions[i];

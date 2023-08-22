@@ -427,14 +427,17 @@ export default {
         closeButtonIcon: {
             class: 'w-4 h-4 inline-block'
         },
-        content: ({ state }) => ({
+        content: ({ state, instance }) => ({
             class: [
                 'overflow-y-auto',
                 'bg-white text-gray-700 px-6 pb-8 pt-0',
-                'rounded-bl-lg rounded-br-lg',
-                'dark:bg-gray-900  dark:text-white/80 ',
+                ,
+                'dark:bg-gray-900  dark:text-white/80',
                 {
                     grow: state.maximized
+                },
+                {
+                    'rounded-bl-lg rounded-br-lg': !instance.$slots.footer
                 }
             ]
         }),
@@ -551,9 +554,9 @@ export default {
         content: {
             class: ['p-5 pt-0 h-full w-full', 'grow overflow-y-auto']
         },
-        mask: {
-            class: ['flex pointer-events-auto', 'bg-black bg-opacity-40 transition duration-200 z-20 transition-colors']
-        },
+        mask: ({ props }) => ({
+            class: ['flex pointer-events-auto', 'transition duration-200 z-20 transition-colors', { 'bg-black/40': props.modal }]
+        }),
         transition: ({ props }) => {
             return props.position === 'top'
                 ? {

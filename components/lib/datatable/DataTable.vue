@@ -522,6 +522,8 @@ export default {
                 resolvedFieldDatas.set(item, ObjectUtils.resolveFieldData(item, this.d_sortField));
             }
 
+            const comparer = new Intl.Collator(undefined, { numeric: true }).compare;
+
             data.sort((data1, data2) => {
                 let value1 = resolvedFieldDatas.get(data1);
                 let value2 = resolvedFieldDatas.get(data2);
@@ -531,7 +533,7 @@ export default {
                 if (value1 == null && value2 != null) result = -1;
                 else if (value1 != null && value2 == null) result = 1;
                 else if (value1 == null && value2 == null) result = 0;
-                else if (typeof value1 === 'string' && typeof value2 === 'string') result = new Intl.Collator(undefined, { numeric: true }).compare(value1, value2);
+                else if (typeof value1 === 'string' && typeof value2 === 'string') result = comparer(value1, value2);
                 else result = value1 < value2 ? -1 : value1 > value2 ? 1 : 0;
 
                 return this.d_sortOrder * result;
@@ -567,7 +569,9 @@ export default {
 
             if (typeof value1 === 'string' || value1 instanceof String) {
                 if (value1.localeCompare && value1 !== value2) {
-                    return this.d_multiSortMeta[index].order * new Intl.Collator(undefined, { numeric: true }).compare(value1, value2);
+                    const comparer = new Intl.Collator(undefined, { numeric: true }).compare;
+
+                    return this.d_multiSortMeta[index].order * comparer(value1, value2);
                 }
             } else {
                 result = value1 < value2 ? -1 : 1;
