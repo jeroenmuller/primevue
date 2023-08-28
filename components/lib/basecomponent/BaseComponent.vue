@@ -470,7 +470,7 @@ export default {
                 self,
                 globalPT,
                 key !== 'transition' && {
-                    ...(key === 'root' && { [`${datasetPrefix}name`]: ObjectUtils.toFlatCase(this.$.type.name) }),
+                    ...(key === 'root' && this.$.type.name === this.$options.hostName && { [`${datasetPrefix}name`]: ObjectUtils.toFlatCase(this.$.type.name) }),
                     [`${datasetPrefix}section`]: ObjectUtils.toFlatCase(key)
                 }
             );
@@ -552,7 +552,7 @@ export default {
             return this._getPT(this.$config?.pt, undefined, (value) => ObjectUtils.getItemValue(value, { instance: this }));
         },
         defaultPT() {
-            return this._getPT(this.$config?.pt, undefined, (value) => this._getOptionValue(value, this.$name, { instance: this }) || ObjectUtils.getItemValue(value, { instance: this }));
+            return this._getPT(this.$config?.pt, undefined, (value) => this._getOptionValue(value, this.$name, { ...this.$params }) || ObjectUtils.getItemValue(value, { ...this.$params }));
         },
         isUnstyled() {
             return this.unstyled !== undefined ? this.unstyled : this.$config.unstyled;
