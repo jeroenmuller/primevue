@@ -116,11 +116,11 @@ const CustomTailwind = usePassThrough(
             header: 'my_panel_header'
         }
     },
-    { mergeSections: false, mergeProps: false }
+    { mergeSections: true, mergeProps: true }
 );
 
 export default defineNuxtPlugin((nuxtApp) => {
-    nuxtApp.vueApp.use(PrimeVue, { ripple: true, unstyled: true, pt: Tailwind });
+    nuxtApp.vueApp.use(PrimeVue, { ripple: true, unstyled: true, pt: CustomTailwind });
 
     nuxtApp.vueApp.use(ToastService);
     nuxtApp.vueApp.use(ConfirmationService);
