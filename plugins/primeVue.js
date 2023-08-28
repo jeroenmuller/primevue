@@ -106,7 +106,18 @@ import DocSections from '@/components/doc/DocSections';
 import DocSectionText from '@/components/doc/DocSectionText';
 import CodeHighlight from '@/components/layout/CodeHighlight';
 import DevelopmentSection from '@/components/layout/DevelopmentSection';
+import { usePassThrough } from '@/components/lib/passthrough/index.js';
 import Tailwind from '@/components/lib/passthrough/tailwind/index.js';
+
+const CustomTailwind = usePassThrough(
+    Tailwind,
+    {
+        panel: {
+            header: 'my_panel_header'
+        }
+    },
+    { mergeSections: false, mergeProps: false }
+);
 
 export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.use(PrimeVue, { ripple: true, unstyled: true, pt: Tailwind });
