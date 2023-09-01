@@ -80,6 +80,7 @@
     },
     "dependencies": {
         "@docsearch/js": "^3.3.3",
+        "nuxt-gtag": "^0.6.2",
         "vee-validate": "^4.8.2"
     }
 }

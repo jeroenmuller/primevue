@@ -1,6 +1,9 @@
 <template>
     <DocSectionText v-bind="$attrs">
-        <p>Steps requires a collection of menuitems as its <i>model</i>.</p>
+        <p>
+            Since v3.33.0 the vue-router dependency of menu components is deprecated and templating should be used to define router links instead. This approach provides flexibility to be able to use any kind of router link component such as
+            <i>NuxtLink</i> or <i>router-link</i>. Here is an example with vue-router.
+        </p>
     </DocSectionText>
     <div class="card">
         <Steps
@@ -20,6 +23,10 @@
                         <span v-bind="props.label">{{ label }}</span>
                     </a>
                 </router-link>
+                <a v-else :href="item.url" :target="item.target" v-bind="props.action">
+                    <span v-bind="props.step">{{ index + 1 }}</span>
+                    <span v-bind="props.label">{{ label }}</span>
+                </a>
             </template>
         </Steps>
     </div>
@@ -46,6 +53,10 @@ export default {
                 {
                     label: 'Confirmation',
                     route: '/steps/confirmation'
+                },
+                {
+                    label: 'File Upload',
+                    url: '/fileupload'
                 }
             ],
             code: {
@@ -62,10 +73,10 @@ export default {
                 <span v-bind="props.label">{{ label }}</span>
             </a>
         </router-link>
-        <span v-else v-bind="props.action">
+        <a v-else :href="item.url" :target="item.target" v-bind="props.action">
             <span v-bind="props.step">{{ index + 1 }}</span>
             <span v-bind="props.label">{{ label }}</span>
-        </span>
+        </a>
     </template>
 </Steps>`,
                 options: `<template>
@@ -84,10 +95,10 @@ export default {
                             <span v-bind="props.label">{{ label }}</span>
                         </a>
                     </router-link>
-                    <span v-else v-bind="props.action">
+                    <a v-else :href="item.url" :target="item.target" v-bind="props.action">
                         <span v-bind="props.step">{{ index + 1 }}</span>
                         <span v-bind="props.label">{{ label }}</span>
-                    </span>
+                    </a>
                 </template>
             </Steps>
         </div>
@@ -114,6 +125,10 @@ export default {
                 {
                     label: 'Confirmation',
                     route: '/steps/confirmation'
+                },
+                {
+                    label: 'File Upload',
+                    url: '/fileupload'
                 }
             ]
         }
@@ -141,10 +156,10 @@ export default {
                             <span v-bind="props.label">{{ label }}</span>
                         </a>
                     </router-link>
-                    <span v-else v-bind="props.action">
+                    <a v-else :href="item.url" :target="item.target" v-bind="props.action">
                         <span v-bind="props.step">{{ index + 1 }}</span>
                         <span v-bind="props.label">{{ label }}</span>
-                    </span>
+                    </a>
                 </template>
             </Steps>
         </div>
@@ -174,6 +189,10 @@ const items = ref([
     {
         label: 'Confirmation',
         route: "/confirmation",
+    },
+    {
+        label: 'File Upload',
+        url: '/fileupload'
     }
 ]);
 

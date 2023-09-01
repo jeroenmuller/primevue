@@ -470,7 +470,7 @@ export default {
                 self,
                 globalPT,
                 key !== 'transition' && {
-                    ...(key === 'root' && this.$.type.name === this.$options.hostName && { [`${datasetPrefix}name`]: ObjectUtils.toFlatCase(this.$.type.name) }),
+                    ...(key === 'root' && { [`${datasetPrefix}name`]: ObjectUtils.toFlatCase(this.$.type.name) }),
                     [`${datasetPrefix}section`]: ObjectUtils.toFlatCase(key)
                 }
             );
@@ -555,7 +555,7 @@ export default {
             return this._getPT(this.$config?.pt, undefined, (value) => this._getOptionValue(value, this.$name, { ...this.$params }) || ObjectUtils.getItemValue(value, { ...this.$params }));
         },
         isUnstyled() {
-            return this.unstyled !== undefined ? this.unstyled : this.$config.unstyled;
+            return this.unstyled !== undefined ? this.unstyled : this.$config?.unstyled;
         },
         $params() {
             return { instance: this, props: this.$props, state: this.$data, parentInstance: this.$parentInstance };
