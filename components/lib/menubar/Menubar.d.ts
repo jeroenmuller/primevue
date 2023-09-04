@@ -176,6 +176,28 @@ export interface MenubarContext {
 }
 
 /**
+ * Defines valid router binding props in Menubar component.
+ */
+export interface MenubarRouterBindProps {
+    /**
+     * Action element binding
+     */
+    action: object;
+    /**
+     * Icon element binding
+     */
+    icon: object;
+    /**
+     * Label element binding
+     */
+    label: object;
+    /**
+     * Submenuicon elemnt binding
+     */
+    submenuicon: object;
+}
+
+/**
  * Defines valid properties in Menubar component.
  */
 export interface MenubarProps {
@@ -240,11 +262,15 @@ export interface MenubarSlots {
         /**
          * Binding properties of the menuitem
          */
-        props: (...args: any) => string;
+        props: MenubarRouterBindProps;
         /**
          * State of the root
          */
         root: boolean;
+        /**
+         * Whether or not there is a submenu
+         */
+        hasSubmenu: boolean;
     }): VNode[];
     /**
      * Custom popup icon template on responsive mode.
