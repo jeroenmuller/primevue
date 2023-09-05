@@ -10,6 +10,7 @@
 import { TransitionProps, VNode } from 'vue';
 import { ComponentHooks } from '../basecomponent';
 import { MenuItem } from '../menuitem';
+import { PassThroughOptions } from '../passthrough';
 import { ClassComponent, GlobalComponentConstructor, PTOptions } from '../ts-helpers';
 
 export declare type TieredMenuPassThroughOptionType = TieredMenuPassThroughAttributes | ((options: TieredMenuPassThroughMethodOptions) => TieredMenuPassThroughAttributes | string) | string | null | undefined;
@@ -20,10 +21,26 @@ export declare type TieredMenuPassThroughTransitionType = TransitionProps | ((op
  * Custom passthrough(pt) option method.
  */
 export interface TieredMenuPassThroughMethodOptions {
+    /**
+     * Defines instance.
+     */
     instance: any;
+    /**
+     * Defines valid properties.
+     */
     props: TieredMenuProps;
+    /**
+     * Defines current inline state.
+     */
     state: TieredMenuState;
+    /**
+     * Defines current options.
+     */
     context: TieredMenuContext;
+    /**
+     * Defines passthrough(pt) options in global config.
+     */
+    global: object | undefined;
 }
 
 /**
@@ -238,6 +255,11 @@ export interface TieredMenuProps {
      * @type {TieredMenuPassThroughOptions}
      */
     pt?: PTOptions<TieredMenuPassThroughOptions>;
+    /**
+     * Used to configure passthrough(pt) options of the component.
+     * @type {PassThroughOptions}
+     */
+    ptOptions?: PassThroughOptions;
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false

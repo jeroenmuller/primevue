@@ -9,6 +9,7 @@
  */
 import { VNode } from 'vue';
 import { ComponentHooks } from '../basecomponent';
+import { PassThroughOptions } from '../passthrough';
 import { ClassComponent, GlobalComponentConstructor, PTOptions } from '../ts-helpers';
 
 export declare type SelectButtonPassThroughOptionType = SelectButtonPassThroughAttributes | ((options: SelectButtonPassThroughMethodOptions) => SelectButtonPassThroughAttributes | string) | string | null | undefined;
@@ -17,10 +18,26 @@ export declare type SelectButtonPassThroughOptionType = SelectButtonPassThroughA
  * Custom passthrough(pt) option method.
  */
 export interface SelectButtonPassThroughMethodOptions {
+    /**
+     * Defines instance.
+     */
     instance: any;
+    /**
+     * Defines valid properties.
+     */
     props: SelectButtonProps;
+    /**
+     * Defines current inline state.
+     */
     state: SelectButtonState;
+    /**
+     * Defines current options.
+     */
     context: SelectButtonContext;
+    /**
+     * Defines passthrough(pt) options in global config.
+     */
+    global: object | undefined;
 }
 
 /**
@@ -151,6 +168,11 @@ export interface SelectButtonProps {
      * @type {SelectButtonPassThroughOptions}
      */
     pt?: PTOptions<SelectButtonPassThroughOptions>;
+    /**
+     * Used to configure passthrough(pt) options of the component.
+     * @type {PassThroughOptions}
+     */
+    ptOptions?: PassThroughOptions;
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false

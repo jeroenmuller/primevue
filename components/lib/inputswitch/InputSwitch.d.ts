@@ -9,6 +9,7 @@
  */
 import { InputHTMLAttributes } from 'vue';
 import { ComponentHooks } from '../basecomponent';
+import { PassThroughOptions } from '../passthrough';
 import { ClassComponent, GlobalComponentConstructor, PTOptions } from '../ts-helpers';
 
 export declare type InputSwitchPassThroughOptionType = InputSwitchPassThroughAttributes | ((options: InputSwitchPassThroughMethodOptions) => InputSwitchPassThroughAttributes | string) | string | null | undefined;
@@ -17,9 +18,22 @@ export declare type InputSwitchPassThroughOptionType = InputSwitchPassThroughAtt
  * Custom passthrough(pt) option method.
  */
 export interface InputSwitchPassThroughMethodOptions {
+    /**
+     * Defines instance.
+     */
     instance: any;
+    /**
+     * Defines valid properties.
+     */
     props: InputSwitchProps;
+    /**
+     * Defines current inline state.
+     */
     state: InputSwitchState;
+    /**
+     * Defines passthrough(pt) options in global config.
+     */
+    global: object | undefined;
 }
 
 /**
@@ -116,6 +130,11 @@ export interface InputSwitchProps {
      * @type {InputSwitchPassThroughOptions}
      */
     pt?: PTOptions<InputSwitchPassThroughOptions>;
+    /**
+     * Used to configure passthrough(pt) options of the component.
+     * @type {PassThroughOptions}
+     */
+    ptOptions?: PassThroughOptions;
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false

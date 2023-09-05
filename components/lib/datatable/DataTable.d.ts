@@ -12,6 +12,7 @@ import { ComponentHooks } from '../basecomponent';
 import { ColumnPassThroughOptionType } from '../column';
 import { ColumnGroupPassThroughOptionType } from '../columngroup';
 import { PaginatorPassThroughOptionType } from '../paginator';
+import { PassThroughOptions } from '../passthrough';
 import { RowPassThroughOptionType } from '../row';
 import { ClassComponent, GlobalComponentConstructor, Nullable, PTOptions } from '../ts-helpers';
 import { VirtualScrollerPassThroughOptionType, VirtualScrollerProps } from '../virtualscroller';
@@ -24,10 +25,26 @@ export declare type DataTablePassThroughTransitionType = TransitionProps | ((opt
  * Custom passthrough(pt) option method.
  */
 export interface DataTablePassThroughMethodOptions {
+    /**
+     * Defines instance.
+     */
     instance: any;
+    /**
+     * Defines valid properties.
+     */
     props: DataTableProps;
+    /**
+     * Defines current inline state.
+     */
     state: DataTableState;
+    /**
+     * Defines current options.
+     */
     context: DataTableContext;
+    /**
+     * Defines passthrough(pt) options in global config.
+     */
+    global: object | undefined;
 }
 
 /**
@@ -1086,6 +1103,11 @@ export interface DataTableProps {
      * @type {DataTablePassThroughOptions}
      */
     pt?: PTOptions<DataTablePassThroughOptions>;
+    /**
+     * Used to configure passthrough(pt) options of the component.
+     * @type {PassThroughOptions}
+     */
+    ptOptions?: PassThroughOptions;
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false

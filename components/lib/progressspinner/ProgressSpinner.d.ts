@@ -8,6 +8,7 @@
  *
  */
 import { ComponentHooks } from '../basecomponent';
+import { PassThroughOptions } from '../passthrough';
 import { ClassComponent, GlobalComponentConstructor, PTOptions } from '../ts-helpers';
 
 export declare type ProgressSpinnerPassThroughOptionType = ProgressSpinnerPassThroughAttributes | ((options: ProgressSpinnerPassThroughMethodOptions) => ProgressSpinnerPassThroughAttributes | string) | string | null | undefined;
@@ -16,8 +17,18 @@ export declare type ProgressSpinnerPassThroughOptionType = ProgressSpinnerPassTh
  * Custom passthrough(pt) option method.
  */
 export interface ProgressSpinnerPassThroughMethodOptions {
+    /**
+     * Defines instance.
+     */
     instance: any;
+    /**
+     * Defines valid properties.
+     */
     props: ProgressSpinnerProps;
+    /**
+     * Defines passthrough(pt) options in global config.
+     */
+    global: object | undefined;
 }
 
 /**
@@ -74,6 +85,11 @@ export interface ProgressSpinnerProps {
      * @type {ProgressSpinnerPassThroughOptions}
      */
     pt?: PTOptions<ProgressSpinnerPassThroughOptions>;
+    /**
+     * Used to configure passthrough(pt) options of the component.
+     * @type {PassThroughOptions}
+     */
+    ptOptions?: PassThroughOptions;
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false

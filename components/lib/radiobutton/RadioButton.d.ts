@@ -9,6 +9,7 @@
  */
 import { InputHTMLAttributes } from 'vue';
 import { ComponentHooks } from '../basecomponent';
+import { PassThroughOptions } from '../passthrough';
 import { ClassComponent, GlobalComponentConstructor, PTOptions } from '../ts-helpers';
 
 export declare type RadioButtonPassThroughOptionType = RadioButtonPassThroughAttributes | ((options: RadioButtonPassThroughMethodOptions) => RadioButtonPassThroughAttributes | string) | string | null | undefined;
@@ -17,9 +18,22 @@ export declare type RadioButtonPassThroughOptionType = RadioButtonPassThroughAtt
  * Custom passthrough(pt) option method.
  */
 export interface RadioButtonPassThroughMethodOptions {
+    /**
+     * Defines instance.
+     */
     instance: any;
+    /**
+     * Defines valid properties.
+     */
     props: RadioButtonProps;
+    /**
+     * Defines current inline state.
+     */
     state: RadioButtonState;
+    /**
+     * Defines passthrough(pt) options in global config.
+     */
+    global: object | undefined;
 }
 
 /**
@@ -122,6 +136,11 @@ export interface RadioButtonProps {
      * @type {RadioButtonPassThroughOptions}
      */
     pt?: PTOptions<RadioButtonPassThroughOptions>;
+    /**
+     * Used to configure passthrough(pt) options of the component.
+     * @type {PassThroughOptions}
+     */
+    ptOptions?: PassThroughOptions;
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false

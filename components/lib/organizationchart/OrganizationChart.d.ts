@@ -9,6 +9,7 @@
  */
 import { VNode } from 'vue';
 import { ComponentHooks } from '../basecomponent';
+import { PassThroughOptions } from '../passthrough';
 import { ClassComponent, GlobalComponentConstructor, PTOptions } from '../ts-helpers';
 
 export declare type OrganizationChartPassThroughOptionType = OrganizationChartPassThroughAttributes | ((options: OrganizationChartPassThroughMethodOptions) => OrganizationChartPassThroughAttributes | string) | string | null | undefined;
@@ -17,10 +18,26 @@ export declare type OrganizationChartPassThroughOptionType = OrganizationChartPa
  * Custom passthrough(pt) option method.
  */
 export interface OrganizationChartPassThroughMethodOptions {
+    /**
+     * Defines instance.
+     */
     instance: any;
+    /**
+     * Defines valid properties.
+     */
     props: OrganizationChartProps;
+    /**
+     * Defines current inline state.
+     */
     state: OrganizationChartState;
+    /**
+     * Defines current options.
+     */
     context: OrganizationChartContext;
+    /**
+     * Defines passthrough(pt) options in global config.
+     */
+    global: object | undefined;
 }
 
 /**
@@ -225,6 +242,11 @@ export interface OrganizationChartProps {
      * @type {OrganizationChartPassThroughOptions}
      */
     pt?: PTOptions<OrganizationChartPassThroughOptions>;
+    /**
+     * Used to configure passthrough(pt) options of the component.
+     * @type {PassThroughOptions}
+     */
+    ptOptions?: PassThroughOptions;
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false

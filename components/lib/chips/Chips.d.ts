@@ -9,6 +9,7 @@
  */
 import { InputHTMLAttributes, VNode } from 'vue';
 import { ComponentHooks } from '../basecomponent';
+import { PassThroughOptions } from '../passthrough';
 import { ClassComponent, GlobalComponentConstructor, PTOptions } from '../ts-helpers';
 
 export declare type ChipsPassThroughOptionType = ChipsPassThroughAttributes | ((options: ChipsPassThroughMethodOptions) => ChipsPassThroughAttributes | string) | string | null | undefined;
@@ -17,9 +18,22 @@ export declare type ChipsPassThroughOptionType = ChipsPassThroughAttributes | ((
  * Custom passthrough(pt) option method.
  */
 export interface ChipsPassThroughMethodOptions {
+    /**
+     * Defines instance.
+     */
     instance: any;
+    /**
+     * Defines valid properties.
+     */
     props: ChipsProps;
+    /**
+     * Defines current inline state.
+     */
     state: ChipsState;
+    /**
+     * Defines passthrough(pt) options in global config.
+     */
+    global: object | undefined;
 }
 
 /**
@@ -183,6 +197,11 @@ export interface ChipsProps {
      * @type {ChipsPassThroughOptions}
      */
     pt?: PTOptions<ChipsPassThroughOptions>;
+    /**
+     * Used to configure passthrough(pt) options of the component.
+     * @type {PassThroughOptions}
+     */
+    ptOptions?: PassThroughOptions;
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false

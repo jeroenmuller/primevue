@@ -9,6 +9,7 @@
  */
 import { TextareaHTMLAttributes } from 'vue';
 import { ComponentHooks } from '../basecomponent';
+import { PassThroughOptions } from '../passthrough';
 import { ClassComponent, GlobalComponentConstructor, PTOptions } from '../ts-helpers';
 
 export declare type TextareaPassThroughOptionType = TextareaPassThroughAttributes | ((options: TextareaPassThroughMethodOptions) => TextareaPassThroughAttributes | string) | string | null | undefined;
@@ -17,9 +18,22 @@ export declare type TextareaPassThroughOptionType = TextareaPassThroughAttribute
  * Custom passthrough(pt) option method.
  */
 export interface TextareaPassThroughMethodOptions {
+    /**
+     * Defines instance.
+     */
     instance: any;
+    /**
+     * Defines valid properties.
+     */
     props: TextareaProps;
+    /**
+     * Defines current options.
+     */
     context: TextareaContext;
+    /**
+     * Defines passthrough(pt) options in global config.
+     */
+    global: object | undefined;
 }
 
 /**
@@ -80,6 +94,11 @@ export interface TextareaProps extends TextareaHTMLAttributes {
      * @type {TextareaPassThroughOptions}
      */
     pt?: PTOptions<TextareaPassThroughOptions>;
+    /**
+     * Used to configure passthrough(pt) options of the component.
+     * @type {PassThroughOptions}
+     */
+    ptOptions?: PassThroughOptions;
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false

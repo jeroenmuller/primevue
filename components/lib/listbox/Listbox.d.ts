@@ -9,6 +9,7 @@
  */
 import { InputHTMLAttributes, VNode } from 'vue';
 import { ComponentHooks } from '../basecomponent';
+import { PassThroughOptions } from '../passthrough';
 import { ClassComponent, GlobalComponentConstructor, PTOptions } from '../ts-helpers';
 import { VirtualScrollerItemOptions, VirtualScrollerPassThroughOptionType, VirtualScrollerProps } from '../virtualscroller';
 
@@ -18,10 +19,26 @@ export declare type ListboxPassThroughOptionType = ListboxPassThroughAttributes 
  * Custom passthrough(pt) option method.
  */
 export interface ListboxPassThroughMethodOptions {
+    /**
+     * Defines instance.
+     */
     instance: any;
+    /**
+     * Defines valid properties.
+     */
     props: ListboxProps;
+    /**
+     * Defines current inline state.
+     */
     state: ListboxState;
+    /**
+     * Defines current options.
+     */
     context: ListboxContext;
+    /**
+     * Defines passthrough(pt) options in global config.
+     */
+    global: object | undefined;
 }
 
 /**
@@ -323,6 +340,11 @@ export interface ListboxProps {
      * @type {ListboxPassThroughOptions}
      */
     pt?: PTOptions<ListboxPassThroughOptions>;
+    /**
+     * Used to configure passthrough(pt) options of the component.
+     * @type {PassThroughOptions}
+     */
+    ptOptions?: PassThroughOptions;
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false

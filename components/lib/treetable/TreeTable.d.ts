@@ -11,6 +11,7 @@ import { VNode } from 'vue';
 import { ComponentHooks } from '../basecomponent';
 import { ColumnPassThroughOptionType } from '../column';
 import { PaginatorPassThroughOptionType } from '../paginator';
+import { PassThroughOptions } from '../passthrough';
 import { TreeNode } from '../tree';
 import { ClassComponent, GlobalComponentConstructor, PTOptions } from '../ts-helpers';
 
@@ -20,10 +21,26 @@ export declare type TreeTablePassThroughOptionType = TreeTablePassThroughAttribu
  * Custom passthrough(pt) option method.
  */
 export interface TreeTablePassThroughMethodOptions {
+    /**
+     * Defines instance.
+     */
     instance: any;
+    /**
+     * Defines valid properties.
+     */
     props: TreeTableProps;
+    /**
+     * Defines current inline state.
+     */
     state: TreeTableState;
+    /**
+     * Defines current options.
+     */
     context: TreeTableContext;
+    /**
+     * Defines passthrough(pt) options in global config.
+     */
+    global: object | undefined;
 }
 
 /**
@@ -560,6 +577,11 @@ export interface TreeTableProps {
      * @type {TreeTablePassThroughOptions}
      */
     pt?: PTOptions<TreeTablePassThroughOptions>;
+    /**
+     * Used to configure passthrough(pt) options of the component.
+     * @type {PassThroughOptions}
+     */
+    ptOptions?: PassThroughOptions;
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false

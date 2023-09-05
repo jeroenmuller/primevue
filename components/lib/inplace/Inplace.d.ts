@@ -11,6 +11,7 @@
 import { ButtonHTMLAttributes, HTMLAttributes, VNode } from 'vue';
 import { ComponentHooks } from '../basecomponent';
 import { ButtonPassThroughOptions } from '../button';
+import { PassThroughOptions } from '../passthrough';
 import { ClassComponent, GlobalComponentConstructor, PTOptions } from '../ts-helpers';
 
 export declare type InplacePassThroughOptionType = InplacePassThroughAttributes | ((options: InplacePassThroughMethodOptions) => InplacePassThroughAttributes | string) | string | null | undefined;
@@ -19,9 +20,22 @@ export declare type InplacePassThroughOptionType = InplacePassThroughAttributes 
  * Custom passthrough(pt) option method.
  */
 export interface InplacePassThroughMethodOptions {
+    /**
+     * Defines instance.
+     */
     instance: any;
+    /**
+     * Defines valid properties.
+     */
     props: InplaceProps;
+    /**
+     * Defines current inline state.
+     */
     state: InplaceState;
+    /**
+     * Defines passthrough(pt) options in global config.
+     */
+    global: object | undefined;
 }
 
 /**
@@ -108,6 +122,11 @@ export interface InplaceProps {
      * @type {InplacePassThroughOptions}
      */
     pt?: PTOptions<InplacePassThroughOptions>;
+    /**
+     * Used to configure passthrough(pt) options of the component.
+     * @type {PassThroughOptions}
+     */
+    ptOptions?: PassThroughOptions;
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false

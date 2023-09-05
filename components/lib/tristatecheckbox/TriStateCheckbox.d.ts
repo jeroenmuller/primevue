@@ -9,6 +9,7 @@
  */
 import { InputHTMLAttributes, VNode } from 'vue';
 import { ComponentHooks } from '../basecomponent';
+import { PassThroughOptions } from '../passthrough';
 import { ClassComponent, GlobalComponentConstructor, Nullable, PTOptions } from '../ts-helpers';
 
 export declare type TriStateCheckboxPassThroughOptionType = TriStateCheckboxPassThroughAttributes | ((options: TriStateCheckboxPassThroughMethodOptions) => TriStateCheckboxPassThroughAttributes | string) | string | null | undefined;
@@ -17,10 +18,26 @@ export declare type TriStateCheckboxPassThroughOptionType = TriStateCheckboxPass
  * Custom passthrough(pt) option method.
  */
 export interface TriStateCheckboxPassThroughMethodOptions {
+    /**
+     * Defines instance.
+     */
     instance: any;
+    /**
+     * Defines valid properties.
+     */
     props: TriStateCheckboxProps;
+    /**
+     * Defines current inline state.
+     */
     state: TriStateCheckboxState;
+    /**
+     * Defines current options.
+     */
     context: TriStateCheckboxContext;
+    /**
+     * Defines passthrough(pt) options in global config.
+     */
+    global: object | undefined;
 }
 
 /**
@@ -145,6 +162,11 @@ export interface TriStateCheckboxProps {
      * @type {TriStateCheckboxPassThroughOptions}
      */
     pt?: PTOptions<TriStateCheckboxPassThroughOptions>;
+    /**
+     * Used to configure passthrough(pt) options of the component.
+     * @type {PassThroughOptions}
+     */
+    ptOptions?: PassThroughOptions;
     /**
      * When enabled, it removes component related styles in the core.
      * @defaultValue false
