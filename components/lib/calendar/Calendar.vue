@@ -42,8 +42,8 @@
             data-pc-section="dropdownbutton"
         >
             <template #icon>
-                <slot name="dropdownicon">
-                    <component :is="icon ? 'span' : 'CalendarIcon'" :class="icon" v-bind="ptm('dropdownButton')['icon']" data-pc-section="icon" />
+                <slot name="dropdownicon" :class="icon">
+                    <component :is="icon ? 'span' : 'CalendarIcon'" :class="icon" v-bind="ptm('dropdownButton')['icon']" data-pc-section="dropdownicon" />
                 </slot>
             </template>
         </CalendarButton>
@@ -86,32 +86,62 @@
                                         </slot>
                                     </button>
                                     <div :class="cx('title')" v-bind="ptm('title')">
-                                        <button
-                                            v-if="currentView === 'date'"
-                                            type="button"
-                                            @click="switchToMonthView"
-                                            @keydown="onContainerButtonKeydown"
-                                            :class="cx('monthTitle')"
-                                            :disabled="switchViewButtonDisabled"
-                                            :aria-label="$primevue.config.locale.chooseMonth"
-                                            v-bind="ptm('monthTitle')"
-                                            data-pc-group-section="view"
-                                        >
-                                            {{ getMonthName(month.month) }}
-                                        </button>
-                                        <button
-                                            v-if="currentView !== 'year'"
-                                            type="button"
-                                            @click="switchToYearView"
-                                            @keydown="onContainerButtonKeydown"
-                                            :class="cx('yearTitle')"
-                                            :disabled="switchViewButtonDisabled"
-                                            :aria-label="$primevue.config.locale.chooseYear"
-                                            v-bind="ptm('yearTitle')"
-                                            data-pc-group-section="view"
-                                        >
-                                            {{ getYear(month) }}
-                                        </button>
+                                        <template v-if="$primevue.config.locale.showMonthAfterYear">
+                                            <button
+                                                v-if="currentView !== 'year'"
+                                                type="button"
+                                                @click="switchToYearView"
+                                                @keydown="onContainerButtonKeydown"
+                                                :class="cx('yearTitle')"
+                                                :disabled="switchViewButtonDisabled"
+                                                :aria-label="$primevue.config.locale.chooseYear"
+                                                v-bind="ptm('yearTitle')"
+                                                data-pc-group-section="view"
+                                            >
+                                                {{ getYear(month) }}
+                                            </button>
+                                            <button
+                                                v-if="currentView === 'date'"
+                                                type="button"
+                                                @click="switchToMonthView"
+                                                @keydown="onContainerButtonKeydown"
+                                                :class="cx('monthTitle')"
+                                                :disabled="switchViewButtonDisabled"
+                                                :aria-label="$primevue.config.locale.chooseMonth"
+                                                v-bind="ptm('monthTitle')"
+                                                data-pc-group-section="view"
+                                            >
+                                                {{ getMonthName(month.month) }}
+                                            </button>
+                                        </template>
+                                        <template v-else>
+                                            <button
+                                                v-if="currentView === 'date'"
+                                                type="button"
+                                                @click="switchToMonthView"
+                                                @keydown="onContainerButtonKeydown"
+                                                :class="cx('monthTitle')"
+                                                :disabled="switchViewButtonDisabled"
+                                                :aria-label="$primevue.config.locale.chooseMonth"
+                                                v-bind="ptm('monthTitle')"
+                                                data-pc-group-section="view"
+                                            >
+                                                {{ getMonthName(month.month) }}
+                                            </button>
+                                            <button
+                                                v-if="currentView !== 'year'"
+                                                type="button"
+                                                @click="switchToYearView"
+                                                @keydown="onContainerButtonKeydown"
+                                                :class="cx('yearTitle')"
+                                                :disabled="switchViewButtonDisabled"
+                                                :aria-label="$primevue.config.locale.chooseYear"
+                                                v-bind="ptm('yearTitle')"
+                                                data-pc-group-section="view"
+                                            >
+                                                {{ getYear(month) }}
+                                            </button>
+                                        </template>
                                         <span v-if="currentView === 'year'" :class="cx('decadeTitle')" v-bind="ptm('decadeTitle')">
                                             <slot name="decade" :years="yearPickerValues"> {{ yearPickerValues[0].value }} - {{ yearPickerValues[yearPickerValues.length - 1].value }} </slot>
                                         </span>

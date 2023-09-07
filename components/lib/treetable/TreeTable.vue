@@ -32,17 +32,23 @@
             <template v-if="$slots.paginatorend" #end>
                 <slot name="paginatorend"></slot>
             </template>
-            <template v-if="$slots.paginatorfirstpagelinkicon" #firstpagelinkicon>
-                <slot name="paginatorfirstpagelinkicon"></slot>
+            <template v-if="$slots.paginatorfirstpagelinkicon" #firstpagelinkicon="slotProps">
+                <slot name="paginatorfirstpagelinkicon" :class="slotProps.class"></slot>
             </template>
-            <template v-if="$slots.paginatorprevpagelinkicon" #prevpagelinkicon>
-                <slot name="paginatorprevpagelinkicon"></slot>
+            <template v-if="$slots.paginatorprevpagelinkicon" #prevpagelinkicon="slotProps">
+                <slot name="paginatorprevpagelinkicon" :class="slotProps.class"></slot>
             </template>
-            <template v-if="$slots.paginatornextpagelinkicon" #nextpagelinkicon>
-                <slot name="paginatornextpagelinkicon"></slot>
+            <template v-if="$slots.paginatornextpagelinkicon" #nextpagelinkicon="slotProps">
+                <slot name="paginatornextpagelinkicon" :class="slotProps.class"></slot>
             </template>
-            <template v-if="$slots.paginatorlastpagelinkicon" #lastpagelinkicon>
-                <slot name="paginatorlastpagelinkicon"></slot>
+            <template v-if="$slots.paginatorlastpagelinkicon" #lastpagelinkicon="slotProps">
+                <slot name="paginatorlastpagelinkicon" :class="slotProps.class"></slot>
+            </template>
+            <template v-if="$slots.paginatorjumptopagedropdownicon" #jumptopagedropdownicon="slotProps">
+                <slot name="paginatorjumptopagedropdownicon" :class="slotProps.class"></slot>
+            </template>
+            <template v-if="$slots.paginatorrowsperpagedropdownicon" #rowsperpagedropdownicon="slotProps">
+                <slot name="paginatorrowsperpagedropdownicon" :class="slotProps.class"></slot>
             </template>
         </TTPaginator>
         <div :class="cx('wrapper')" :style="{ maxHeight: scrollHeight }" v-bind="ptm('wrapper')">
@@ -132,17 +138,23 @@
             <template v-if="$slots.paginatorend" #end>
                 <slot name="paginatorend"></slot>
             </template>
-            <template v-if="$slots.paginatorfirstpagelinkicon" #firstpagelinkicon>
-                <slot name="paginatorfirstpagelinkicon"></slot>
+            <template v-if="$slots.paginatorfirstpagelinkicon" #firstpagelinkicon="slotProps">
+                <slot name="paginatorfirstpagelinkicon" :class="slotProps.class"></slot>
             </template>
-            <template v-if="$slots.paginatorprevpagelinkicon" #prevpagelinkicon>
-                <slot name="paginatorprevpagelinkicon"></slot>
+            <template v-if="$slots.paginatorprevpagelinkicon" #prevpagelinkicon="slotProps">
+                <slot name="paginatorprevpagelinkicon" :class="slotProps.class"></slot>
             </template>
-            <template v-if="$slots.paginatornextpagelinkicon" #nextpagelinkicon>
-                <slot name="paginatornextpagelinkicon"></slot>
+            <template v-if="$slots.paginatornextpagelinkicon" #nextpagelinkicon="slotProps">
+                <slot name="paginatornextpagelinkicon" :class="slotProps.class"></slot>
             </template>
-            <template v-if="$slots.paginatorlastpagelinkicon" #lastpagelinkicon>
-                <slot name="paginatorlastpagelinkicon"></slot>
+            <template v-if="$slots.paginatorlastpagelinkicon" #lastpagelinkicon="slotProps">
+                <slot name="paginatorlastpagelinkicon" :class="slotProps.class"></slot>
+            </template>
+            <template v-if="$slots.paginatorjumptopagedropdownicon" #jumptopagedropdownicon="slotProps">
+                <slot name="paginatorjumptopagedropdownicon" :class="slotProps.class"></slot>
+            </template>
+            <template v-if="$slots.paginatorrowsperpagedropdownicon" #rowsperpagedropdownicon="slotProps">
+                <slot name="paginatorrowsperpagedropdownicon" :class="slotProps.class"></slot>
             </template>
         </TTPaginator>
         <div v-if="$slots.footer" :class="cx('footer')" v-bind="ptm('footer')">
