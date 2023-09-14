@@ -140,7 +140,7 @@ const PrimeCSS = {
 
         const _toVariables = (_theme, _prefix = '') => {
             return Object.entries(_theme).reduce((acc, [key, value]) => {
-                const px = Utils.object.test(excludedKeyRegex, key) ? _prefix : `${_prefix}-${Utils.object.toKebabCase(key)}`;
+                const px = Utils.object.test(EXCLUDED_KEY_REGEX, key) || Utils.object.test(excludedKeyRegex, key) ? _prefix : `${_prefix}-${Utils.object.toKebabCase(key)}`;
                 const v = Utils.object.toValue(value);
 
                 if (Utils.object.isObject(v)) {

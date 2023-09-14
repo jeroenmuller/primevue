@@ -13,6 +13,17 @@ export default {
                 duration: '0.2s',
                 property: 'background-color, color, border-color, box-shadow'
             }
+        },
+        variables: {
+            blue: {
+                500: '#0d6efd'
+            },
+            green: {
+                500: '#198754'
+            },
+            yellow: {
+                500: '#ffc107'
+            }
         }
     },
     panel: {

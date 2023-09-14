@@ -11,6 +11,9 @@ export function useCSS(name, options = {}) {
 
         stylesRef.value = useStyle(styles.rule, { name: `${name}-styles`, ..._options });
         variablesRef.value = useStyle(variables.rule, { name: `${name}-variables`, ..._options });
+
+        stylesRef.value.load();
+        variablesRef.value.load();
     };
 
     const unload = () => {
