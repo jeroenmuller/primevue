@@ -359,7 +359,7 @@ ${radioButtonStyles}
 
 const { load: loadStyle } = useStyle(styles, { name: 'common', manual: true });
 const { load: loadGlobalStyle } = useStyle('', { name: 'global', manual: true });
-const { load: loadGlobalCSS } = useCSS('global');
+const { load: loadGlobalCSS } = useCSS('global', { selectorOptions: { prefix: 'body' } });
 
 export default {
     name: 'BaseComponent',
