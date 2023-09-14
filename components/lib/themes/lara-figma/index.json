@@ -1,0 +1,122 @@
+{
+    "lara": {
+      "global": {
+        "properties": {
+          "color": {
+            "value": "#495057",
+            "type": "color"
+          },
+          "borderRadius": {
+            "value": "6px",
+            "type": "borderRadius"
+          },
+          "font": {
+            "family": {
+              "value": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\"",
+              "type": "fontFamilies"
+            },
+            "size": {
+              "value": "14px",
+              "type": "fontSizes"
+            }
+          },
+          "gap": {
+            "value": "7px",
+            "type": "spacing"
+          }
+        },
+        "variables": {
+          "surface": {
+            "0": {
+              "value": "#ffffff",
+              "type": "color"
+            }
+          },
+          "fontWeight": {
+            "500": {
+              "value": "500",
+              "type": "fontWeights"
+            }
+          }
+        }
+      },
+      "panel": {
+        "header": {
+          "properties": {
+            "color": {
+              "value": "#343a40",
+              "type": "color"
+            },
+            "background": {
+              "value": "#297dd2",
+              "type": "color"
+            },
+            "padding": {
+              "top": {
+                "value": "17.5px",
+                "type": "spacing"
+              },
+              "right": {
+                "value": "17.5px",
+                "type": "spacing"
+              },
+              "bottom": {
+                "value": "{panel.header.properties.padding.top} * 2",
+                "type": "spacing"
+              },
+              "left": {
+                "value": "17.5px",
+                "type": "spacing"
+              }
+            },
+            "border": {
+              "value": {
+                "width": "1px",
+                "style": "solid",
+                "color": "#dee2e6"
+              },
+              "type": "border"
+            }
+          }
+        },
+        "content": {
+          "properties": {
+            "background": {
+              "value": "{global.variables.surface.0}",
+              "type": "color"
+            },
+            "color": {
+              "value": "#495057",
+              "type": "color"
+            }
+          }
+        },
+        "title": {
+          "properties": {
+            "fontWeight": {
+              "value": "{global.variables.fontWeight.500}",
+              "type": "fontWeights"
+            },
+            "fontSize": {
+              "value": "14",
+              "type": "fontSizes"
+            }
+          },
+          "typography": {
+            "value": {
+              "fontFamily": "{global.properties.font.family}",
+              "fontWeight": "{panel.title.properties.fontWeight}",
+              "fontSize": "{panel.title.properties.fontSize}"
+            },
+            "type": "typography"
+          }
+        }
+      }
+    },
+    "$themes": [],
+    "$metadata": {
+      "tokenSetOrder": [
+        "lara"
+      ]
+    }
+  }

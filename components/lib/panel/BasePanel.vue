@@ -42,7 +42,7 @@ const classes = {
 };
 
 const { load: loadStyle } = useStyle(styles, { name: 'panel', manual: true });
-const { load: loadCSS } = useCSS('panel', { variableOptions: { prefix: 'p-panel' } });
+const { load: loadCSS } = useCSS('panel', { selectorOptions: { selectors: { panel: '.p-panel' } } });
 
 export default {
     name: 'BasePanel',

@@ -7,7 +7,7 @@ export function useCSS(name, options = {}) {
     const variablesRef = ref(undefined);
 
     const load = (_theme = {}, _options = {}) => {
-        const { styles, variables } = PrimeCSS.generate(_theme[name], options);
+        const { styles, variables } = PrimeCSS.generate({ [name]: _theme[name] }, options);
 
         stylesRef.value = useStyle(styles.rule, { name: `${name}-styles`, ..._options });
         variablesRef.value = useStyle(variables.rule, { name: `${name}-variables`, ..._options });
