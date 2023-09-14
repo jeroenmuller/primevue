@@ -1,5 +1,6 @@
 <script>
 import BaseComponent from 'primevue/basecomponent';
+import { useCSS } from 'primevue/usecss';
 import { useStyle } from 'primevue/usestyle';
 
 const styles = `
@@ -41,6 +42,7 @@ const classes = {
 };
 
 const { load: loadStyle } = useStyle(styles, { name: 'panel', manual: true });
+const { load: loadCSS } = useCSS('panel', { variableOptions: { prefix: 'p-panel' } });
 
 export default {
     name: 'BasePanel',
@@ -56,7 +58,8 @@ export default {
     },
     css: {
         classes,
-        loadStyle
+        loadStyle,
+        loadCSS
     },
     provide() {
         return {

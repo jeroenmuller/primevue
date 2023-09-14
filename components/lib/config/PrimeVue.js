@@ -135,6 +135,7 @@ export const defaultOptions = {
     },
     pt: undefined,
     unstyled: false,
+    theme: undefined,
     csp: {
         nonce: undefined
     }

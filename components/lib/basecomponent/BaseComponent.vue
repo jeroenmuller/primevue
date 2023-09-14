@@ -1,5 +1,6 @@
 <script>
 import { loadBaseStyle } from 'primevue/base';
+import { useCSS } from 'primevue/usecss';
 import { useStyle } from 'primevue/usestyle';
 import { ObjectUtils } from 'primevue/utils';
 import { mergeProps } from 'vue';
@@ -358,6 +359,7 @@ ${radioButtonStyles}
 
 const { load: loadStyle } = useStyle(styles, { name: 'common', manual: true });
 const { load: loadGlobalStyle } = useStyle('', { name: 'global', manual: true });
+const { load: loadGlobalCSS } = useCSS('global');
 
 export default {
     name: 'BaseComponent',
@@ -373,6 +375,10 @@ export default {
         unstyled: {
             type: Boolean,
             default: undefined
+        },
+        theme: {
+            type: Object,
+            default: undefined
         }
     },
     inject: {
@@ -387,6 +393,15 @@ export default {
                 if (!newValue) {
                     loadStyle(undefined, { nonce: this.$config?.csp?.nonce });
                     this.$options.css && this.$css.loadStyle(undefined, { nonce: this.$config?.csp?.nonce });
+                }
+            }
+        },
+        hasTheme: {
+            immediate: true,
+            handler(newValue) {
+                if (newValue) {
+                    loadGlobalCSS(this.$config?.theme, { nonce: this.$config?.csp?.nonce });
+                    this.$options.css && this.$css.loadCSS(this.$config?.theme, { nonce: this.$config?.csp?.nonce });
                 }
             }
         }
@@ -558,11 +573,14 @@ export default {
         isUnstyled() {
             return this.unstyled !== undefined ? this.unstyled : this.$config?.unstyled;
         },
+        hasTheme() {
+            return this.theme !== undefined ? this.theme : this.$config?.theme;
+        },
         $params() {
             return { instance: this, props: this.$props, state: this.$data, parentInstance: this.$parentInstance };
         },
         $css() {
-            return { classes: undefined, inlineStyles: undefined, loadStyle: () => {}, loadCustomStyle: () => {}, ...(this._getHostInstance(this) || {}).$css, ...this.$options.css };
+            return { classes: undefined, inlineStyles: undefined, loadStyle: () => {}, loadCustomStyle: () => {}, loadCSS: () => {}, ...(this._getHostInstance(this) || {}).$css, ...this.$options.css };
         },
         $config() {
             return this.$primevue?.config;

@@ -1,0 +1,5 @@
+{
+    "main": "./usecss.cjs.js",
+    "module": "./usecss.esm.js",
+    "unpkg": "./usecss.min.js"
+}
