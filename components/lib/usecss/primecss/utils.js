@@ -72,20 +72,25 @@ const Utils = {
             return this.isObject(value) && value.hasOwnProperty('value') ? value.value : value;
         },
         getVariableValue(value, prefix = '', excludedKeyRegexes = []) {
-            const regex = /{([^}]*)}/g;
+            if (this.isString(value)) {
+                const regex = /{([^}]*)}/g;
+                const val = value.trim();
 
-            if (this.test(regex, value)) {
-                const val = value.replaceAll(regex, (v) => {
-                    const path = v.replace(/{|}/g, '');
-                    const keys = path.split('.').filter((_v) => !excludedKeyRegexes.some((_r) => this.test(_r, _v)));
+                if (this.test(regex, val)) {
+                    const _val = val.replaceAll(regex, (v) => {
+                        const path = v.replace(/{|}/g, '');
+                        const keys = path.split('.').filter((_v) => !excludedKeyRegexes.some((_r) => this.test(_r, _v)));
 
-                    return `var(--${prefix}-${this.toKebabCase(keys.join('-'))})`;
-                });
+                        return `var(--${prefix}-${this.toKebabCase(keys.join('-'))})`;
+                    });
 
-                return `calc(${val})`;
+                    return `calc(${_val})`;
+                }
+
+                return val;
             }
 
-            return value;
+            return undefined;
         },
         getComputedValue(obj = {}, value) {
             if (this.isString(value)) {
