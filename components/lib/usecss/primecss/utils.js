@@ -84,7 +84,10 @@ const Utils = {
                         return `var(--${prefix}-${this.toKebabCase(keys.join('-'))})`;
                     });
 
-                    return `calc(${_val})`;
+                    const calculationRegex = /(\d+\s+[\+\-\*\/]\s+\d+)/g;
+                    const cleanedVarRegex = /var\([^)]+\)/g;
+
+                    return this.test(calculationRegex, _val.replace(cleanedVarRegex, '0')) ? `calc(${_val})` : _val;
                 }
 
                 return val;

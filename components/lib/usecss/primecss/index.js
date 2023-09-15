@@ -101,7 +101,7 @@ const PrimeCSS = {
                                 break;
 
                             default:
-                                const _s = _compound ? `${_selector}${s}` : `${_selector} ${s}`;
+                                const _s = _compound || key === 'root' ? `${_selector}${s}` : `${_selector} ${s}`;
 
                                 computed = _generate(value, px, _s.trim(), path);
                                 break;
