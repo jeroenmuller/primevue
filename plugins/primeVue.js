@@ -108,7 +108,7 @@ import CodeHighlight from '@/components/layout/CodeHighlight';
 import DevelopmentSection from '@/components/layout/DevelopmentSection';
 
 //import Lara from '@/components/lib/themes/lara';
-import LaraFigma from '@/components/lib/themes/lara-figma/token.json';
+import LaraFigma from '@/components/lib/themes/lara-figma/tokens.json';
 
 export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.vueApp.use(PrimeVue, { ripple: true, theme: LaraFigma.lara });
