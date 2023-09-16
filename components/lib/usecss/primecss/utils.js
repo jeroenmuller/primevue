@@ -141,9 +141,9 @@ const Utils = {
                         const variables = {
                             [`${px}-x`]: x,
                             [`${px}-y`]: y,
+                            [`${px}-blur`]: blur,
                             [`${px}-spread`]: spread,
                             [`${px}-color`]: color,
-                            [`${px}-blur`]: blur,
                             ...(type === 'innerShadow' && { [`${px}-type`]: 'inset' })
                         };
 
