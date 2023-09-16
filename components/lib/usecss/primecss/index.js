@@ -20,6 +20,7 @@ const SELECTOR = {
 };
 
 const EXCLUDED_KEY_REGEX = /^(selector|properties|compounds|children|states|css|variants|variables)$/gi;
+const EXCLUDED_KEY_REGEX_FOR_FIGMA = /^(typography)$/gi;
 
 const PrimeCSS = {
     generate(theme, options = {}) {
@@ -76,14 +77,15 @@ const PrimeCSS = {
 
                     if (Utils.object.isObject(value) && key !== 'selector') {
                         const path = [..._keys, key];
-                        let s = !Utils.object.test(EXCLUDED_KEY_REGEX, key) ? _getSelector(value, key, path) : '';
+                        let s = Utils.object.test(EXCLUDED_KEY_REGEX, key) || Utils.object.test(EXCLUDED_KEY_REGEX_FOR_FIGMA, key) ? '' : _getSelector(value, key, path);
                         let computed = {};
 
                         s = Utils.object.getComputedValue(theme, s) || '';
 
                         switch (key) {
                             case 'properties':
-                                computed = _getProperties(value, px);
+                            case 'typography':
+                                computed = _getProperties(Utils.object.toValue(value), px);
 
                                 computed.styles = [Utils.object.getRule(`${_selector}${s}`, computed.styles.join(''))];
                                 break;
