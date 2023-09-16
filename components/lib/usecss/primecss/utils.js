@@ -18,6 +18,9 @@ const Utils = {
         isString(value, empty = true) {
             return typeof value === 'string' && (empty || value !== '');
         },
+        isNumber(value) {
+            return !isNaN(value);
+        },
         toFlatCase(str) {
             // convert snake, kebab, camel and pascal cases to flat case
             return this.isString(str) ? str.replace(/(-|_)/g, '').toLowerCase() : str;
@@ -91,6 +94,8 @@ const Utils = {
                 }
 
                 return val;
+            } else if (this.isNumber(value)) {
+                return value;
             }
 
             return undefined;
@@ -101,6 +106,8 @@ const Utils = {
                 const val = value.trim();
 
                 return this.test(regex, val) ? val.replaceAll(regex, (v) => this.getOptionValue(obj, v.replace(/{|}/g, ''))) : val;
+            } else if (this.isNumber(value)) {
+                return value;
             }
 
             return undefined;
@@ -119,6 +126,54 @@ const Utils = {
             }
 
             return '';
+        }
+    },
+    style: {
+        getBoxShadow(value = {}, prefix = '', excludedKeyRegexes) {
+            const _value = Utils.object.toValue(value);
+            const _prefix = `--${prefix}-box-shadow`;
+
+            if (!Utils.object.isString(_value)) {
+                const shadows = [_value].flat().reduce(
+                    (acc, v, i) => {
+                        const { x, y, spread, color, blur, type } = v;
+                        const px = `${_prefix}-${i}`;
+                        const variables = {
+                            [`${px}-x`]: x,
+                            [`${px}-y`]: y,
+                            [`${px}-spread`]: spread,
+                            [`${px}-color`]: color,
+                            [`${px}-blur`]: blur,
+                            ...(type === 'innerShadow' && { [`${px}-type`]: 'inset' })
+                        };
+
+                        let val = '';
+
+                        Object.entries(variables).forEach(([_k, _v], _i) => {
+                            val += `${_i === 0 ? '' : ' '}var(${_k})`;
+                            Utils.object.setProperty(acc['variables'], _k, Utils.object.getVariableValue(_v, prefix, excludedKeyRegexes));
+                        });
+
+                        acc['values'].push(val);
+
+                        return acc;
+                    },
+                    {
+                        values: [],
+                        variables: []
+                    }
+                );
+
+                return {
+                    styles: [`\n\tbox-shadow: ${shadows.values.join(', ')};`],
+                    variables: shadows.variables
+                };
+            }
+
+            return {
+                styles: [`\n\tbox-shadow: var(--${_prefix});`],
+                variables: [`\n\t--${_prefix}: ${Utils.object.getVariableValue(value, _prefix, excludedKeyRegexes)}`]
+            };
         }
     }
 };

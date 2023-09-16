@@ -27,6 +27,8 @@ const PrimeCSS = {
         const { prefix = VARIABLE.PREFIX, enable = true, selector: variableSelector = VARIABLE.SELECTOR, excludedKeyRegex = VARIABLE.EXCLUDED_KEY_REGEX } = variableOptions;
         const { prefix: selectorPrefix = SELECTOR.PREFIX, selectors = SELECTOR.SELECTORS, alias = SELECTOR.ALIAS, defaultTemplate = SELECTOR.DEFAULT_TEMPLATE } = selectorOptions;
 
+        const exclusiveProperties = ['box-shadow'];
+
         const _getProperties = (_properties, _prefix = '', _property = '') => {
             return Object.entries(_properties).reduce(
                 (acc, [key, value]) => {
@@ -36,11 +38,11 @@ const PrimeCSS = {
                     const pr = _property ? `${_property}-${k}` : k;
                     const v = Utils.object.toValue(value);
 
-                    if (Utils.object.isObject(v)) {
-                        const nested = _getProperties(v, px, pr);
+                    if (Utils.object.isObject(v) || exclusiveProperties.some((expr) => expr === k)) {
+                        const computed = k === 'box-shadow' ? Utils.style.getBoxShadow(v, _prefix, [EXCLUDED_KEY_REGEX, excludedKeyRegex]) : _getProperties(v, px, pr);
 
-                        Utils.object.mergeProperties(styles, nested.styles);
-                        enable && Utils.object.mergeProperties(variables, nested.variables);
+                        Utils.object.mergeProperties(styles, computed.styles);
+                        enable && Utils.object.mergeProperties(variables, computed.variables);
                     } else {
                         Utils.object.setProperty(styles, pr, `var(--${px})`);
                         enable && Utils.object.setProperty(variables, `--${px}`, Utils.object.getVariableValue(v, prefix, [EXCLUDED_KEY_REGEX, excludedKeyRegex]));
