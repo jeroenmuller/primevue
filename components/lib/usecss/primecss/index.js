@@ -33,7 +33,7 @@ const PrimeCSS = {
         const _getProperties = (_properties, _prefix = '', _property = '') => {
             return Object.entries(_properties).reduce(
                 (acc, [key, value]) => {
-                    const { styles, variables } = acc;
+                    const { styles, variables, values } = acc;
                     const k = Utils.object.toKebabCase(key);
                     const px = `${_prefix}-${k}`;
                     const pr = _property ? `${_property}-${k}` : k;
@@ -42,18 +42,23 @@ const PrimeCSS = {
                     if (Utils.object.isObject(v) || exclusiveProperties.some((expr) => expr === k)) {
                         const computed = k === 'box-shadow' ? Utils.style.getBoxShadow(v, _prefix, [EXCLUDED_KEY_REGEX, excludedKeyRegex]) : _getProperties(v, px, pr);
 
-                        Utils.object.mergeProperties(styles, computed.styles);
-                        enable && Utils.object.mergeProperties(variables, computed.variables);
+                        Utils.object.merge(styles, computed.styles);
+                        enable && Utils.object.merge(variables, computed.variables);
+                        values[key] = computed.values;
                     } else {
+                        const computedValue = Utils.object.getVariableValue(v, prefix, [EXCLUDED_KEY_REGEX, excludedKeyRegex]);
+
                         Utils.object.setProperty(styles, pr, `var(--${px})`);
-                        enable && Utils.object.setProperty(variables, `--${px}`, Utils.object.getVariableValue(v, prefix, [EXCLUDED_KEY_REGEX, excludedKeyRegex]));
+                        enable && Utils.object.setProperty(variables, `--${px}`, computedValue);
+                        values[key] = computedValue;
                     }
 
                     return acc;
                 },
                 {
                     styles: [],
-                    variables: []
+                    variables: [],
+                    values: {}
                 }
             );
         };
@@ -72,7 +77,7 @@ const PrimeCSS = {
         const _generate = (_theme = {}, _prefix = '', _selector = '', _keys = [], _compound = false) => {
             return Object.entries(_theme).reduce(
                 (acc, [key, value]) => {
-                    const { styles, variables } = acc;
+                    const { styles, variables, properties } = acc;
                     const px = Utils.object.test(EXCLUDED_KEY_REGEX, key) || Utils.object.test(excludedKeyRegex, key) ? _prefix : `${_prefix}-${Utils.object.toKebabCase(key)}`;
 
                     if (Utils.object.isObject(value) && key !== 'selector') {
@@ -85,9 +90,20 @@ const PrimeCSS = {
                         switch (key) {
                             case 'properties':
                             case 'typography':
-                                computed = _getProperties(Utils.object.toValue(value), px);
+                                const _value = Utils.object.toValue(value);
+                                const [name, ...rest] = _keys;
 
+                                computed = _getProperties(_value, px);
                                 computed.styles = [Utils.object.getRule(`${_selector}${s}`, computed.styles.join(''))];
+                                computed.properties = [
+                                    {
+                                        groupBy: name,
+                                        key: rest.join('.'),
+                                        prefix: px,
+                                        properties: computed.values
+                                    }
+                                ];
+
                                 break;
 
                             case 'compounds':
@@ -111,31 +127,37 @@ const PrimeCSS = {
                                 break;
                         }
 
-                        Utils.object.mergeProperties(styles, computed.styles);
-                        Utils.object.mergeProperties(variables, computed.variables);
+                        Utils.object.merge(styles, computed.styles);
+                        Utils.object.merge(variables, computed.variables);
+                        Utils.object.merge(properties, computed.properties);
                     } else if (key === 'css') {
-                        Utils.object.mergeProperties(styles, [`${value}\n`]);
+                        Utils.object.merge(styles, [`${value}\n`]);
                     }
 
                     return acc;
                 },
                 {
                     styles: [],
-                    variables: []
+                    variables: [],
+                    properties: []
                 }
             );
         };
 
-        const { styles, variables } = _generate(theme, prefix, selectorPrefix, undefined, !!selectorPrefix);
+        const { styles, variables, properties } = _generate(theme, prefix, selectorPrefix, undefined, !!selectorPrefix);
 
         return {
             styles: {
                 value: styles,
-                rule: styles.join('')
+                css: styles.join('')
             },
             variables: {
                 value: variables,
-                rule: enable ? Utils.object.getRule(variableSelector, variables.join('')) : ''
+                css: enable ? Utils.object.getRule(variableSelector, variables.join('')) : ''
+            },
+            properties: {
+                value: properties,
+                group: Utils.object.groupBy(properties, 'groupBy')
             }
         };
     },
@@ -150,7 +172,7 @@ const PrimeCSS = {
                 if (Utils.object.isObject(v)) {
                     const variables = _toVariables(v, px);
 
-                    Utils.object.mergeProperties(acc, variables);
+                    Utils.object.merge(acc, variables);
                 } else {
                     Utils.object.setProperty(acc, `--${px}`, Utils.object.getVariableValue(v, prefix, [EXCLUDED_KEY_REGEX, excludedKeyRegex]));
                 }
@@ -163,7 +185,7 @@ const PrimeCSS = {
 
         return {
             value,
-            rule: Utils.object.getRule(selector, value.join(''))
+            css: Utils.object.getRule(selector, value.join(''))
         };
     }
 };

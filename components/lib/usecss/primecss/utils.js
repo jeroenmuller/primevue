@@ -47,6 +47,20 @@ const Utils = {
 
             return item;
         },
+        merge(value1, value2) {
+            if (this.isArray(value1)) {
+                value1.push(...(value2 || []));
+            } else if (this.isObject(value1)) {
+                Object.assign(value1, value2);
+            }
+        },
+        groupBy(objectArr = [], key) {
+            return objectArr.reduce((acc, obj) => {
+                (acc[obj[key]] = acc[obj[key]] || []).push(obj);
+
+                return acc;
+            }, {});
+        },
         getItemValue(obj, ...params) {
             return this.isFunction(obj) ? obj(...params) : obj;
         },
@@ -117,9 +131,6 @@ const Utils = {
                 properties.push(`\n\t${key}: ${value};`);
             }
         },
-        mergeProperties(properties1, properties2 = []) {
-            this.isArray(properties1) && properties1.push(...properties2);
-        },
         getRule(selector, properties) {
             if (selector) {
                 return `${selector} {${properties}\n}\n`;
@@ -147,32 +158,42 @@ const Utils = {
                             [`${px}-color`]: color
                         };
 
-                        let val = '';
+                        let styles = [];
+                        let values = [];
 
-                        Object.entries(variables).forEach(([_k, _v], _i) => {
-                            val += `${_i === 0 ? '' : ' '}var(${_k})`;
-                            Utils.object.setProperty(acc['variables'], _k, Utils.object.getVariableValue(_v, prefix, excludedKeyRegexes));
+                        Object.entries(variables).forEach(([_k, _v]) => {
+                            const computedValue = Utils.object.getVariableValue(_v, prefix, excludedKeyRegexes);
+
+                            styles.push(`var(${_k})`);
+                            values.push(computedValue);
+                            Utils.object.setProperty(acc['variables'], _k, computedValue);
                         });
 
-                        acc['values'].push(val);
+                        acc['styles'].push(styles.join(' '));
+                        acc['values'].push(values.join(' '));
 
                         return acc;
                     },
                     {
-                        values: [],
-                        variables: []
+                        styles: [],
+                        variables: [],
+                        values: []
                     }
                 );
 
                 return {
-                    styles: [`\n\tbox-shadow: ${shadows.values.join(', ')};`],
-                    variables: shadows.variables
+                    styles: [`\n\tbox-shadow: ${shadows.styles.join(', ')};`],
+                    variables: shadows.variables,
+                    values: shadows.values.join(', ')
                 };
             }
 
+            const computedValue = Utils.object.getVariableValue(value, _prefix, excludedKeyRegexes);
+
             return {
                 styles: [`\n\tbox-shadow: var(--${_prefix});`],
-                variables: [`\n\t--${_prefix}: ${Utils.object.getVariableValue(value, _prefix, excludedKeyRegexes)}`]
+                variables: [`\n\t--${_prefix}: ${computedValue}`],
+                values: computedValue
             };
         }
     }
