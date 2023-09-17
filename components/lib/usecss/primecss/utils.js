@@ -139,12 +139,12 @@ const Utils = {
                         const { x, y, spread, color, blur, type } = v;
                         const px = `${_prefix}-${i}`;
                         const variables = {
+                            ...(type === 'innerShadow' && { [`${px}-type`]: 'inset' }),
                             [`${px}-x`]: x,
                             [`${px}-y`]: y,
                             [`${px}-blur`]: blur,
                             [`${px}-spread`]: spread,
-                            [`${px}-color`]: color,
-                            ...(type === 'innerShadow' && { [`${px}-type`]: 'inset' })
+                            [`${px}-color`]: color
                         };
 
                         let val = '';
