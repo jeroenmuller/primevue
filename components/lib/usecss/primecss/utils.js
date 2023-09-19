@@ -140,12 +140,12 @@ const Utils = {
         },
         setProperty(properties, key, value) {
             if (this.isString(key, false)) {
-                properties.push(`${key}: ${value};`);
+                properties.push(`${key}:${value};`);
             }
         },
         getRule(selector, properties) {
             if (selector) {
-                return `${selector} {${properties}}`;
+                return `${selector}{${properties}}`;
             }
 
             return '';
@@ -194,7 +194,7 @@ const Utils = {
                 );
 
                 return {
-                    styles: [`box-shadow: ${shadows.styles.join(', ')};`],
+                    styles: [`box-shadow: ${shadows.styles.join(',')};`],
                     variables: shadows.variables,
                     values: shadows.values.join(', ')
                 };

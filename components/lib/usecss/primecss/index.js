@@ -1,4 +1,3 @@
-import CleanCSS from 'clean-css';
 import Utils from './utils.js';
 
 const VARIABLE = {
@@ -27,14 +26,9 @@ const SELECTOR = {
 const EXCLUDED_KEY_REGEX = /^(selector|properties|compounds|children|states|css|variants|variables)$/gi;
 const EXCLUDED_KEY_REGEX_FOR_FIGMA = /^(typography)$/gi;
 
-const CLEAN_CSS_OPTIONS = {
-    //format: 'beautify',
-    inline: ['all']
-};
-
 const PrimeCSS = {
     generate(theme, options = {}) {
-        const { variableOptions = {}, selectorOptions = {}, cleanCSSOptions = CLEAN_CSS_OPTIONS } = options;
+        const { variableOptions = {}, selectorOptions = {} } = options;
         const { prefix = VARIABLE.PREFIX, enable = true, selector: variableSelector = VARIABLE.SELECTOR, excludedKeyRegex = VARIABLE.EXCLUDED_KEY_REGEX } = variableOptions;
         const { prefix: selectorPrefix = SELECTOR.PREFIX, layer = SELECTOR.LAYER, selectors = SELECTOR.SELECTORS, alias = SELECTOR.ALIAS, defaultTemplate = SELECTOR.DEFAULT_TEMPLATE } = selectorOptions;
 
@@ -154,17 +148,16 @@ const PrimeCSS = {
             );
         };
 
-        const cleanCSS = new CleanCSS(cleanCSSOptions);
         const { styles, variables, properties } = _generate(theme, prefix, selectorPrefix, undefined, !!selectorPrefix);
 
         return {
             styles: {
                 value: styles,
-                css: cleanCSS.minify(layer.enable ? Utils.object.getRule(`@layer ${layer.name || ''}`, styles.join('')) : styles.join('')).styles
+                css: layer.enable ? Utils.object.getRule(`@layer ${layer.name || ''}`, styles.join('')) : styles.join('')
             },
             variables: {
                 value: variables,
-                css: cleanCSS.minify(enable ? Utils.object.getRule(variableSelector, variables.join('')) : '').styles
+                css: enable ? Utils.object.getRule(variableSelector, variables.join('')) : ''
             },
             properties: {
                 value: properties,
@@ -172,7 +165,7 @@ const PrimeCSS = {
             }
         };
     },
-    toVariables(theme, options = {}, cleanCSSOptions = CLEAN_CSS_OPTIONS) {
+    toVariables(theme, options = {}) {
         const { prefix = VARIABLE.PREFIX, selector = VARIABLE.SELECTOR, excludedKeyRegex = VARIABLE.EXCLUDED_KEY_REGEX } = options;
 
         const _toVariables = (_theme, _prefix = '') => {
@@ -192,12 +185,11 @@ const PrimeCSS = {
             }, []);
         };
 
-        const cleanCSS = new CleanCSS(cleanCSSOptions);
         const value = _toVariables(theme, prefix);
 
         return {
             value,
-            css: cleanCSS.minify(Utils.object.getRule(selector, value.join(''))).styles
+            css: Utils.object.getRule(selector, value.join(''))
         };
     }
 };
