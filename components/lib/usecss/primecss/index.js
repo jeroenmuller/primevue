@@ -1,3 +1,4 @@
+import CleanCSS from 'clean-css';
 import Utils from './utils.js';
 
 const VARIABLE = {
@@ -8,6 +9,10 @@ const VARIABLE = {
 
 const SELECTOR = {
     PREFIX: '',
+    LAYER: {
+        enable: true,
+        name: 'prime'
+    },
     DEFAULT_TEMPLATE: '[data-pc-section="{0}"]',
     SELECTORS: {
         global: 'body'
@@ -22,11 +27,16 @@ const SELECTOR = {
 const EXCLUDED_KEY_REGEX = /^(selector|properties|compounds|children|states|css|variants|variables)$/gi;
 const EXCLUDED_KEY_REGEX_FOR_FIGMA = /^(typography)$/gi;
 
+const CLEAN_CSS_OPTIONS = {
+    //format: 'beautify',
+    inline: ['all']
+};
+
 const PrimeCSS = {
     generate(theme, options = {}) {
-        const { variableOptions = {}, selectorOptions = {} } = options;
+        const { variableOptions = {}, selectorOptions = {}, cleanCSSOptions = CLEAN_CSS_OPTIONS } = options;
         const { prefix = VARIABLE.PREFIX, enable = true, selector: variableSelector = VARIABLE.SELECTOR, excludedKeyRegex = VARIABLE.EXCLUDED_KEY_REGEX } = variableOptions;
-        const { prefix: selectorPrefix = SELECTOR.PREFIX, selectors = SELECTOR.SELECTORS, alias = SELECTOR.ALIAS, defaultTemplate = SELECTOR.DEFAULT_TEMPLATE } = selectorOptions;
+        const { prefix: selectorPrefix = SELECTOR.PREFIX, layer = SELECTOR.LAYER, selectors = SELECTOR.SELECTORS, alias = SELECTOR.ALIAS, defaultTemplate = SELECTOR.DEFAULT_TEMPLATE } = selectorOptions;
 
         const exclusiveProperties = ['box-shadow'];
 
@@ -46,7 +56,7 @@ const PrimeCSS = {
                         enable && Utils.object.merge(variables, computed.variables);
                         values[key] = computed.values;
                     } else {
-                        const computedValue = Utils.object.getVariableValue(v, prefix, [EXCLUDED_KEY_REGEX, excludedKeyRegex]);
+                        const computedValue = Utils.object.getVariableValue(v, px, prefix, [EXCLUDED_KEY_REGEX, excludedKeyRegex]);
 
                         Utils.object.setProperty(styles, pr, `var(--${px})`);
                         enable && Utils.object.setProperty(variables, `--${px}`, computedValue);
@@ -131,7 +141,7 @@ const PrimeCSS = {
                         Utils.object.merge(variables, computed.variables);
                         Utils.object.merge(properties, computed.properties);
                     } else if (key === 'css') {
-                        Utils.object.merge(styles, [`${value}\n`]);
+                        Utils.object.merge(styles, [`${value}`]);
                     }
 
                     return acc;
@@ -144,16 +154,17 @@ const PrimeCSS = {
             );
         };
 
+        const cleanCSS = new CleanCSS(cleanCSSOptions);
         const { styles, variables, properties } = _generate(theme, prefix, selectorPrefix, undefined, !!selectorPrefix);
 
         return {
             styles: {
                 value: styles,
-                css: styles.join('')
+                css: cleanCSS.minify(layer.enable ? Utils.object.getRule(`@layer ${layer.name || ''}`, styles.join('')) : styles.join('')).styles
             },
             variables: {
                 value: variables,
-                css: enable ? Utils.object.getRule(variableSelector, variables.join('')) : ''
+                css: cleanCSS.minify(enable ? Utils.object.getRule(variableSelector, variables.join('')) : '').styles
             },
             properties: {
                 value: properties,
@@ -161,7 +172,7 @@ const PrimeCSS = {
             }
         };
     },
-    toVariables(theme, options = {}) {
+    toVariables(theme, options = {}, cleanCSSOptions = CLEAN_CSS_OPTIONS) {
         const { prefix = VARIABLE.PREFIX, selector = VARIABLE.SELECTOR, excludedKeyRegex = VARIABLE.EXCLUDED_KEY_REGEX } = options;
 
         const _toVariables = (_theme, _prefix = '') => {
@@ -174,18 +185,19 @@ const PrimeCSS = {
 
                     Utils.object.merge(acc, variables);
                 } else {
-                    Utils.object.setProperty(acc, `--${px}`, Utils.object.getVariableValue(v, prefix, [EXCLUDED_KEY_REGEX, excludedKeyRegex]));
+                    Utils.object.setProperty(acc, `--${px}`, Utils.object.getVariableValue(v, px, prefix, [EXCLUDED_KEY_REGEX, excludedKeyRegex]));
                 }
 
                 return acc;
             }, []);
         };
 
+        const cleanCSS = new CleanCSS(cleanCSSOptions);
         const value = _toVariables(theme, prefix);
 
         return {
             value,
-            css: Utils.object.getRule(selector, value.join(''))
+            css: cleanCSS.minify(Utils.object.getRule(selector, value.join(''))).styles
         };
     }
 };

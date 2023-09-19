@@ -88,7 +88,19 @@ const Utils = {
         toValue(value) {
             return this.isObject(value) && value.hasOwnProperty('value') ? value.value : value;
         },
-        getVariableValue(value, prefix = '', excludedKeyRegexes = []) {
+        toUnit(value, variable = '') {
+            const excludedProperties = ['opacity', 'z-index', 'line-height', 'font-weight', 'flex', 'flex-grow', 'flex-shrink', 'order'];
+
+            if (!excludedProperties.some((property) => variable.endsWith(property))) {
+                const val = `${value}`.trim();
+                const valArr = val.split(' ');
+
+                return valArr.map((v) => (this.isNumber(v) ? `${v}px` : v)).join(' ');
+            }
+
+            return value;
+        },
+        getVariableValue(value, variable = '', prefix = '', excludedKeyRegexes = []) {
             if (this.isString(value)) {
                 const regex = /{([^}]*)}/g;
                 const val = value.trim();
@@ -107,9 +119,9 @@ const Utils = {
                     return this.test(calculationRegex, _val.replace(cleanedVarRegex, '0')) ? `calc(${_val})` : _val;
                 }
 
-                return val;
+                return this.toUnit(val, variable);
             } else if (this.isNumber(value)) {
-                return value;
+                return this.toUnit(value, variable);
             }
 
             return undefined;
@@ -128,12 +140,12 @@ const Utils = {
         },
         setProperty(properties, key, value) {
             if (this.isString(key, false)) {
-                properties.push(`\n\t${key}: ${value};`);
+                properties.push(`${key}: ${value};`);
             }
         },
         getRule(selector, properties) {
             if (selector) {
-                return `${selector} {${properties}\n}\n`;
+                return `${selector} {${properties}}`;
             }
 
             return '';
@@ -162,7 +174,7 @@ const Utils = {
                         let values = [];
 
                         Object.entries(variables).forEach(([_k, _v]) => {
-                            const computedValue = Utils.object.getVariableValue(_v, prefix, excludedKeyRegexes);
+                            const computedValue = Utils.object.getVariableValue(_v, _prefix, prefix, excludedKeyRegexes);
 
                             styles.push(`var(${_k})`);
                             values.push(computedValue);
@@ -182,17 +194,17 @@ const Utils = {
                 );
 
                 return {
-                    styles: [`\n\tbox-shadow: ${shadows.styles.join(', ')};`],
+                    styles: [`box-shadow: ${shadows.styles.join(', ')};`],
                     variables: shadows.variables,
                     values: shadows.values.join(', ')
                 };
             }
 
-            const computedValue = Utils.object.getVariableValue(value, _prefix, excludedKeyRegexes);
+            const computedValue = Utils.object.getVariableValue(value, _prefix, _prefix, excludedKeyRegexes);
 
             return {
-                styles: [`\n\tbox-shadow: var(--${_prefix});`],
-                variables: [`\n\t--${_prefix}: ${computedValue}`],
+                styles: [`box-shadow: var(--${_prefix});`],
+                variables: [`--${_prefix}: ${computedValue}`],
                 values: computedValue
             };
         }
