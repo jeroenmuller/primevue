@@ -14516,6 +14516,19 @@
                             "parameters": [],
                             "returnType": "VNode<RendererNode, RendererElement, Object>[]",
                             "description": "Custom icon template."
+                        },
+                        {
+                            "name": "container",
+                            "parameters": [
+                                {
+                                    "name": "scope",
+                                    "optional": false,
+                                    "type": "{\n  \t <span class=\"font-medium\">message</span>: any, // Message of the component\n \t <span class=\"font-medium\">onClose</span>: () &rArr; void, // Close dialog function.\n\t <span class=\"font-medium\">onAccept</span>: () &rArr; void, // Accept function of the component\n\t <span class=\"font-medium\">onReject</span>: () &rArr; void, // Reject function of the component\n}",
+                                    "description": "container slot's params."
+                                }
+                            ],
+                            "returnType": "VNode<RendererNode, RendererElement, Object>[]",
+                            "description": "Custom container slot."
                         }
                     ]
                 },
@@ -14788,6 +14801,19 @@
                             "parameters": [],
                             "returnType": "VNode<RendererNode, RendererElement, Object>[]",
                             "description": "Custom icon template."
+                        },
+                        {
+                            "name": "container",
+                            "parameters": [
+                                {
+                                    "name": "scope",
+                                    "optional": false,
+                                    "type": "{\n  \t <span class=\"font-medium\">message</span>: any, // Message of the component\n \t <span class=\"font-medium\">onAccept</span>: () &rArr; void, // Accept function of the component\n\t <span class=\"font-medium\">onReject</span>: () &rArr; void, // Reject function of the component\n}",
+                                    "description": "container slot's params."
+                                }
+                            ],
+                            "returnType": "VNode<RendererNode, RendererElement, Object>[]",
+                            "description": "Custom container slot."
                         }
                     ]
                 },
@@ -19545,6 +19571,14 @@
                             "description": "Whether to show the header or not."
                         },
                         {
+                            "name": "blockScroll",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "boolean",
+                            "default": "false",
+                            "description": "Whether background scroll should be blocked when dialog is visible."
+                        },
+                        {
                             "name": "baseZIndex",
                             "optional": true,
                             "readonly": false,
@@ -19734,6 +19768,19 @@
                             ],
                             "returnType": "VNode<RendererNode, RendererElement, Object>[]",
                             "description": "Custom maximize icon template of dialog."
+                        },
+                        {
+                            "name": "container",
+                            "parameters": [
+                                {
+                                    "name": "scope",
+                                    "optional": false,
+                                    "type": "{\n \t <span class=\"font-medium\">onClose</span>: () &rArr; void, // Close dialog function.\n\t <span class=\"font-medium\">onMaximize</span>: (event: Event) &rArr; void, // Maximize/minimize dialog function.\n}",
+                                    "description": "container slot's params."
+                                }
+                            ],
+                            "returnType": "VNode<RendererNode, RendererElement, Object>[]",
+                            "description": "Custom container slot."
                         }
                     ]
                 },
@@ -30197,6 +30244,19 @@
                             ],
                             "returnType": "VNode<RendererNode, RendererElement, Object>[]",
                             "description": "Custom close icon template."
+                        },
+                        {
+                            "name": "container",
+                            "parameters": [
+                                {
+                                    "name": "scope",
+                                    "optional": false,
+                                    "type": "{\n \t <span class=\"font-medium\">onClose</span>: () &rArr; void, // Close message function.\n}",
+                                    "description": "container slot's params."
+                                }
+                            ],
+                            "returnType": "VNode<RendererNode, RendererElement, Object>[]",
+                            "description": "Custom container slot."
                         }
                     ]
                 },
@@ -33022,6 +33082,19 @@
                             "parameters": [],
                             "returnType": "void",
                             "description": "Callback to invoke when the overlay is hidden."
+                        },
+                        {
+                            "name": "container",
+                            "parameters": [
+                                {
+                                    "name": "scope",
+                                    "optional": false,
+                                    "type": "Object",
+                                    "description": "container slot's params."
+                                }
+                            ],
+                            "returnType": "VNode<RendererNode, RendererElement, Object>[]",
+                            "description": "Custom container slot."
                         }
                     ]
                 }
@@ -38745,6 +38818,19 @@
                             ],
                             "returnType": "VNode<RendererNode, RendererElement, Object>[]",
                             "description": "Custom close icon template."
+                        },
+                        {
+                            "name": "container",
+                            "parameters": [
+                                {
+                                    "name": "scope",
+                                    "optional": false,
+                                    "type": "{\n \t <span class=\"font-medium\">onClose</span>: () &rArr; void, // Close sidebar function.\n}",
+                                    "description": "container slot's params."
+                                }
+                            ],
+                            "returnType": "VNode<RendererNode, RendererElement, Object>[]",
+                            "description": "Custom container slot."
                         }
                     ]
                 },
@@ -44334,6 +44420,19 @@
                             ],
                             "returnType": "VNode<RendererNode, RendererElement, Object>[]",
                             "description": "Custom close icon template."
+                        },
+                        {
+                            "name": "container",
+                            "parameters": [
+                                {
+                                    "name": "scope",
+                                    "optional": false,
+                                    "type": "{\n  \t <span class=\"font-medium\">message</span>: any, // Message of the component\n \t <span class=\"font-medium\">onClose</span>: () &rArr; void, // Close toast function\n}",
+                                    "description": "container slot's params."
+                                }
+                            ],
+                            "returnType": "VNode<RendererNode, RendererElement, Object>[]",
+                            "description": "Custom container slot."
                         }
                     ]
                 },

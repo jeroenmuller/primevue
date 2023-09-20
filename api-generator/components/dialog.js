@@ -72,6 +72,12 @@ const DialogProps = [
         description: 'Whether to show the header or not.'
     },
     {
+        name: 'blockScroll',
+        type: 'boolean',
+        default: 'false',
+        description: 'Whether background scroll should be blocked when dialog is visible.'
+    },
+    {
         name: 'baseZIndex',
         type: 'number',
         default: '0',
@@ -209,6 +215,10 @@ const DialogSlots = [
     {
         name: 'maximizeicon',
         description: 'Custom maximizeicon icon template of dialog.'
+    },
+    {
+        name: 'container',
+        description: 'Custom container template.'
     }
 ];
 

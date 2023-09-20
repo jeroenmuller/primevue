@@ -203,6 +203,11 @@ export interface DialogProps {
      */
     showHeader?: boolean | undefined;
     /**
+     * Whether background scroll should be blocked when dialog is visible.
+     * @defaultValue false
+     */
+    blockScroll?: boolean | undefined;
+    /**
      * Base zIndex value to use in layering.
      * @defaultValue 0
      */
@@ -326,6 +331,21 @@ export interface DialogSlots {
          * Style class of the maximize icon
          */
         class: any;
+    }): VNode[];
+    /**
+     * Custom container slot.
+     * @param {Object} scope - container slot's params.
+     */
+    container(scope: {
+        /**
+         * Close dialog function.
+         */
+        onClose: () => void;
+        /**
+         * Maximize/minimize dialog function.
+         * @param {Event} event - Browser event
+         */
+        onMaximize: (event: Event) => void;
     }): VNode[];
 }
 
