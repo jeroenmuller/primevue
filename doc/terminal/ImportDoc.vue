@@ -8,8 +8,10 @@ export default {
     data() {
         return {
             code: {
-                basic: `import Terminal from 'primevue/terminal';
-import TerminalService from 'primevue/terminalservice'`
+                basic: `
+import Terminal from 'primevue/terminal';
+import TerminalService from 'primevue/terminalservice'
+`
             }
         };
     }

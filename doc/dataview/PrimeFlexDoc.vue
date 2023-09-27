@@ -11,10 +11,14 @@ export default {
     data() {
         return {
             code1: {
-                basic: `npm install primeflex`
+                basic: `
+npm install primeflex
+`
             },
             code2: {
-                basic: `import 'primeflex/primeflex.css';`
+                basic: `
+import 'primeflex/primeflex.css';
+`
             }
         };
     }

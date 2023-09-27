@@ -18,7 +18,8 @@ export default {
             this.dialogRef.close();
         }
     }
-}`,
+}
+`,
                 options: `
 export default {
     inject: ['dialogRef'],

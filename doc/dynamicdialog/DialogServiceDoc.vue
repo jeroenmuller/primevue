@@ -14,16 +14,20 @@ export default {
     data() {
         return {
             code1: {
-                basic: `import {createApp} from 'vue';
+                basic: `
+import {createApp} from 'vue';
 import DialogService from 'primevue/dialogservice';
 
 const app = createApp(App);
-app.use(DialogService);`
+app.use(DialogService);
+`
             },
             code2: {
-                basic: `import { useDialog } from 'primevue/usedialog';
+                basic: `
+import { useDialog } from 'primevue/usedialog';
 
-const dialog = useDialog();`,
+const dialog = useDialog();
+`,
                 options: `const dialogRef = this.$dialog;`,
                 composition: `
 import { useDialog } from 'primevue/usedialog';

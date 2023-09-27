@@ -21,7 +21,8 @@ this.$dialog.open(ProductListDemo, {
     data: {
         user: 'primetime'
     }
-};`
+};
+`
             },
             code2: {
                 basic: `
@@ -30,7 +31,8 @@ export default {
     mounted:{
         const params = this.dialogRef.data; // {user: 'primetime'}
     }
-}`
+}
+`
             },
             code3: {
                 basic: `
@@ -38,7 +40,8 @@ this.$dialog.open(ProductListDemo, {
     onClose(options) {
         const callbackParams = options.data; // {id: 12}
     }
-);`
+);
+`
             },
             code4: {
                 basic: `
@@ -49,7 +52,8 @@ export default {
             this.dialogRef.close({id: 12});
         }
     }
-}`
+}
+`
             }
         };
     }

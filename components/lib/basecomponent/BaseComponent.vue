@@ -60,12 +60,12 @@ const buttonStyles = `
     border-radius: 0;
 }
 
-.p-buttonset .p-button:first-of-type {
+.p-buttonset .p-button:first-of-type:not(:only-of-type) {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-.p-buttonset .p-button:last-of-type {
+.p-buttonset .p-button:last-of-type:not(:only-of-type) {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
@@ -231,6 +231,7 @@ const radioButtonStyles = `
 }
 `;
 const styles = `
+@layer primevue {
 .p-component, .p-component * {
     box-sizing: border-box;
 }
@@ -354,6 +355,7 @@ ${buttonStyles}
 ${checkboxStyles}
 ${inputTextStyles}
 ${radioButtonStyles}
+}
 `;
 
 const { load: loadStyle } = useStyle(styles, { name: 'common', manual: true });
@@ -487,8 +489,6 @@ export default {
             return ObjectUtils.isString(value) || ObjectUtils.isArray(value) ? { class: value } : value;
         },
         _getPT(pt, key = '', callback) {
-            const _usept = pt?.['_usept'];
-
             const getValue = (value, checkSameKey = false) => {
                 const computedValue = callback ? callback(value) : value;
                 const _key = ObjectUtils.toFlatCase(key);
@@ -497,9 +497,9 @@ export default {
                 return (checkSameKey ? (_key !== _cKey ? computedValue?.[_key] : undefined) : computedValue?.[_key]) ?? computedValue;
             };
 
-            return ObjectUtils.isNotEmpty(_usept)
+            return pt?.hasOwnProperty('_usept')
                 ? {
-                      _usept,
+                      _usept: pt['_usept'],
                       originalValue: getValue(pt.originalValue),
                       value: getValue(pt.value)
                   }

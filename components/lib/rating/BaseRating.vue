@@ -3,20 +3,22 @@ import BaseComponent from 'primevue/basecomponent';
 import { useStyle } from 'primevue/usestyle';
 
 const styles = `
-.p-rating {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-
-.p-rating-item {
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-}
-
-.p-rating.p-readonly .p-rating-item {
-    cursor: default;
+@layer primevue {
+    .p-rating {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+    
+    .p-rating-item {
+        display: inline-flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    
+    .p-rating.p-readonly .p-rating-item {
+        cursor: default;
+    }
 }
 `;
 
@@ -31,7 +33,7 @@ const classes = {
     cancelItem: ({ instance }) => [
         'p-rating-item p-rating-cancel-item',
         {
-            'p-focus': instance.focusedOptionIndex === 0
+            'p-focus': instance.focusedOptionIndex === 0 && instance.isFocusVisibleItem
         }
     ],
     cancelIcon: 'p-rating-icon p-rating-cancel',
@@ -39,14 +41,14 @@ const classes = {
         'p-rating-item',
         {
             'p-rating-item-active': value <= props.modelValue,
-            'p-focus': value === instance.focusedOptionIndex
+            'p-focus': value === instance.focusedOptionIndex && instance.isFocusVisibleItem
         }
     ],
     onIcon: 'p-rating-icon',
     offIcon: 'p-rating-icon'
 };
 
-const { load: loadStyle, unload: unloadStyle } = useStyle(styles, { name: 'rating', manual: true });
+const { load: loadStyle } = useStyle(styles, { name: 'rating', manual: true });
 
 export default {
     name: 'BaseRating',
