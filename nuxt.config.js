@@ -56,7 +56,7 @@ export default defineNuxtConfig({
     gtag: {
         id: 'G-48TTQ6G6KV'
     },
-    css: ['~/assets/styles/style.css', '/node_modules/primeicons/primeicons.css', '@/assets/styles/flags.css'],
+    css: ['~/assets/styles/style.css', '/node_modules/primeicons/primeicons.css', '@/assets/styles/flags.css', '@docsearch/css/dist/style.css', '@/assets/styles/layout/landing/_landing.scss', '@/assets/styles/layout/layout.scss'],
     postcss: {
         plugins: {
             tailwindcss: {},
