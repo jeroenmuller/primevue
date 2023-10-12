@@ -88,7 +88,7 @@
                     </button>
                 </li>
                 <li class="relative">
-                    <!-- <li class="relative">
+                    <li class="relative">
                     <button
                         v-styleclass="{ selector: '@next', enterClass: 'hidden', enterActiveClass: 'scalein', leaveToClass: 'hidden', leaveActiveClass: 'fadeout', hideOnOutsideClick: true }"
                         type="button"
@@ -110,7 +110,6 @@
                         </ul>
                     </div>
                 </li> -->
-                </li>
             </ul>
         </div>
     </div>
