@@ -2,12 +2,10 @@
     <DocSectionText v-bind="$attrs">
         <p>
             PrimeVue ships with various free themes to choose from. The list below states all the available themes in the npm distribution with import paths. For a live preview, use the configurator
-            <span class="border-round inline-flex border-1 w-2rem h-2rem p-0 align-items-center justify-content-center bg-primary"><span class="pi pi-cog"></span></span> at the topbar to switch themes.
+            <span class="border-round inline-flex border-1 w-2rem h-2rem p-0 align-items-center justify-content-center bg-primary"><span class="pi pi-palette"></span></span> at the topbar to switch themes.
         </p>
     </DocSectionText>
-    <div class="h-20rem overflow-auto">
-        <DocSectionCode :code="code" hideToggleCode importCode hideCodeSandbox hideStackBlitz codeClassName="h-20rem overflow-auto" />
-    </div>
+    <DocSectionCode :code="code" hideToggleCode importCode hideCodeSandbox hideStackBlitz scrollable />
 </template>
 
 <script>

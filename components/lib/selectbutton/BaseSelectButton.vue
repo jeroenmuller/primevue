@@ -1,17 +1,6 @@
 <script>
 import BaseComponent from 'primevue/basecomponent';
-
-const classes = {
-    root: ({ props }) => ['p-selectbutton p-buttonset p-component', { 'p-disabled': props.disabled }],
-    button: ({ instance, option }) => [
-        'p-button p-component',
-        {
-            'p-highlight': instance.isSelected(option),
-            'p-disabled': instance.isOptionDisabled(option)
-        }
-    ],
-    label: 'p-button-label'
-};
+import SelectButtonStyle from 'primevue/selectbutton/style';
 
 export default {
     name: 'BaseSelectButton',
@@ -27,6 +16,10 @@ export default {
             type: Boolean,
             default: false
         },
+        allowEmpty: {
+            type: Boolean,
+            default: true
+        },
         disabled: Boolean,
         dataKey: null,
         'aria-labelledby': {
@@ -34,9 +27,7 @@ export default {
             default: null
         }
     },
-    css: {
-        classes
-    },
+    style: SelectButtonStyle,
     provide() {
         return {
             $parentInstance: this

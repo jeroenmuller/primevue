@@ -3,7 +3,7 @@
 [![Discord Chat](https://img.shields.io/discord/557940238991753223.svg?color=7289da&label=chat&logo=discord)](https://discord.gg/gzKFYnpmCY)
 [![Prime Discussions](https://img.shields.io/github/discussions-search?query=org%3Aprimefaces&logo=github&label=Prime%20Discussions&link=https%3A%2F%2Fgithub.com%2Forgs%2Fprimefaces%2Fdiscussions)](https://github.com/orgs/primefaces/discussions)
 
-[![PrimeVue Hero](https://user-images.githubusercontent.com/686247/138925407-2a7e916d-c674-4fb5-b721-1dd41a8eeebc.jpg)](https://primevue.org/)
+[![PrimeVue Hero](https://www.primefaces.org/static/social/primevue-preview.jpg)](https://primevue.org/)
 
 # PrimeVue
 
@@ -71,7 +71,7 @@ app.component('Button', Button);
 
 ## Prop Cases
 
-Component prop names are described as camel case throughout the documentation however kebap-case is also fully supported. Events on the other hand should always be kebap-case.
+Component prop names are described as camel case throughout the documentation however kebab-case is also fully supported. Events on the other hand should always be kebab-case.
 
 ```vue
 <Dialog :showHeader="false"></Dialog>
