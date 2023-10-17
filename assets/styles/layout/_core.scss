@@ -22,11 +22,17 @@ body {
     color: var(--text-color);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color .5s;
 }
 
 a {
     text-decoration: none;
 }
+
+::selection {
+    background-color: var(--highlight-bg);
+    color: var(--highlight-text-color);
+} 
 
 h1, h2, h3, h4, h5, h6 {
     margin: 1.5rem 0 1rem 0;
@@ -94,12 +100,8 @@ input[type="number"] {
 	border: none;
     cursor: pointer;
     user-select: none;
-}
 
-.px-link:focus-visible {
-    outline: 0 none;
-    outline-offset: 0;
-    box-shadow: var(--focus-ring);
+    @include focus-visible();
 }
 
 .px-link:disabled {

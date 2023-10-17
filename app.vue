@@ -12,6 +12,15 @@ export default {
     themeChangeListener: null,
     newsActivate: null,
     newsService: null,
+    watch: {
+        $route: {
+            handler(to) {
+                if (to.name === 'index') {
+                    this.themeChangeListener({ theme: this.$appState.darkTheme ? 'lara-dark-teal' : 'lara-light-teal', dark: this.$appState.darkTheme });
+                }
+            }
+        }
+    },
     mounted() {
         this.newsActivate = () => {
             this.$appState.announcement = News;
@@ -32,6 +41,7 @@ export default {
             this.$primevue.changeTheme(this.$appState.theme, event.theme, 'theme-link', () => {
                 this.$appState.theme = event.theme;
                 this.$appState.darkTheme = event.dark;
+                EventBus.emit('theme-change-complete', { theme: event.theme, dark: event.dark });
             });
         };
 

@@ -1,18 +1,15 @@
-@media screen and (min-width: 1729px) {
+@media screen and (min-width: 1920px) {
     .layout-content {
-        max-width: 1478px;
+        max-width: 1728px;
         margin: 0 auto;
     }
 
     .layout-topbar-inner,
     .layout-footer {
-        max-width: 1478px;
+        max-width: 1728px;
         margin: 0 auto;
     }
 
-    .layout-sidebar {
-        left: 200px;
-    }
 }
 
 @media screen and (max-width: 991px) {
@@ -27,11 +24,6 @@
         .layout-topbar-logo-container {
             width: auto;
             margin-right: 0;
-        }
-
-        #docsearch {
-            margin-left: auto;
-            margin-right: .5rem;
         }
 
         .DocSearch-Button {
@@ -54,22 +46,6 @@
         }
     }
 
-    .layout-light,
-    .layout-dark {
-        .DocSearch-Button {
-            background: var(--surface-card);
-            border-color: var(--surface-border);
-
-            &:hover {
-                border-color: var(--primary-color);
-            }
-
-            .DocSearch-Search-Icon {
-                color: var(--text-700);
-            }
-        }
-    }
-
     .layout-sidebar {
         top: 0;
         left: 0;
@@ -77,7 +53,8 @@
         z-index: 1102;
         height: 100%;
         transform: translateX(-100%);
-        background-color: var(--surface-overlay);
+        background-color: var(--mobile-menu-bg);
+        backdrop-filter: blur(20px);
         width: 300px;
         opacity: 0;
 
@@ -88,6 +65,12 @@
         &.active {
             opacity: 1;
             transform: translateX(0);
+        }
+    }
+
+    .layout-news-active {
+        .layout-sidebar {
+            top: 0;
         }
     }
 
@@ -155,7 +138,7 @@
         }
 
         .layout-topbar-icon {
-            display: block;
+            display: inline-flex;
         }
     }
 

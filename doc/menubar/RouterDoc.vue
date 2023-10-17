@@ -9,7 +9,7 @@
         <Menubar :model="items">
             <template #item="{ label, item, props, root, hasSubmenu }">
                 <router-link v-if="item.route" v-slot="routerProps" :to="item.route" custom>
-                    <a :href="routerProps.href" v-bind="props.action">
+                    <a :href="routerProps.href" v-bind="props.action" @click="routerProps.navigate">
                         <span v-bind="props.icon" />
                         <span v-bind="props.label">{{ label }}</span>
                     </a>
@@ -162,7 +162,7 @@ export default {
 <Menubar :model="items">
     <template #item="{ label, item, props, root, hasSubmenu }">
         <router-link v-if="item.route" v-slot="routerProps" :to="item.route" custom>
-            <a :href="routerProps.href" v-bind="props.action">
+            <a :href="routerProps.href" v-bind="props.action" @click="routerProps.navigate">
                 <span v-bind="props.icon" />
                 <span v-bind="props.label">{{ label }}</span>
             </a>
@@ -173,14 +173,15 @@ export default {
             <span :class="[hasSubmenu && (root ? 'pi pi-fw pi-angle-down' : 'pi pi-fw pi-angle-right')]" v-bind="props.submenuicon" />
         </a>
     </template>
-</Menubar>`,
+</Menubar>
+`,
                 options: `
 <template>
     <div class="card relative z-2">
         <Menubar :model="items">
             <template #item="{ label, item, props, root, hasSubmenu }">
                 <router-link v-if="item.route" v-slot="routerProps" :to="item.route" custom>
-                    <a :href="routerProps.href" v-bind="props.action">
+                    <a :href="routerProps.href" v-bind="props.action" @click="routerProps.navigate">
                         <span v-bind="props.icon" />
                         <span v-bind="props.label">{{ label }}</span>
                     </a>
@@ -330,14 +331,15 @@ export default {
         };
     }
 };
-<\/script>`,
+<\/script>
+`,
                 composition: `
 <template>
     <div class="card relative z-2">
         <Menubar :model="items">
             <template #item="{ label, item, props, root, hasSubmenu }">
                 <router-link v-if="item.route" v-slot="routerProps" :to="item.route" custom>
-                    <a :href="routerProps.href" v-bind="props.action">
+                    <a :href="routerProps.href" v-bind="props.action" @click="routerProps.navigate">
                         <span v-bind="props.icon" />
                         <span v-bind="props.label">{{ label }}</span>
                     </a>
@@ -483,7 +485,8 @@ const items = ref([
         icon: 'pi pi-fw pi-power-off'
     }
 ]);
-<\/script>`
+<\/script>
+`
             }
         };
     }

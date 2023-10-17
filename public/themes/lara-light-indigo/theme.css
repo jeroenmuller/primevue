@@ -5023,16 +5023,16 @@
     border-radius: 6px;
   }
   .p-inline-message.p-inline-message-info {
-    background: #e9e9ff;
-    border: solid #696cff;
+    background: rgba(219, 234, 254, 0.7);
+    border: solid #3b82f6;
     border-width: 0px;
-    color: #696cff;
+    color: #3b82f6;
   }
   .p-inline-message.p-inline-message-info .p-inline-message-icon {
-    color: #696cff;
+    color: #3b82f6;
   }
   .p-inline-message.p-inline-message-success {
-    background: #e4f8f0;
+    background: rgba(228, 248, 240, 0.7);
     border: solid #1ea97c;
     border-width: 0px;
     color: #1ea97c;
@@ -5041,7 +5041,7 @@
     color: #1ea97c;
   }
   .p-inline-message.p-inline-message-warn {
-    background: #fff2e2;
+    background: rgba(255, 242, 226, 0.7);
     border: solid #cc8925;
     border-width: 0px;
     color: #cc8925;
@@ -5050,7 +5050,7 @@
     color: #cc8925;
   }
   .p-inline-message.p-inline-message-error {
-    background: #ffe7e6;
+    background: rgba(255, 231, 230, 0.7);
     border: solid #ff5757;
     border-width: 0px;
     color: #ff5757;
@@ -5084,7 +5084,7 @@
     transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
   }
   .p-message .p-message-close:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.5);
   }
   .p-message .p-message-close:focus-visible {
     outline: 0 none;
@@ -5092,19 +5092,19 @@
     box-shadow: 0 0 0 0.2rem #C7D2FE;
   }
   .p-message.p-message-info {
-    background: #e9e9ff;
-    border: solid #696cff;
+    background: rgba(219, 234, 254, 0.7);
+    border: solid #3b82f6;
     border-width: 0 0 0 6px;
-    color: #696cff;
+    color: #3b82f6;
   }
   .p-message.p-message-info .p-message-icon {
-    color: #696cff;
+    color: #3b82f6;
   }
   .p-message.p-message-info .p-message-close {
-    color: #696cff;
+    color: #3b82f6;
   }
   .p-message.p-message-success {
-    background: #e4f8f0;
+    background: rgba(228, 248, 240, 0.7);
     border: solid #1ea97c;
     border-width: 0 0 0 6px;
     color: #1ea97c;
@@ -5116,7 +5116,7 @@
     color: #1ea97c;
   }
   .p-message.p-message-warn {
-    background: #fff2e2;
+    background: rgba(255, 242, 226, 0.7);
     border: solid #cc8925;
     border-width: 0 0 0 6px;
     color: #cc8925;
@@ -5128,7 +5128,7 @@
     color: #cc8925;
   }
   .p-message.p-message-error {
-    background: #ffe7e6;
+    background: rgba(255, 231, 230, 0.7);
     border: solid #ff5757;
     border-width: 0 0 0 6px;
     color: #ff5757;
@@ -5153,7 +5153,7 @@
   }
 
   .p-toast {
-    opacity: 0.9;
+    opacity: 1;
   }
   .p-toast .p-toast-message {
     margin: 0 0 1rem 0;
@@ -5188,7 +5188,7 @@
     transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
   }
   .p-toast .p-toast-message .p-toast-icon-close:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.5);
   }
   .p-toast .p-toast-message .p-toast-icon-close:focus-visible {
     outline: 0 none;
@@ -5196,17 +5196,17 @@
     box-shadow: 0 0 0 0.2rem #C7D2FE;
   }
   .p-toast .p-toast-message.p-toast-message-info {
-    background: #e9e9ff;
-    border: solid #696cff;
+    background: rgba(219, 234, 254, 0.7);
+    border: solid #3b82f6;
     border-width: 0 0 0 6px;
-    color: #696cff;
+    color: #3b82f6;
   }
   .p-toast .p-toast-message.p-toast-message-info .p-toast-message-icon,
 .p-toast .p-toast-message.p-toast-message-info .p-toast-icon-close {
-    color: #696cff;
+    color: #3b82f6;
   }
   .p-toast .p-toast-message.p-toast-message-success {
-    background: #e4f8f0;
+    background: rgba(228, 248, 240, 0.7);
     border: solid #1ea97c;
     border-width: 0 0 0 6px;
     color: #1ea97c;
@@ -5216,7 +5216,7 @@
     color: #1ea97c;
   }
   .p-toast .p-toast-message.p-toast-message-warn {
-    background: #fff2e2;
+    background: rgba(255, 242, 226, 0.7);
     border: solid #cc8925;
     border-width: 0 0 0 6px;
     color: #cc8925;
@@ -5226,7 +5226,7 @@
     color: #cc8925;
   }
   .p-toast .p-toast-message.p-toast-message-error {
-    background: #ffe7e6;
+    background: rgba(255, 231, 230, 0.7);
     border: solid #ff5757;
     border-width: 0 0 0 6px;
     color: #ff5757;
@@ -5561,7 +5561,7 @@
       stroke: #ff5757;
     }
     40% {
-      stroke: #696cff;
+      stroke: #3b82f6;
     }
     66% {
       stroke: #1ea97c;
@@ -5697,5 +5697,9 @@
 
   .p-speeddial-item.p-focus > .p-speeddial-action {
     box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #b1b3f8, 0 1px 2px 0 black;
+  }
+
+  .p-toast-message {
+    backdrop-filter: blur(10px);
   }
 }

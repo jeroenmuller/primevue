@@ -9,7 +9,7 @@
         <Menu :model="items">
             <template #item="{ label, item, props }">
                 <router-link v-if="item.route" v-slot="routerProps" :to="item.route" custom>
-                    <a :href="routerProps.href" v-bind="props.action">
+                    <a :href="routerProps.href" v-bind="props.action" @click="routerProps.navigate">
                         <span v-bind="props.icon" />
                         <span v-bind="props.label">{{ label }}</span>
                     </a>
@@ -70,7 +70,7 @@ export default {
 <Menu :model="items">
     <template #item="{ label, item, props }">
         <router-link v-if="item.route" v-slot="routerProps" :to="item.route" custom>
-            <a :href="routerProps.href" v-bind="props.action">
+            <a :href="routerProps.href" v-bind="props.action" @click="routerProps.navigate">
                 <span v-bind="props.icon" />
                 <span v-bind="props.label">{{ label }}</span>
             </a>
@@ -80,14 +80,15 @@ export default {
             <span v-bind="props.label">{{ label }}</span>
         </a>
     </template>
-</Menu>`,
+</Menu>
+`,
                 options: `
 <template>
     <div class="card flex justify-content-center">
         <Menu :model="items">
             <template #item="{ label, item, props }">
                 <router-link v-if="item.route" v-slot="routerProps" :to="item.route" custom>
-                    <a :href="routerProps.href" v-bind="props.action">
+                    <a :href="routerProps.href" v-bind="props.action" @click="routerProps.navigate">
                         <span v-bind="props.icon" />
                         <span v-bind="props.label">{{ label }}</span>
                     </a>
@@ -147,7 +148,8 @@ export default {
         };
     }
 };
-<\/script>`,
+<\/script>
+`,
                 composition: `
 <template>
     <div class="card flex justify-content-center">
@@ -210,7 +212,8 @@ const items = ref([
         ]
     }
 ]);
-<\/script>`
+<\/script>
+`
             }
         };
     }

@@ -836,6 +836,146 @@
             }
         }
     },
+    "animate": {
+        "description": "Animate manages PrimeFlex CSS classes declaratively to during enter/leave animations on scroll or on page load.\n\n[Live Demo](https://primevue.org/animate)",
+        "interfaces": {
+            "description": "Defines the custom interfaces used by the module.",
+            "eventDescription": "Defines the custom events used by the component's emit.",
+            "methodDescription": "Defines methods that can be accessed by the component's reference.",
+            "typeDescription": "Defines the custom types used by the module.",
+            "values": {
+                "AnimateOptions": {
+                    "description": "Defines options of Animate.",
+                    "relatedProp": "",
+                    "props": [
+                        {
+                            "name": "enterClass",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "string",
+                            "default": "",
+                            "description": "Animate scroll to add when item begins to get displayed."
+                        },
+                        {
+                            "name": "leaveClass",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "string",
+                            "default": "",
+                            "description": "Animate scroll to add when item begins to get hidden."
+                        },
+                        {
+                            "name": "pt",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "PassThrough<AnimateDirectivePassThroughOptions>",
+                            "default": "",
+                            "description": "Used to pass attributes to DOM elements inside the component."
+                        },
+                        {
+                            "name": "ptOptions",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "PassThroughOptions",
+                            "default": "",
+                            "description": "Used to configure passthrough(pt) options of the component."
+                        }
+                    ],
+                    "methods": []
+                },
+                "AnimateDirectivePassThroughOptions": {
+                    "description": "Custom passthrough(pt) directive options.",
+                    "relatedProp": "",
+                    "props": [
+                        {
+                            "name": "hooks",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "DirectiveHooks<any, any>",
+                            "default": "",
+                            "description": "Used to manage all lifecycle hooks"
+                        }
+                    ],
+                    "methods": []
+                },
+                "AnimateDirectiveBinding": {
+                    "description": "Binding of Animate directive.",
+                    "relatedProp": "",
+                    "props": [
+                        {
+                            "name": "value",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "AnimateOptions",
+                            "default": "",
+                            "description": "Value of the Animate."
+                        }
+                    ],
+                    "methods": [],
+                    "extendedTypes": "Omit<DirectiveBinding, \"modifiers\" | \"value\">"
+                }
+            }
+        }
+    },
+    "animate/style/AnimateStyle": {
+        "interfaces": {
+            "description": "Defines the custom interfaces used by the module.",
+            "eventDescription": "Defines the custom events used by the component's emit.",
+            "methodDescription": "Defines methods that can be accessed by the component's reference.",
+            "typeDescription": "Defines the custom types used by the module.",
+            "values": {
+                "AnimateStyle": {
+                    "relatedProp": "",
+                    "props": [
+                        {
+                            "name": "name",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "string",
+                            "default": ""
+                        },
+                        {
+                            "name": "css",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "string",
+                            "default": ""
+                        },
+                        {
+                            "name": "classes",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "object",
+                            "default": ""
+                        },
+                        {
+                            "name": "inlineStyles",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "object",
+                            "default": ""
+                        },
+                        {
+                            "name": "loadStyle",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "Function",
+                            "default": ""
+                        },
+                        {
+                            "name": "getStyleSheet",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "Function",
+                            "default": ""
+                        }
+                    ],
+                    "methods": [],
+                    "extendedTypes": "BaseStyle"
+                }
+            }
+        }
+    },
     "api/Api": {
         "interfaces": {
             "description": "Defines the custom interfaces used by the module.",
@@ -5062,7 +5202,7 @@
                         }
                     ],
                     "methods": [],
-                    "extendedBy": "AccordionStyle,AccordionTabStyle,AutoCompleteStyle,AvatarStyle,AvatarGroupStyle,BadgeStyle,BadgeDirectiveStyle,BaseComponentStyle,BaseIconStyle,BlockUIStyle,BreadcrumbStyle,ButtonStyle,CalendarStyle,CardStyle,CarouselStyle,CascadeSelectStyle,ChartStyle,CheckboxStyle,ChipStyle,ChipsStyle,ColorPickerStyle,ColumnStyle,ColumnGroupStyle,ConfirmDialogStyle,ConfirmPopupStyle,ContextMenuStyle,DataTableStyle,DataViewStyle,DataViewLayoutOptionsStyle,DeferredContentStyle,DialogStyle,DividerStyle,DockStyle,DropdownStyle,DynamicDialogStyle,EditorStyle,FieldsetStyle,AccordionStyle,FocusTrapStyle,GalleriaStyle,ImageStyle,InlineMessageStyle,InplaceStyle,InputMaskStyle,InputNumberStyle,InputSwitchStyle,InputTextStyle,KnobStyle,ListboxStyle,MegaMenuStyle,MenuStyle,MenubarStyle,MessageStyle,MultiSelectStyle,OrderListStyle,OrganizationChartStyle,OverlayPanelStyle,PaginatorStyle,PanelStyle,PanelMenuStyle,PasswordStyle,PickListStyle,PortalStyle,ProgressBarStyle,ProgressSpinnerStyle,RadioButtonStyle,RatingStyle,AccordionStyle,RowStyle,ScrollPanelStyle,ScrollTopStyle,SelectButtonStyle,SidebarStyle,SkeletonStyle,SliderStyle,SpeedDialStyle,SplitButtonStyle,SplitterStyle,SplitterPanelStyle,StepsStyle,StyleClassStyle,TabMenuStyle,TabPanelStyle,TabViewStyle,TagStyle,TerminalStyle,TextareaStyle,TieredMenuStyle,TimelineStyle,ToastStyle,ToggleButtonStyle,ToolbarStyle,TooltipStyle,TreeStyle,TreeSelectStyle,TreeTableStyle,TriStateCheckboxStyle,VirtualScrollerStyle"
+                    "extendedBy": "AccordionStyle,AccordionTabStyle,AnimateStyle,AutoCompleteStyle,AvatarStyle,AvatarGroupStyle,BadgeStyle,BadgeDirectiveStyle,BaseComponentStyle,BaseIconStyle,BlockUIStyle,BreadcrumbStyle,ButtonStyle,CalendarStyle,CardStyle,CarouselStyle,CascadeSelectStyle,ChartStyle,CheckboxStyle,ChipStyle,ChipsStyle,ColorPickerStyle,ColumnStyle,ColumnGroupStyle,ConfirmDialogStyle,ConfirmPopupStyle,ContextMenuStyle,DataTableStyle,DataViewStyle,DataViewLayoutOptionsStyle,DeferredContentStyle,DialogStyle,DividerStyle,DockStyle,DropdownStyle,DynamicDialogStyle,EditorStyle,FieldsetStyle,AccordionStyle,FocusTrapStyle,GalleriaStyle,ImageStyle,InlineMessageStyle,InplaceStyle,InputMaskStyle,InputNumberStyle,InputSwitchStyle,InputTextStyle,KnobStyle,ListboxStyle,MegaMenuStyle,MenuStyle,MenubarStyle,MessageStyle,MultiSelectStyle,OrderListStyle,OrganizationChartStyle,OverlayPanelStyle,PaginatorStyle,PanelStyle,PanelMenuStyle,PasswordStyle,PickListStyle,PortalStyle,ProgressBarStyle,ProgressSpinnerStyle,RadioButtonStyle,RatingStyle,AccordionStyle,RowStyle,ScrollPanelStyle,ScrollTopStyle,SelectButtonStyle,SidebarStyle,SkeletonStyle,SliderStyle,SpeedDialStyle,SplitButtonStyle,SplitterStyle,SplitterPanelStyle,StepsStyle,StyleClassStyle,TabMenuStyle,TabPanelStyle,TabViewStyle,TagStyle,TerminalStyle,TextareaStyle,TieredMenuStyle,TimelineStyle,ToastStyle,ToggleButtonStyle,ToolbarStyle,TooltipStyle,TreeStyle,TreeSelectStyle,TreeTableStyle,TriStateCheckboxStyle,VirtualScrollerStyle"
                 }
             }
         }
@@ -36432,6 +36572,14 @@
                             "type": "boolean",
                             "default": "false",
                             "description": "When enabled, it removes component related styles in the core."
+                        },
+                        {
+                            "name": "closeOnEscape",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "boolean",
+                            "default": "true",
+                            "description": "Specifies if pressing escape key should hide the dialog."
                         }
                     ],
                     "methods": []
@@ -42669,8 +42817,8 @@
                             "optional": true,
                             "readonly": false,
                             "type": "boolean",
-                            "default": "false",
-                            "description": "Whether selection can not be cleared.",
+                            "default": "true",
+                            "description": "Whether selection can be cleared.",
                             "deprecated": "Use 'allowEmpty' property instead."
                         },
                         {
@@ -46010,7 +46158,7 @@
                             "description": "Selector to define the target element. Available selectors are '@next', '@prev', '@parent' and '@grandparent'."
                         },
                         {
-                            "name": "enterClassName",
+                            "name": "enterClass",
                             "optional": true,
                             "readonly": false,
                             "type": "string",
@@ -46018,7 +46166,7 @@
                             "description": "Style class to add when item begins to get displayed."
                         },
                         {
-                            "name": "enterActiveClassName",
+                            "name": "enterActiveClass",
                             "optional": true,
                             "readonly": false,
                             "type": "string",
@@ -46026,7 +46174,7 @@
                             "description": "Style class to add during enter animation."
                         },
                         {
-                            "name": "enterToClassName",
+                            "name": "enterToClass",
                             "optional": true,
                             "readonly": false,
                             "type": "string",
@@ -46034,7 +46182,7 @@
                             "description": "Style class to add when item begins to get displayed."
                         },
                         {
-                            "name": "leaveClassName",
+                            "name": "leaveClass",
                             "optional": true,
                             "readonly": false,
                             "type": "string",
@@ -46042,7 +46190,7 @@
                             "description": "Style class to add when item begins to get hidden."
                         },
                         {
-                            "name": "leaveActiveClassName",
+                            "name": "leaveActiveClass",
                             "optional": true,
                             "readonly": false,
                             "type": "string",
@@ -46050,7 +46198,7 @@
                             "description": "Style class to add during leave animation."
                         },
                         {
-                            "name": "leaveToClassName",
+                            "name": "leaveToClass",
                             "optional": true,
                             "readonly": false,
                             "type": "string",
@@ -50812,12 +50960,20 @@
                             "description": "When present, it adds a custom delay to the tooltip's hiding."
                         },
                         {
+                            "name": "autoHide",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "boolean",
+                            "default": "true",
+                            "description": "Whether to hide tooltip when hovering over tooltip content."
+                        },
+                        {
                             "name": "pt",
                             "optional": true,
                             "readonly": false,
                             "type": "PassThrough<TooltipDirectivePassThroughOptions>",
                             "default": "",
-                            "description": "Used to pass attributes to DOM elements inside the component."
+                            "description": "Uses to pass attributes to DOM elements inside the component."
                         },
                         {
                             "name": "ptOptions",
@@ -51677,7 +51833,13 @@
                     "methods": [
                         {
                             "name": "default",
-                            "parameters": [],
+                            "parameters": [
+                                {
+                                    "name": "scope",
+                                    "optional": false,
+                                    "type": "{\n  \t <span class=\"ml-3 text-primary-700\">node</span>: <span class=\"text-primary-500\">TreeNode</span>, <span class=\"text-primary-300\">// Tree node instance</span>\n }"
+                                }
+                            ],
                             "returnType": "VNode<RendererNode, RendererElement, Object>[]",
                             "description": "Default content slot."
                         },

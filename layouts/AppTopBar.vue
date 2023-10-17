@@ -59,10 +59,12 @@
                     </svg>
                 </PrimeVueNuxtLink>
             </div>
-            <div id="docsearch"></div>
 
             <ul class="flex list-none m-0 p-0 gap-2 align-items-center">
-                <!-- <li>
+                <li>
+                    <div id="docsearch"></div>
+                </li>
+                <li>
                     <a
                         href="https://github.com/primefaces/primevue"
                         target="_blank"
@@ -83,12 +85,30 @@
                     </a>
                 </li>
                 <li>
-                    <button type="button" class="p-button flex border-1 w-2rem h-2rem p-0 align-items-center justify-content-center transition-all transition-duration-300 min-w-0" @click="onConfigButtonClick">
-                        <i class="pi pi-cog"></i>
+                    <a
+                        href="https://github.com/orgs/primefaces/discussions"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="flex flex-shrink-0 px-link border-1 border-solid w-2rem h-2rem surface-border border-round surface-card align-items-center justify-content-center transition-all transition-duration-300 hover:border-primary"
+                    >
+                        <i class="pi pi-comments text-700"></i>
+                    </a>
+                </li>
+                <li>
+                    <button
+                        type="button"
+                        class="flex flex-shrink-0 px-link border-1 border-solid w-2rem h-2rem surface-border border-round surface-card align-items-center justify-content-center transition-all transition-duration-300 hover:border-primary"
+                        @click="toggleDarkMode"
+                    >
+                        <i :class="['pi', { 'pi-moon': $appState.darkTheme, 'pi-sun': !$appState.darkTheme }]"></i>
+                    </button>
+                </li>
+                <li v-if="showConfigurator">
+                    <button type="button" class="p-button flex-shrink-0 flex border-1 w-2rem h-2rem p-0 align-items-center justify-content-center transition-all transition-duration-300 min-w-0" @click="onConfigButtonClick">
+                        <i class="pi pi-palette"></i>
                     </button>
                 </li>
                 <li class="relative">
-                    <li class="relative">
                     <button
                         v-styleclass="{ selector: '@next', enterClass: 'hidden', enterActiveClass: 'scalein', leaveToClass: 'hidden', leaveActiveClass: 'fadeout', hideOnOutsideClick: true }"
                         type="button"
@@ -109,7 +129,18 @@
                             </li>
                         </ul>
                     </div>
-                </li> -->
+                </li>
+                <li v-if="showMenuButton" class="menu-button">
+                    <button
+                        type="button"
+                        class="flex flex-shrink-0 px-link border-1 border-solid w-2rem h-2rem surface-border border-round surface-card align-items-center justify-content-center transition-all transition-duration-300 hover:border-primary menu-button"
+                        @click="onMenuButtonClick"
+                        aria-haspopup
+                        aria-label="Menu"
+                    >
+                        <i class="pi pi-bars"></i>
+                    </button>
+                </li>
             </ul>
         </div>
     </div>
@@ -128,9 +159,9 @@ export default {
             type: Boolean,
             default: true
         },
-        showDarkSwitch: {
+        showMenuButton: {
             type: Boolean,
-            default: false
+            default: true
         }
     },
     data() {
@@ -158,7 +189,23 @@ export default {
             container: '#docsearch',
             appId: '01CMUF4W4R',
             indexName: 'primevue',
-            apiKey: '9bb5939e36897b26ff7de5b7b64d6c43'
+            apiKey: '9bb5939e36897b26ff7de5b7b64d6c43',
+            transformItems: (items) => {
+                const isLocalhost = process.env.NODE_ENV !== 'production';
+
+                return items.map((item) => {
+                    if (isLocalhost) {
+                        const url = new URL(item.url);
+
+                        url.protocol = window.location.protocol;
+                        url.hostname = window.location.hostname;
+                        url.port = window.location.port;
+                        item.url = url.toString();
+                    }
+
+                    return item;
+                });
+            }
         });
     },
     beforeUnmount() {

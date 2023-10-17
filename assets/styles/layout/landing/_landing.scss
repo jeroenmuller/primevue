@@ -2,9 +2,8 @@ $landingBreakpointMD: 767px;
 $landingBreakpointLG: 991px;
 $landingBreakpointXL: 1199px;
 
+@import '../_mixins';
 @import './_main';
-@import './_light';
-@import './_dark';
 @import './_hero';
 @import './_users';
 @import './_getstarted';
@@ -12,3 +11,4 @@ $landingBreakpointXL: 1199px;
 @import './_blocks';
 @import './_templates';
 @import './_features';
+@import './_footer';
