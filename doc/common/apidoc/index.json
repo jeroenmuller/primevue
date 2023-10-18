@@ -898,6 +898,21 @@
                     ],
                     "methods": []
                 },
+                "AnimateDirectiveModifiers": {
+                    "description": "Defines modifiers of Animate.",
+                    "relatedProp": "",
+                    "props": [
+                        {
+                            "name": "once",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "boolean",
+                            "default": "true",
+                            "description": "Whether the animation will be repeated"
+                        }
+                    ],
+                    "methods": []
+                },
                 "AnimateDirectiveBinding": {
                     "description": "Binding of Animate directive.",
                     "relatedProp": "",
@@ -909,6 +924,14 @@
                             "type": "AnimateOptions",
                             "default": "",
                             "description": "Value of the Animate."
+                        },
+                        {
+                            "name": "modifiers",
+                            "optional": true,
+                            "readonly": false,
+                            "type": "AnimateDirectiveModifiers",
+                            "default": "",
+                            "description": "Modifiers of the tooltip."
                         }
                     ],
                     "methods": [],
@@ -16853,6 +16876,14 @@
                             "type": "boolean",
                             "default": "false",
                             "description": "Current focused state of menuitem as a boolean."
+                        },
+                        {
+                            "name": "disabled",
+                            "optional": false,
+                            "readonly": false,
+                            "type": "boolean",
+                            "default": "false",
+                            "description": "Current disabled state of menuitem as a boolean."
                         }
                     ],
                     "methods": []
@@ -31613,6 +31644,14 @@
                             "type": "boolean",
                             "default": "false",
                             "description": "Current focused state of menuitem as a boolean."
+                        },
+                        {
+                            "name": "disabled",
+                            "optional": false,
+                            "readonly": false,
+                            "type": "boolean",
+                            "default": "false",
+                            "description": "Current disabled state of menuitem as a boolean."
                         }
                     ],
                     "methods": []
@@ -32202,6 +32241,14 @@
                             "type": "boolean",
                             "default": "false",
                             "description": "Current focused state of menuitem as a boolean."
+                        },
+                        {
+                            "name": "disabled",
+                            "optional": false,
+                            "readonly": false,
+                            "type": "boolean",
+                            "default": "false",
+                            "description": "Current disabled state of menuitem as a boolean."
                         }
                     ],
                     "methods": []
@@ -32821,6 +32868,14 @@
                             "type": "boolean",
                             "default": "false",
                             "description": "Current focused state of menuitem as a boolean."
+                        },
+                        {
+                            "name": "disabled",
+                            "optional": false,
+                            "readonly": false,
+                            "type": "boolean",
+                            "default": "false",
+                            "description": "Current disabled state of menuitem as a boolean."
                         },
                         {
                             "name": "level",
@@ -38040,6 +38095,14 @@
                             "type": "boolean",
                             "default": "false",
                             "description": "Current focused state of menuitem as a boolean."
+                        },
+                        {
+                            "name": "disabled",
+                            "optional": false,
+                            "readonly": false,
+                            "type": "boolean",
+                            "default": "false",
+                            "description": "Current disabled state of menuitem as a boolean."
                         }
                     ],
                     "methods": []
@@ -38140,6 +38203,22 @@
                             "type": "object",
                             "default": "",
                             "description": "Submenuicon elemnt binding"
+                        },
+                        {
+                            "name": "headerIcon",
+                            "optional": false,
+                            "readonly": false,
+                            "type": "object",
+                            "default": "",
+                            "description": "Header icon element binding"
+                        },
+                        {
+                            "name": "headerLabel",
+                            "optional": false,
+                            "readonly": false,
+                            "type": "object",
+                            "default": "",
+                            "description": "Header label element binding"
                         }
                     ],
                     "methods": []
@@ -48802,6 +48881,14 @@
                             "type": "boolean",
                             "default": "false",
                             "description": "Current focused state of menuitem as a boolean."
+                        },
+                        {
+                            "name": "disabled",
+                            "optional": false,
+                            "readonly": false,
+                            "type": "boolean",
+                            "default": "false",
+                            "description": "Current disabled state of menuitem as a boolean."
                         }
                     ],
                     "methods": []
