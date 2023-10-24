@@ -157,6 +157,7 @@ export default {
         alias: {
             'primevue/utils': path.resolve(__dirname, './components/lib/utils/Utils.js'),
             'primevue/api': path.resolve(__dirname, './components/lib/api/Api.js'),
+            'primevue/usetheme': path.resolve(__dirname, './components/lib/usetheme/UseTheme.js'),
             ...STYLE_ALIAS,
             'primevue/base': path.resolve(__dirname, './components/lib/base/Base.js'),
             'primevue/basedirective': path.resolve(__dirname, './components/lib/basedirective/BaseDirective.js'),

@@ -45,7 +45,7 @@ export default defineNuxtConfig({
                 { property: 'og:ttl', content: '604800' }
             ],
             link: [
-                {
+                /*{
                     id: 'home-table-link',
                     rel: 'stylesheet',
                     href: baseUrl + 'styles/landing/themes/lara-light-teal/theme.css'
@@ -54,7 +54,7 @@ export default defineNuxtConfig({
                     id: 'theme-link',
                     rel: 'stylesheet',
                     href: baseUrl + 'themes/lara-light-teal/theme.css'
-                },
+                },*/
                 { rel: 'icon', href: baseUrl + 'favicon.ico' }
             ],
             script: [

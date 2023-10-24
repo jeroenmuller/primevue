@@ -354,8 +354,18 @@ ${radioButtonCSS}
 }
 `;
 
+const themeOptions = {
+    name: 'global',
+    selectorOptions: {
+        selectors: {
+            global: 'body'
+        }
+    }
+};
+
 export default BaseStyle.extend({
     name: 'common',
     css,
-    loadGlobalStyle: (globalCSS, options = {}) => useStyle(globalCSS, { name: 'global', ...options })
+    loadGlobalStyle: (globalCSS, options = {}) => useStyle(globalCSS, { name: 'global', ...options }),
+    themeOptions
 });

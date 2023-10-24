@@ -1,0 +1,6 @@
+{
+    "main": "./usetheme.cjs.js",
+    "module": "./usetheme.esm.js",
+    "unpkg": "./usetheme.min.js",
+    "types": "./UseTheme.d.ts"
+}

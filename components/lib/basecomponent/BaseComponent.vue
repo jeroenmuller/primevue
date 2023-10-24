@@ -18,6 +18,10 @@ export default {
         unstyled: {
             type: Boolean,
             default: undefined
+        },
+        theme: {
+            type: Object,
+            default: undefined
         }
     },
     inject: {
@@ -32,6 +36,15 @@ export default {
                 if (!newValue) {
                     BaseComponentStyle.loadStyle({ nonce: this.$config?.csp?.nonce });
                     this.$options.style && this.$style.loadStyle({ nonce: this.$config?.csp?.nonce });
+                }
+            }
+        },
+        $theme: {
+            immediate: true,
+            handler(newValue) {
+                if (newValue) {
+                    BaseComponentStyle.loadTheme(this.$theme, { nonce: this.$config?.csp?.nonce });
+                    this.$options.style && this.$style.loadTheme(this.$theme, { nonce: this.$config?.csp?.nonce });
                 }
             }
         }
@@ -201,11 +214,14 @@ export default {
         isUnstyled() {
             return this.unstyled !== undefined ? this.unstyled : this.$config?.unstyled;
         },
+        $theme() {
+            return this.theme !== undefined ? this.theme : this.$config?.theme;
+        },
         $params() {
             return { instance: this, props: this.$props, state: this.$data, parentInstance: this.$parentInstance };
         },
         $style() {
-            return { classes: undefined, inlineStyles: undefined, loadStyle: () => {}, loadCustomStyle: () => {}, ...(this._getHostInstance(this) || {}).$style, ...this.$options.style };
+            return { classes: undefined, inlineStyles: undefined, loadStyle: () => {}, loadCustomStyle: () => {}, loadTheme: () => {}, ...(this._getHostInstance(this) || {}).$style, ...this.$options.style };
         },
         $config() {
             return this.$primevue?.config;

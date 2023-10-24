@@ -1,4 +1,5 @@
 import { useStyle } from 'primevue/usestyle';
+import { useTheme } from 'primevue/usetheme';
 
 const css = `
 .p-hidden-accessible {
@@ -27,13 +28,19 @@ const classes = {};
 
 const inlineStyles = {};
 
+const themeOptions = undefined;
+
 export default {
     name: 'base',
     css,
     classes,
     inlineStyles,
+    themeOptions,
     loadStyle(options = {}) {
         return this.css ? useStyle(this.css, { name: this.name, ...options }) : {};
+    },
+    loadTheme(theme, options = {}) {
+        return theme && this.themeOptions ? useTheme(theme, { name: this.name, ...this.themeOptions }).load(undefined, options) : {};
     },
     getStyleSheet(extendedCSS = '', props = {}) {
         if (this.css) {

@@ -40,8 +40,20 @@ const classes = {
     footer: 'p-panel-footer'
 };
 
+const themeOptions = {
+    selectorOptions: {
+        selectors: {
+            panel: {
+                root: '.p-panel',
+                header: '.p-panel-header'
+            }
+        }
+    }
+};
+
 export default BaseStyle.extend({
     name: 'panel',
     css,
-    classes
+    classes,
+    themeOptions
 });
