@@ -47,6 +47,7 @@ const STYLE_ALIAS = {
     'primevue/image/style': path.resolve(__dirname, './components/lib/image/style/ImageStyle.js'),
     'primevue/inlinemessage/style': path.resolve(__dirname, './components/lib/inlinemessage/style/InlineMessageStyle.js'),
     'primevue/inplace/style': path.resolve(__dirname, './components/lib/inplace/style/InplaceStyle.js'),
+    'primevue/inputgroup/style': path.resolve(__dirname, './components/lib/inputgroup/style/InputGroupStyle.js'),
     'primevue/inputmask/style': path.resolve(__dirname, './components/lib/inputmask/style/InputMaskStyle.js'),
     'primevue/inputnumber/style': path.resolve(__dirname, './components/lib/inputnumber/style/InputNumberStyle.js'),
     'primevue/inputswitch/style': path.resolve(__dirname, './components/lib/inputswitch/style/InputSwitchStyle.js'),
